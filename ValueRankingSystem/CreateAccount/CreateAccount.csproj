@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D982C20E-F90E-4325-A236-EB8249444997}</ProjectGuid>
+    <ProjectGuid>{9A1EC708-47B5-48B0-86FA-588130E903FF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ValueRankingSystem</RootNamespace>
-    <AssemblyName>ValueRankingSystem</AssemblyName>
+    <RootNamespace>CreateAccount</RootNamespace>
+    <AssemblyName>CreateAccount</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -58,16 +58,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoginForm.cs">
+    <Compile Include="CreateAccountForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoginForm.Designer.cs">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <Compile Include="CreateAccountForm.Designer.cs">
+      <DependentUpon>CreateAccountForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="LoginForm.resx">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <EmbeddedResource Include="CreateAccountForm.resx">
+      <DependentUpon>CreateAccountForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -93,9 +93,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CreateAccount\CreateAccount.csproj">
-      <Project>{9a1ec708-47b5-48b0-86fa-588130e903ff}</Project>
-      <Name>CreateAccount</Name>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{e42ba06a-5d06-4f91-85e8-a49cbab3de1e}</Project>
+      <Name>Database</Name>
     </ProjectReference>
     <ProjectReference Include="..\User\User.csproj">
       <Project>{0526df06-dd95-4ede-8b20-ddc18f6afe7d}</Project>
