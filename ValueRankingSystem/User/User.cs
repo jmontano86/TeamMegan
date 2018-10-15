@@ -13,31 +13,35 @@ namespace Users
         public string _emailAddress { get; set; }
         public string _role { get; set; }
 
-        public const string THERAPIST_ROLE = "Therapist";
-        public const string USER_ROLE = "User";
-        public const string ADMIN_ROLE = "Admin";
-        public User()
-        {
+        public const string THERAPIST_ROLE = "T";
+        public const string USER_ROLE = "U";
+        public const string ADMIN_ROLE = "A";
 
+
+
+        public User login(string strEmail, string strPassword)
+        {
+            DatabaseHelper db = new DatabaseHelper();
+            //TODO: LookupUser and match password hash
+            return this;
         }
 
-
-        public User login(User user)
+        private string hashPassword(string strPassword)
         {
-            //TODO: Build login script. This will query from database to pull email address
-            return user;
+            var bytes = new UTF8Encoding().GetBytes(strPassword);
+            byte[] hashBytes;
+            using (var algorithm = new SHA512Managed())
+            {
+                hashBytes = algorithm.ComputeHash(bytes);
+            }
+            return Convert.ToBase64String(hashBytes);
         }
 
         public User createAccount(string strEmail, string strPassword, string strUsername)
         {
-            var bytes = new UTF8Encoding().GetBytes(strPassword);
-            byte[] hashBytes;
-            using (var algorithm = new System.Security.Cryptography.SHA512Managed())
-            {
-                hashBytes = algorithm.ComputeHash(bytes);
-            }
-            string strHashedPassword = Convert.ToBase64String(hashBytes);
             DatabaseHelper db = new DatabaseHelper();
+            //TODO: Compare database with email address to ensure no prior registration
+            string strHashedPassword = hashPassword(strPassword);
             int intID = db.CreateAccount(strEmail, strHashedPassword, strUsername);
             if (intID > 0)
             {

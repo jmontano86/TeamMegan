@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Mail;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using MetroFramework;
 using MetroFramework.Forms;
 using Users;
 using CreateAccount;
@@ -74,7 +65,7 @@ namespace ValueRankingSystem
         {
             //All Data is validated, run login info
             User user = new User();
-            user = user.login(user);
+            user = user.login(emailTextBox.Text, passwordTextBox.Text);
             if (user._id < 0)
             {
                 //send to appropriate form: Admin, User, Therapist
@@ -93,14 +84,16 @@ namespace ValueRankingSystem
 
             } else
             {
-                //password mismatch, try again
+                //password/username mismatch, try again
             }
         }
 
         private void createAccountButton_Click(object sender, EventArgs e)
         {
-            CreateAccountForm form = new CreateAccountForm();
-            form.ShowDialog();
+            CreateAccountForm createForm = new CreateAccountForm();
+            this.Hide();
+            createForm.ShowDialog();
+            this.Show();
         }
     }
 }

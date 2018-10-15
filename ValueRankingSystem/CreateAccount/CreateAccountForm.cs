@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MetroFramework;
 using MetroFramework.Forms;
 using Users;
 
@@ -34,6 +26,7 @@ namespace CreateAccount
 
         private bool isEmailValid(string emailAddress)
         {
+            //Checks to make sure the email address is an email address
             try
             {
                 MailAddress mail = new MailAddress(emailAddress);

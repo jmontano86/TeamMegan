@@ -7,6 +7,13 @@ namespace Database
 {
     public class DatabaseHelper
     {
+
+        public const string USERS_USERNAME_COLUMN = "Username";
+        public const string USERS_PASSWORD_COLUMN = "Password";
+        public const string USERS_EMAIL_COLUMN = "Email";
+        public const string USERS_TYPE_COLUMN = "Type";
+        public const string USERS_USERID_COLUMN = "UserID";
+
         public static SqlConnection Connect()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -24,16 +31,16 @@ namespace Database
             SqlCommand cmd = new SqlCommand("SPCreateNewUser", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add(new SqlParameter("Username", username));
-            cmd.Parameters.Add(new SqlParameter("Password", password));
-            cmd.Parameters.Add(new SqlParameter("Email", email));
-            cmd.Parameters.Add("id", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
+            cmd.Parameters.Add(new SqlParameter(USERS_USERNAME_COLUMN, username));
+            cmd.Parameters.Add(new SqlParameter(USERS_PASSWORD_COLUMN, password));
+            cmd.Parameters.Add(new SqlParameter(USERS_EMAIL_COLUMN, email));
+            cmd.Parameters.Add(USERS_USERID_COLUMN, System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
             try
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
 
-                return (int)cmd.Parameters["id"].Value;
+                return (int)cmd.Parameters[USERS_USERID_COLUMN].Value;
             } catch
             {
                 return 0;
