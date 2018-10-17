@@ -148,7 +148,7 @@ namespace AdminForm
 
         private void finishButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("You better have filled this out correctly, fucker");
+            MessageBox.Show("Congrats, nothing happened");
         }
     }
 }
