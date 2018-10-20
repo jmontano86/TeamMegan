@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login", "ValueRankingSystem\Login.csproj", "{D982C20E-F90E-4325-A236-EB8249444997}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "User", "User\User.csproj", "{0526DF06-DD95-4EDE-8B20-DDC18F6AFE7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users", "User\Users.csproj", "{0526DF06-DD95-4EDE-8B20-DDC18F6AFE7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateAccount", "CreateAccount\CreateAccount.csproj", "{9A1EC708-47B5-48B0-86FA-588130E903FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{E42BA06A-5D06-4F91-85E8-A49CBAB3DE1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{E42BA06A-5D06-4F91-85E8-A49CBAB3DE1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
