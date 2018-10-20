@@ -24,18 +24,12 @@ namespace ValueRankingSystem
         private void emailTextBox_Leave(object sender, EventArgs e)
         {
             //check to ensure we have both a valid email and a valid password
-            validateInput(emailTextBox.Text, passwordTextBox.Text);
+            validateInput();
         }
         private void passwordTextBox_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             //validate password entered. Minimum length 8 characters
-            //TODO: Validate valid keypress. Ex: No spaces, quotes, semi-colon, etc.
-            validateInput(emailTextBox.Text, passwordTextBox.Text);
-        }
-
-        private void emailTextBox_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
-            //TODO: Validate the following characters are not used: Space, quotes, semi-colon, etc.
+            validateInput();
         }
 
         private bool isEmailValid(string emailAddress)
@@ -50,7 +44,7 @@ namespace ValueRankingSystem
             }
         }
 
-        private void validateInput(string email, string password)
+        private void validateInput()
         {
             //validate to make sure a valid password was entered as well as a valid email address
             if (isEmailValid(emailTextBox.Text) && passwordTextBox.Text != "" && passwordTextBox.Text.Length > 7)
@@ -64,27 +58,38 @@ namespace ValueRankingSystem
         private void loginButton_Click(object sender, EventArgs e)
         {
             //All Data is validated, run login info
-            User user = new User();
+            //TODO Create login validation
+            UserClass user = new UserClass();
             user = user.login(emailTextBox.Text, passwordTextBox.Text);
-            if (user._id < 0)
+            if (user._id > 0)
             {
                 //send to appropriate form: Admin, User, Therapist
+                //TODO: Call appropriate forms.
                 switch (user._role)
                 {
-                    case User.ADMIN_ROLE:
-                        //do stuff
+                    case UserClass.ADMIN_ROLE:
+                        //AdminForm adminForm = new AdminForm();
+                        //adminForm.User = user;
+                        //adminForm.ShowDiaglog();
                         break;
-                    case User.THERAPIST_ROLE:
-                        //do stuff
+                    case UserClass.THERAPIST_ROLE:
+                        //ResultsForm resultForm = new ResultsForm();
+                        //resultForm.User = user;
+                        //resultForm.ShowDiaglog();
                         break;
-                    case User.USER_ROLE:
-                        //do stuff
+                    case UserClass.USER_ROLE:
+                        //TestsForm testForm = new TestsForm();
+                        //testForm.User = user;
+                        //testForm.ShowDialog();
+                        break;
+                    default:
+                        //something seriously went wrong if we hit this
                         break;
                 }
 
             } else
             {
-                //password/username mismatch, try again
+                //password mismatch. error provider, label, message box? 
             }
         }
 

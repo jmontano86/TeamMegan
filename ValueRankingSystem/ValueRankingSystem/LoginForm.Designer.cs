@@ -94,7 +94,6 @@
             this.emailTextBox.UseSelectable = true;
             this.emailTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.emailTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.emailTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.emailTextBox_KeyUp);
             this.emailTextBox.Leave += new System.EventHandler(this.emailTextBox_Leave);
             // 
             // passwordTextBox

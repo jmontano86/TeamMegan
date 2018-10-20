@@ -1,11 +1,12 @@
 ﻿using System;
-using Database;
 using System.Security.Cryptography;
 using System.Text;
+using System.Collections.Generic;
+using User;
 
 namespace Users
 {
-    public class User
+    public class UserClass
     {
         public int _id { get; set; }
         public string _username { get; set; }
@@ -19,10 +20,25 @@ namespace Users
 
 
 
-        public User login(string strEmail, string strPassword)
+        public UserClass login(string strEmail, string strPassword)
         {
-            DatabaseHelper db = new DatabaseHelper();
-            //TODO: LookupUser and match password hash
+            UserDB db = new UserDB();
+            List<string> strUserItems = new List<string>();
+            strUserItems = db.LookupUser(strEmail);
+            if (strUserItems.Count > 0)
+            {
+                //check password to make sure login valid.
+                if(hashPassword(strPassword) == strUserItems[2])
+                {
+                    Int32.TryParse(strUserItems[0], out int intID);
+                    this._id = intID;
+                    this._username = strUserItems[1];
+                    this._password = strUserItems[2];
+                    this._emailAddress = strUserItems[3];
+                    this._role = strUserItems[4];
+                }
+
+            }
             return this;
         }
 
@@ -37,9 +53,9 @@ namespace Users
             return Convert.ToBase64String(hashBytes);
         }
 
-        public User createAccount(string strEmail, string strPassword, string strUsername)
+        public UserClass createUser(string strEmail, string strPassword, string strUsername)
         {
-            DatabaseHelper db = new DatabaseHelper();
+            UserDB db = new UserDB();
             //TODO: Compare database with email address to ensure no prior registration
             string strHashedPassword = hashPassword(strPassword);
             int intID = db.CreateAccount(strEmail, strHashedPassword, strUsername);
@@ -48,11 +64,19 @@ namespace Users
                 _id = intID;
                 _emailAddress = strEmail;
                 _password = strHashedPassword;
-                _role = "User";
+                _role = USER_ROLE;
                 _username = strUsername;
             }
 
             return this;
+        }
+
+        private bool search(string strEmail)
+        {
+            //find existing user
+            //true for exists
+            //false for not exists
+            return false;
         }
     }
 }

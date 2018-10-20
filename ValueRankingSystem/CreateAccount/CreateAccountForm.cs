@@ -12,6 +12,7 @@ namespace CreateAccount
          * Date: October 13, 2018
          * Summary: Allows user to create a new account in the system.
          */
+
         public CreateAccountForm()
         {
             InitializeComponent();
@@ -24,12 +25,12 @@ namespace CreateAccount
         }
 
 
-        private bool isEmailValid(string emailAddress)
+        private bool isEmailValid(string strEmailAddress)
         {
             //Checks to make sure the email address is an email address
             try
             {
-                MailAddress mail = new MailAddress(emailAddress);
+                MailAddress mail = new MailAddress(strEmailAddress);
                 return true;
             }
             catch
@@ -71,8 +72,8 @@ namespace CreateAccount
 
         private void createButton_Click(object sender, EventArgs e)
         {
-            User user = new User();
-            user = user.createAccount(emailTextBox.Text, passwordTextBox.Text, nameTextBox.Text);
+            UserClass user = new UserClass();
+            user = user.createUser(emailTextBox.Text, passwordTextBox.Text, nameTextBox.Text);
             //TODO send User to Taking Test Screen. 
             this.Close();
         }
