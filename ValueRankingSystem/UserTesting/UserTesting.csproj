@@ -89,5 +89,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UserTestLogic\UserTestLogic.csproj">
+      <Project>{7b2205f2-99dd-4e34-8db3-c4300b34fd94}</Project>
+      <Name>UserTestLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

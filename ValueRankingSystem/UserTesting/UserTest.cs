@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using UserTestLogic;
 
 namespace UserTesting
 {
@@ -31,18 +32,11 @@ namespace UserTesting
             secondItem = "Green";
             thirdItem = "Can't Decide";
             userName = "Demo User";
-            populateObjectArray();
+            UserTestLogic.UserTestLogic.populateObjectArray();
             populateRadio();
             checkArray(TestTakerInfo);
         }
-        // Assigns all variables to a definition in order to be called when the user logins
-        private void populateObjectArray()
-        {
-            TestTakerInfo[0] = userName;
-            TestTakerInfo[1] = firstItem;
-            TestTakerInfo[2] = secondItem;
-            TestTakerInfo[3] = thirdItem;
-        }
+
         // Changes the radio buttons based content in array
         private void populateRadio()
         {
