@@ -78,5 +78,10 @@ namespace Users
             //false for not exists
             return false;
         }
+
+        public static bool GetUsers(List<UserClass> userList, ref string error)
+        {
+            return UserDB.GetUsers(userList, ref error);
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace TestSessions
                 Connection.Open();
                 Command = new SqlCommand();
                 Command.Connection = Connection;
-                Command.CommandText = "SELECT SessionID, TestID, UserID, CreationDate FROM TESTSESSIONS;";
+                Command.CommandText = "SELECT SessionID, TestID, UserID, CreationDate FROM TestSessions;";
                 TestSessionDataReader = Command.ExecuteReader();
 
                 while (TestSessionDataReader.Read())
@@ -36,6 +36,8 @@ namespace TestSessions
                     testSession.TestID = TestSessionDataReader.GetInt32(1);
                     testSession.UserID = TestSessionDataReader.GetInt32(2);
                     testSession.CreationDate = TestSessionDataReader.GetDateTime(3);
+
+                    testSessionList.Add(testSession);
 
                 }
                 return true;
@@ -63,7 +65,7 @@ namespace TestSessions
             {
                 Connection.Open();
                 Command.Connection = Connection;
-                Command.CommandText = "INSERT INTO TESTSESSION (SessionID, TestID, UserID, CreationDate) VALUES (@SessionID, @TestID, @UserID, @CreationDate);";
+                Command.CommandText = "INSERT INTO TestSession (SessionID, TestID, UserID, CreationDate) VALUES (@SessionID, @TestID, @UserID, @CreationDate);";
 
                 Command.Parameters.AddWithValue("@SessionID, ", testsession.SessionID);
                 Command.Parameters.AddWithValue("@TestID, ", testsession.TestID);

@@ -12,6 +12,8 @@ using MetroFramework;
 using TestSessions;
 using Database;
 using static TestSessions.TestSession;
+using Users;
+
 
 namespace ResultsReporting
 {
@@ -24,15 +26,14 @@ namespace ResultsReporting
 
         private void ResultsReporting_Load(object sender, EventArgs e)
         {
-            List<TestSession> testSessionList = new List<TestSession>();
+            List<UserClass> userList = new List<UserClass>();
             string error = "";
 
-            if (TestSessionList.GetTestSessions(testSessionList, ref error))
+            if (UserClass.GetUsers(userList, ref error))
             {
-                foreach (TestSession testsession in testSessionList)
+                foreach (UserClass user in userList)
                 {
-                    patientComboBox.Items.Add(testsession.UserID);
-                    
+                    patientComboBox.Items.Add(user);   
                 }
             }
             else
