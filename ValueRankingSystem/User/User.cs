@@ -17,9 +17,7 @@ namespace Users
         public const string THERAPIST_ROLE = "T";
         public const string USER_ROLE = "U";
         public const string ADMIN_ROLE = "A";
-
-
-
+               
         public UserClass login(string strEmail, string strPassword)
         {
             UserDB db = new UserDB();
@@ -58,24 +56,46 @@ namespace Users
             UserDB db = new UserDB();
             //TODO: Compare database with email address to ensure no prior registration
             string strHashedPassword = hashPassword(strPassword);
-            int intID = db.CreateAccount(strEmail, strHashedPassword, strUsername);
-            if (intID > 0)
+            if (!search(strEmail))
             {
-                _id = intID;
-                _emailAddress = strEmail;
-                _password = strHashedPassword;
-                _role = USER_ROLE;
-                _username = strUsername;
-            }
+                int intID = db.CreateAccount(strEmail, strHashedPassword, strUsername);
+                if (intID > 0)
+                {
+                    _id = intID;
+                    _emailAddress = strEmail;
+                    _password = strHashedPassword;
+                    _role = USER_ROLE;
+                    _username = strUsername;
+                }
 
-            return this;
+                return this;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public override string ToString()
+        {
+            //ToString method override to display username for default method
+            return _username;
         }
 
         private bool search(string strEmail)
         {
             //find existing user
-            //true for exists
-            //false for not exists
+            UserDB db = new UserDB();
+            List<string> strUsers = new List<string>();
+            strUsers = db.LookupUser(strEmail);
+            if (strUsers.Count > 0)
+            {
+                if (strUsers[3] == strEmail)
+                {
+                    //already registered
+                    return true;
+                }
+            }//not registered, ok to process
             return false;
         }
     }

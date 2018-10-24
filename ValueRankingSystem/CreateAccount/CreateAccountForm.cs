@@ -2,6 +2,7 @@
 using System.Net.Mail;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using MetroFramework;
 using Users;
 
 namespace CreateAccount
@@ -75,6 +76,12 @@ namespace CreateAccount
             UserClass user = new UserClass();
             user = user.createUser(emailTextBox.Text, passwordTextBox.Text, nameTextBox.Text);
             //TODO send User to Taking Test Screen. 
+            if(user == null)
+            {
+                MetroMessageBox.Show(this, "You are already registered!","User Already Exists", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
             this.Close();
         }
 
