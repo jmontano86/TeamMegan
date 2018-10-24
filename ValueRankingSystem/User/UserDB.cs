@@ -2,6 +2,8 @@
 using System.Data.SqlClient;
 using Database;
 using System.Data;
+using Users;
+using System;
 
 namespace User
 {
@@ -73,6 +75,47 @@ namespace User
             {
                 conn.Close();
                 conn.Dispose();
+            }
+        }
+
+        public static bool GetUsers(List<UserClass> userList, ref string error)
+        {
+            List<UserClass> UserList = new List<UserClass>();
+
+            SqlConnection Connection = new SqlConnection();
+            SqlDataReader UsersDataReader;
+            SqlCommand Command;
+            UserClass user;
+
+            try
+            {
+                Connection = DatabaseHelper.Connect();
+                Connection.Open();
+                Command = new SqlCommand();
+                Command.Connection = Connection;
+                Command.CommandText = "SELECT UserID, Username FROM Users;";
+                UsersDataReader = Command.ExecuteReader();
+
+                while (UsersDataReader.Read())
+                {
+                    user = new UserClass();
+                    user._id = UsersDataReader.GetInt32(0);
+                    user._username = UsersDataReader.GetString(1);
+
+                    userList.Add(user);
+                }
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                if (Connection != null)
+                    Connection.Close();
             }
         }
     }
