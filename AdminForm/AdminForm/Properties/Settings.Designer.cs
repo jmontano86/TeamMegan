@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ValueRankingSystem.Properties
+namespace AdminForm.Properties
 {
 
 
