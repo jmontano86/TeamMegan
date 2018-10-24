@@ -157,6 +157,7 @@
             this.Controls.Add(this.patientLabel);
             this.Name = "ResultsReportingForm";
             this.Text = "Assessment Results";
+            this.Load += new System.EventHandler(this.ResultsReporting_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
