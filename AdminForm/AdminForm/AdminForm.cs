@@ -1,31 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using MetroFramework.Forms;
+using DataAccessLibrary;
 
 namespace AdminForm
 {
     public partial class AdminForm : MetroForm
     {
-        string strCurrentTest;
+        Test currentTest;
         public AdminForm()
         {
             InitializeComponent();
         }
-
+        //Gets tests that do not exist in the testsessions table
+        //and puts them in the editTestCombobox
         private void AdminForm_Load(object sender, EventArgs e)
         {
-
+            List<Test> testList = new List<Test>();
+            if (TestList.getTests(testList))
+            {
+                foreach(Test test in testList)
+                {
+                    editTestComboBox.Items.Add(test.TestName);
+                }
+            }
         }
-
-        //Works
+        //Gets the test name and number of items from the user
+        //and sets up the new test based on input
         private void addTestButton_Click(object sender, EventArgs e)
         {
             String strInputOne = Interaction.InputBox("Please enter a test name", "Add a test");
@@ -48,6 +51,8 @@ namespace AdminForm
             {
                 itemsDataGrid.Rows.Clear();
                 itemsDataGrid.Rows.Add();
+                currentTest = new Test();
+                currentTest.TestName = strInputOne;
                 for (int i = 0; i < intInputTwo; i++)
                 {
                     DataGridViewRow row = (DataGridViewRow)itemsDataGrid.Rows[i].Clone();
@@ -58,8 +63,9 @@ namespace AdminForm
                 cancelButton.Enabled = true;
                 addItemButton.Enabled = true;
                 deleteItemButton.Enabled = true;
-                strCurrentTest = strInputOne;
-                testNameLabel.Text = "You are now editing the " + strCurrentTest + " test";
+                testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
+                testNameLabel.Visible = true;
+                deleteTestButton.Enabled = false;
                 itemsDataGrid.Rows.RemoveAt(0);
             }
             
@@ -107,7 +113,8 @@ namespace AdminForm
             finishButton.Enabled = false;
             addItemButton.Enabled = false;
             deleteItemButton.Enabled = false;
-            strCurrentTest = "";
+            testNameLabel.Visible = false;
+            deleteTestButton.Enabled = false;
         }
 
         //When the cell being edited is finished editing, call the checkCells method
@@ -138,17 +145,71 @@ namespace AdminForm
                 finishButton.Enabled = false;
             }
         }
-
-        //When the combobox's selected index is changed, 
-        private void editTestComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            strCurrentTest = editTestComboBox.SelectedItem.ToString();
-            testNameLabel.Text = "You are now editing the " + strCurrentTest + " test";
-        }
-
+        //Adds test to tests table and items to items table
         private void finishButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Congrats, nothing happened");
+            List<string> itemNames = new List<string>();
+            //Get the items from the data grid and add them to the list
+            foreach(DataGridViewRow row in itemsDataGrid.Rows)
+            {
+                if(row.Cells[1].Value != null)
+                {
+                    itemNames.Add(row.Cells[1].Value.ToString());
+                }
+            }
+            //Add the test and the items to the database
+            if (TestList.addTest(currentTest))
+            {
+                if (ItemList.addItems(itemNames, currentTest.TestID))
+                {
+                    MessageBox.Show(currentTest.TestName + " has been added");
+                    finishButton.Enabled = true;
+                }
+            }
+        }
+        //Deletes the current test
+        private void deleteTestButton_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete the " + currentTest.TestName +
+                " test?", "Delete test?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                ItemList.deleteItems(currentTest.TestID);
+                TestList.deleteTest(currentTest.TestID);
+                editTestComboBox.Items.Remove(editTestComboBox.SelectedItem);
+            }
+        }
+        //When the edit test combobox selection changes, get the test ID and the items for that test
+        private void editTestComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Test test = new Test();
+            test.TestName = editTestComboBox.SelectedItem.ToString();
+            if (TestList.getTestID(test))
+            {
+                List<Item> listItemsList = new List<Item>();
+                if (ItemList.getItems(listItemsList, test.TestID))
+                {
+                    itemsDataGrid.Rows.Clear();
+                    itemsDataGrid.Rows.Add();
+                    foreach (Item item in listItemsList)
+                    {
+                        DataGridViewRow row = (DataGridViewRow)itemsDataGrid.Rows[0].Clone();
+                        row.Cells[0].Value = item.ItemID.ToString();
+                        row.Cells[1].Value = item.Name;
+                        itemsDataGrid.Rows.Add(row);
+                    }
+                    itemsDataGrid.Rows.RemoveAt(0);
+                    currentTest = test;
+                    testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
+                    testNameLabel.Visible = true;
+                    cancelButton.Enabled = true;
+                    addItemButton.Enabled = true;
+                    deleteItemButton.Enabled = true;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Could not find test '" + editTestComboBox.SelectedValue.ToString() + " test'");
+            }
         }
     }
 }

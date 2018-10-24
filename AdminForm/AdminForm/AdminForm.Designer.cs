@@ -38,6 +38,7 @@
             this.addTestButton = new MetroFramework.Controls.MetroButton();
             this.editTestComboBox = new MetroFramework.Controls.MetroComboBox();
             this.testNameLabel = new MetroFramework.Controls.MetroLabel();
+            this.deleteTestButton = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.itemsDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,7 +70,7 @@
             // deleteItemButton
             // 
             this.deleteItemButton.Enabled = false;
-            this.deleteItemButton.Location = new System.Drawing.Point(416, 309);
+            this.deleteItemButton.Location = new System.Drawing.Point(336, 309);
             this.deleteItemButton.Name = "deleteItemButton";
             this.deleteItemButton.Size = new System.Drawing.Size(75, 23);
             this.deleteItemButton.TabIndex = 18;
@@ -80,7 +81,7 @@
             // addItemButton
             // 
             this.addItemButton.Enabled = false;
-            this.addItemButton.Location = new System.Drawing.Point(337, 309);
+            this.addItemButton.Location = new System.Drawing.Point(257, 309);
             this.addItemButton.Name = "addItemButton";
             this.addItemButton.Size = new System.Drawing.Size(73, 23);
             this.addItemButton.TabIndex = 19;
@@ -129,7 +130,7 @@
             this.editTestComboBox.Size = new System.Drawing.Size(121, 29);
             this.editTestComboBox.TabIndex = 23;
             this.editTestComboBox.UseSelectable = true;
-            this.editTestComboBox.SelectedIndexChanged += new System.EventHandler(this.editTestComboBox_SelectedIndexChanged);
+            this.editTestComboBox.SelectionChangeCommitted += new System.EventHandler(this.editTestComboBox_SelectionChangeCommitted);
             // 
             // testNameLabel
             // 
@@ -141,11 +142,22 @@
             this.testNameLabel.Text = "metroLabel1";
             this.testNameLabel.Visible = false;
             // 
+            // deleteTestButton
+            // 
+            this.deleteTestButton.Location = new System.Drawing.Point(418, 309);
+            this.deleteTestButton.Name = "deleteTestButton";
+            this.deleteTestButton.Size = new System.Drawing.Size(73, 23);
+            this.deleteTestButton.TabIndex = 26;
+            this.deleteTestButton.Text = "Delete test";
+            this.deleteTestButton.UseSelectable = true;
+            this.deleteTestButton.Click += new System.EventHandler(this.deleteTestButton_Click);
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(553, 465);
+            this.Controls.Add(this.deleteTestButton);
             this.Controls.Add(this.itemsDataGrid);
             this.Controls.Add(this.deleteItemButton);
             this.Controls.Add(this.addItemButton);
@@ -175,6 +187,7 @@
         private MetroFramework.Controls.MetroButton addTestButton;
         private MetroFramework.Controls.MetroComboBox editTestComboBox;
         private MetroFramework.Controls.MetroLabel testNameLabel;
+        private MetroFramework.Controls.MetroButton deleteTestButton;
     }
 }
 
