@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using UserTestLogic;
+using DataAccessLibrary;
+using Users;
+using ValueRankingSystem; // This is not working. Still trying to figure out a file deletion error that occurred during local merge
 
 namespace UserTesting
 {
@@ -18,33 +21,26 @@ namespace UserTesting
         {
             InitializeComponent();
         }
-        // Test Variables
-        public string firstItem;
-        public string secondItem;
-        public string thirdItem;
-        public string userName;
-        public bool stringExist;
-        Object[] TestTakerInfo = new object[4];
+        UserClass currentUser = new UserClass();
+        List<Test> testItems = new List<Test>();
+        List<Item> itemList = new List<Item>();
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Sample Data
-            firstItem = "Blue";
-            secondItem = "Green";
-            thirdItem = "Can't Decide";
-            userName = "Demo User";
-            UserTestLogic.UserTestLogic.populateObjectArray();
+            //Get user data
+            currentUser = LoginForm.user;
+            //Load tests into the radio buttons
+            UserTestLogic.UserTestLogic.loadTests(testItems, itemList);
             populateRadio();
-            checkArray(TestTakerInfo);
         }
 
         // Changes the radio buttons based content in array
         private void populateRadio()
         {
-            userChoiceOne.Text = TestTakerInfo[1].ToString();
-            userChoiceTwo.Text = TestTakerInfo[2].ToString();
-            userChoiceThree.Text = TestTakerInfo[3].ToString();
+            userChoiceOne.Text = itemList[0].Name;
+            userChoiceTwo.Text = itemList[1].Name;
+            userChoiceThree.Text = "Undecided";
         }
-        private void metroButton1_Click(object sender, EventArgs e)
+        private void testButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -52,16 +48,16 @@ namespace UserTesting
                 // Need to ask the instructor if the same test can be reused
                 if (userChoiceOne.Checked)
                 {
-                    MessageBox.Show("You chose " + TestTakerInfo[1].ToString());
+                    MessageBox.Show("You chose " + userChoiceOne.Text);
                     //Need to add a function to write to the database
                 }
                 else if (userChoiceTwo.Checked)
                 {
-                    MessageBox.Show("You chose " + TestTakerInfo[2].ToString());
+                    MessageBox.Show("You chose " + userChoiceTwo.Text);
                 }
                 else if (userChoiceThree.Checked)
                 {
-                    MessageBox.Show("You chose " + TestTakerInfo[3].ToString());
+                    MessageBox.Show("You chose " + userChoiceThree.Text);
                 }
                 else
                 {
@@ -73,27 +69,6 @@ namespace UserTesting
                 MessageBox.Show("Something went wrong with the display");
             }
         }
-        private void addChoiceToDb()
-        {
-            // Push choice to DB after the user clicks on finish
-        }
-        // Check to see if the array has any values
-        public static void checkArray(Object[] TestTakerInfo)
-        {
-            bool stringExist = true;
-            int counter = 0;
-            foreach (var stringItem in TestTakerInfo)
-            {
-                counter++;
-                if (TestTakerInfo[counter-1] == null)
-                {
-                    stringExist = false;
-                }
-            }
-            if (stringExist == false)
-            {
-                MessageBox.Show("Unable to load test and user data");
-            }
-        }
+        
     }
 }

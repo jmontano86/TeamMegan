@@ -90,9 +90,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AdminForm\DataAccessLibrary\DataAccessLibrary.csproj">
+      <Project>{b6ad0aa3-8202-4718-a628-defd86c00ccc}</Project>
+      <Name>DataAccessLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UserTestLogic\UserTestLogic.csproj">
       <Project>{7b2205f2-99dd-4e34-8db3-c4300b34fd94}</Project>
       <Name>UserTestLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User\Users.csproj">
+      <Project>{0526df06-dd95-4ede-8b20-ddc18f6afe7d}</Project>
+      <Name>Users</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

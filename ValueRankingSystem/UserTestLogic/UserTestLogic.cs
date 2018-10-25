@@ -3,26 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessLibrary;
 
 namespace UserTestLogic
 {
     public class UserTestLogic
     {
-        // Test Variables
+        Test currentTest;
+        Item currentItem;
 
-        public bool stringExist;
         
-        // Assigns all variables to a definition in order to be called when the user logins
-        public static void populateObjectArray()
+        //Load Items using the testId as an indicator
+        public static List<Item> loadTests(List<Test> testList, List<Item> itemList)
         {
-            Object[] TestTakerInfo = new object[4];
-            Test test = new Test();
-            TestTakerInfo[0] = test.userName;
-            TestTakerInfo[1] = test.firstItem;
-            TestTakerInfo[2] = test.secondItem;
-            TestTakerInfo[3] = test.thirdItem;
+            //Get all tests
+            Test[] t = testList.ToArray();
+            TestList.getTests(testList);
+  
+            //Get all test items
+            foreach (var test in testList)
+            {
+                //Only store test items that match test id for test
+                ItemList.getItems(itemList, test.TestID);
+            }
+            return itemList;
         }
-        // Changes the radio buttons based content in array
-
     }
 }
