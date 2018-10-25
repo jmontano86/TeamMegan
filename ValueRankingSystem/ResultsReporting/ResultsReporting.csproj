@@ -42,6 +42,9 @@
     <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlClient, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -105,6 +108,10 @@
       <Project>{e42ba06a-5d06-4f91-85e8-a49cbab3de1e}</Project>
       <Name>Database</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Results\Results.csproj">
+      <Project>{5b85abb9-3a6a-41a5-931f-400eb9feaec4}</Project>
+      <Name>Results</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestSessions\TestSessions.csproj">
       <Project>{7ac6ef7e-cfd9-4751-a319-dd448efd31bc}</Project>
       <Name>TestSessions</Name>
@@ -113,6 +120,9 @@
       <Project>{0526df06-dd95-4ede-8b20-ddc18f6afe7d}</Project>
       <Name>Users</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Fakes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
