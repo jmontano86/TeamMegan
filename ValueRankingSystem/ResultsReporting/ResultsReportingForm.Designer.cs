@@ -81,6 +81,7 @@
             this.patientComboBox.Size = new System.Drawing.Size(162, 29);
             this.patientComboBox.TabIndex = 3;
             this.patientComboBox.UseSelectable = true;
+            this.patientComboBox.SelectedIndexChanged += new System.EventHandler(this.patientComboBox_SelectedIndexChanged);
             // 
             // testComboBox
             // 

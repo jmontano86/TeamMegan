@@ -43,18 +43,17 @@ namespace TestSessions
             return SessionID.ToString();
         }
 
-        public static class TestSessionList
+      
+        public static bool GetTestSessions(List<TestSession> testSessionList, ref string error)
         {
-            public static bool GetTestSessions(List<TestSession> testSessionList, ref string error)
-            {
-                return TestSessionDB.GetTestSessions(testSessionList, ref error);
-            }
-            
-            public static bool CreateSession(TestSession testsession)
-            {
-                return TestSessionDB.CreateSession(testsession);
-            }
+            return TestSessionDB.GetTestSessions(testSessionList, ref error);
         }
+        
+        public static bool CreateSession(TestSession testsession)
+        {
+            return TestSessionDB.CreateSession(testsession);
+        }
+        
     }
 }
 

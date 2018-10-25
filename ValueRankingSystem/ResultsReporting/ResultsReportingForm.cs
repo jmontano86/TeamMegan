@@ -13,6 +13,7 @@ using TestSessions;
 using Database;
 using static TestSessions.TestSession;
 using Users;
+using Results;
 
 
 namespace ResultsReporting
@@ -27,6 +28,8 @@ namespace ResultsReporting
         private void ResultsReporting_Load(object sender, EventArgs e)
         {
             List<UserClass> userList = new List<UserClass>();
+            
+            
             string error = "";
 
             if (UserClass.GetUsers(userList, ref error))
@@ -38,7 +41,25 @@ namespace ResultsReporting
             }
             else
                 MessageBox.Show(error);
+
+           
         }
-        
+
+        private void patientComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<Result> resultList = new List<Result>();
+
+            string error = "";
+
+            if (Result.GetResults(resultList, ref error))
+            {
+                foreach (Result result in resultList)
+                {
+                    TestScoreListView.Items.Add(result.ToString());
+                }
+            }
+            else
+                MessageBox.Show("Error!");
+        }
     }
 }
