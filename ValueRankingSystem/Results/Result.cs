@@ -46,8 +46,8 @@ namespace Results
 
         public override string ToString()
         {
-            string m = "megan";
-            return m;
+            return _itemID1.ToString();
+            
         }
 
            

@@ -32,14 +32,12 @@ namespace Results
 
                 while (ResultDataReader.Read())
                 {
-                    result = new Result
-                    {
-                        ResultID = ResultDataReader.GetInt32(0),
-                        SessionID = ResultDataReader.GetInt32(1),
-                        ItemID1 = ResultDataReader.GetInt32(2),
-                        ItemID2 = ResultDataReader.GetInt32(3),
-                        UserChoice = ResultDataReader.GetInt32(4)
-                    };
+                    result = new Result();
+                    result.ResultID = ResultDataReader.GetInt32(0);
+                    result.SessionID = ResultDataReader.GetInt32(1);
+                    result.ItemID1 = ResultDataReader.GetInt32(2);
+                  //  result.ItemID2 = ResultDataReader.GetInt32(3);
+                  //  result.UserChoice = ResultDataReader.GetInt32(4);
 
                     resultList.Add(result);
 
