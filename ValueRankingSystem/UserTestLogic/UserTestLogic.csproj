@@ -49,6 +49,14 @@
       <Project>{b6ad0aa3-8202-4718-a628-defd86c00ccc}</Project>
       <Name>DataAccessLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestSessions\TestSessions.csproj">
+      <Project>{7ac6ef7e-cfd9-4751-a319-dd448efd31bc}</Project>
+      <Name>TestSessions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User\Users.csproj">
+      <Project>{0526df06-dd95-4ede-8b20-ddc18f6afe7d}</Project>
+      <Name>Users</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -94,6 +94,10 @@
       <Project>{b6ad0aa3-8202-4718-a628-defd86c00ccc}</Project>
       <Name>DataAccessLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestSessions\TestSessions.csproj">
+      <Project>{7ac6ef7e-cfd9-4751-a319-dd448efd31bc}</Project>
+      <Name>TestSessions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UserTestLogic\UserTestLogic.csproj">
       <Project>{7b2205f2-99dd-4e34-8db3-c4300b34fd94}</Project>
       <Name>UserTestLogic</Name>

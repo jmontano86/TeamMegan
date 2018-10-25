@@ -11,6 +11,7 @@ using MetroFramework.Forms;
 using UserTestLogic;
 using DataAccessLibrary;
 using Users;
+using TestSessions;
 using ValueRankingSystem; // This is not working. Still trying to figure out a file deletion error that occurred during local merge
 
 namespace UserTesting
@@ -29,7 +30,7 @@ namespace UserTesting
             //Get user data
             currentUser = LoginForm.user;
             //Load tests into the radio buttons
-            UserTestLogic.UserTestLogic.loadTests(testItems, itemList);
+            UserTestLogic.UserTestLogic.loadTests(testItems, itemList, currentUser);
             populateRadio();
         }
 
@@ -44,8 +45,8 @@ namespace UserTesting
         {
             try
             {
-                // Looks to see if there are any available tests
-                // Need to ask the instructor if the same test can be reused
+                // Get existing test sessions
+
                 if (userChoiceOne.Checked)
                 {
                     MessageBox.Show("You chose " + userChoiceOne.Text);
