@@ -43,34 +43,32 @@ namespace CreateAccount
         private void validateInput()
         {
             //validate to make sure all inputs are valid before creating new account
-            if (isEmailValid(emailTextBox.Text) && passwordTextBox.Text != "" && passwordTextBox.Text.Length > 7 && nameTextBox.Text != "" &&
-                reenterPasswordTextBox.Text != "" && reenterPasswordTextBox.Text == passwordTextBox.Text)
+            myErrorProvider.Clear();
+            //check to make sure a username is entered
+            if(nameTextBox.Text == "")
             {
-                createButton.Enabled = true;
+                myErrorProvider.SetError(nameTextBox, "Please enter your name");
+                return;
+            }
+            //check for a valid email address
+            if (!isEmailValid(emailTextBox.Text))
+            {
+                myErrorProvider.SetError(emailTextBox, "You must enter a valid email address");
+                return;
+            }
+            //check to make sure password is at least 7 characters
+            if(passwordTextBox.Text.Length < 7)
+            {
+                myErrorProvider.SetError(passwordTextBox, "Password must be at least 7 characters");
+                return;
+            }
+            if(reenterPasswordTextBox.Text != "" && passwordTextBox.Text != reenterPasswordTextBox.Text)
+            {
+                myErrorProvider.SetError(reenterPasswordTextBox, "Re-Enter Password Confirmation must match Password");
                 return;
             }
             createButton.Enabled = false;
         }
-        private void nameTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            validateInput();
-        }
-
-        private void reenterPasswordTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            validateInput();
-        }
-
-        private void passwordTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            validateInput();
-        }
-
-        private void emailTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            validateInput();
-        }
-
         private void createButton_Click(object sender, EventArgs e)
         {
             UserClass user = new UserClass();
@@ -85,5 +83,29 @@ namespace CreateAccount
             this.Close();
         }
 
+        private void CreateAccountForm_Load(object sender, EventArgs e)
+        {
+            nameTextBox.Focus();
+        }
+
+        private void nameTextBox_Leave(object sender, EventArgs e)
+        {
+            validateInput();
+        }
+
+        private void emailTextBox_Leave(object sender, EventArgs e)
+        {
+            validateInput();
+        }
+
+        private void passwordTextBox_Leave(object sender, EventArgs e)
+        {
+            validateInput();
+        }
+
+        private void reenterPasswordTextBox_Leave(object sender, EventArgs e)
+        {
+            validateInput();
+        }
     }
 }

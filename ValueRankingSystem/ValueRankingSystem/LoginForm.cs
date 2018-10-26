@@ -3,6 +3,8 @@ using System.Net.Mail;
 using MetroFramework.Forms;
 using Users;
 using CreateAccount;
+using MetroFramework;
+using System.Windows.Forms;
 
 namespace ValueRankingSystem
 {
@@ -89,7 +91,8 @@ namespace ValueRankingSystem
 
             } else
             {
-                //password mismatch. error provider, label, message box? 
+                MetroMessageBox.Show(this, "Username/Password Combination not found. Please try again!", "Login Failed",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -99,6 +102,11 @@ namespace ValueRankingSystem
             this.Hide();
             createForm.ShowDialog();
             this.Show();
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            emailTextBox.Focus();
         }
     }
 }

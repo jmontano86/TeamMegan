@@ -164,6 +164,7 @@
             this.Controls.Add(this.metroLabel1);
             this.Name = "LoginForm";
             this.Text = "Value Ranking System Login Page";
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
