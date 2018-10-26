@@ -65,9 +65,9 @@ namespace TestSessions
             {
                 Connection.Open();
                 Command.Connection = Connection;
-                Command.CommandText = "INSERT INTO TestSession (SessionID, TestID, UserID, CreationDate) VALUES (@SessionID, @TestID, @UserID, @CreationDate);";
+                Command.CommandText = "INSERT INTO TestSession (TestID, UserID, CreationDate) VALUES (@TestID, @UserID, @CreationDate);";
 
-                Command.Parameters.AddWithValue("@SessionID, ", testsession.SessionID);
+              
                 Command.Parameters.AddWithValue("@TestID, ", testsession.TestID);
                 Command.Parameters.AddWithValue("@UserID, ", testsession.UserID);
                 Command.Parameters.AddWithValue("@CreationDate, ", testsession.CreationDate);
