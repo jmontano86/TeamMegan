@@ -98,5 +98,10 @@ namespace Users
             }//not registered, ok to process
             return false;
         }
+
+        public static bool GetUsers(List<UserClass> userList, ref string error)
+        {
+            return UserDB.GetUsers(userList, ref error);
+        }
     }
 }
