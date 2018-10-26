@@ -33,14 +33,18 @@
             this.userChoiceThree = new MetroFramework.Controls.MetroRadioButton();
             this.testButton = new MetroFramework.Controls.MetroButton();
             this.directionLabel = new MetroFramework.Controls.MetroLabel();
+            this.itemGroupBox = new System.Windows.Forms.GroupBox();
+            this.finishedLabel = new MetroFramework.Controls.MetroLabel();
+            this.itemGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // userChoiceOne
             // 
             this.userChoiceOne.AutoSize = true;
-            this.userChoiceOne.Location = new System.Drawing.Point(116, 263);
+            this.userChoiceOne.Location = new System.Drawing.Point(61, 49);
+            this.userChoiceOne.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.userChoiceOne.Name = "userChoiceOne";
-            this.userChoiceOne.Size = new System.Drawing.Size(65, 17);
+            this.userChoiceOne.Size = new System.Drawing.Size(60, 15);
             this.userChoiceOne.TabIndex = 0;
             this.userChoiceOne.Text = "demo1";
             this.userChoiceOne.UseSelectable = true;
@@ -48,9 +52,10 @@
             // userChoiceTwo
             // 
             this.userChoiceTwo.AutoSize = true;
-            this.userChoiceTwo.Location = new System.Drawing.Point(320, 263);
+            this.userChoiceTwo.Location = new System.Drawing.Point(165, 49);
+            this.userChoiceTwo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.userChoiceTwo.Name = "userChoiceTwo";
-            this.userChoiceTwo.Size = new System.Drawing.Size(65, 17);
+            this.userChoiceTwo.Size = new System.Drawing.Size(60, 15);
             this.userChoiceTwo.TabIndex = 1;
             this.userChoiceTwo.Text = "demo2";
             this.userChoiceTwo.UseSelectable = true;
@@ -58,45 +63,73 @@
             // userChoiceThree
             // 
             this.userChoiceThree.AutoSize = true;
-            this.userChoiceThree.Location = new System.Drawing.Point(524, 263);
+            this.userChoiceThree.Location = new System.Drawing.Point(269, 49);
+            this.userChoiceThree.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.userChoiceThree.Name = "userChoiceThree";
-            this.userChoiceThree.Size = new System.Drawing.Size(124, 17);
+            this.userChoiceThree.Size = new System.Drawing.Size(115, 15);
             this.userChoiceThree.TabIndex = 2;
             this.userChoiceThree.Text = "demoCantDecide";
             this.userChoiceThree.UseSelectable = true;
             // 
             // testButton
             // 
-            this.testButton.Location = new System.Drawing.Point(285, 339);
+            this.testButton.Location = new System.Drawing.Point(214, 275);
+            this.testButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.testButton.Name = "testButton";
-            this.testButton.Size = new System.Drawing.Size(226, 66);
+            this.testButton.Size = new System.Drawing.Size(170, 54);
             this.testButton.TabIndex = 3;
             this.testButton.Text = "&Next";
             this.testButton.UseSelectable = true;
-            this.testButton.Click += new System.EventHandler(this.metroButton1_Click);
+            this.testButton.Click += new System.EventHandler(this.testButton_Click);
             // 
             // directionLabel
             // 
             this.directionLabel.AutoSize = true;
-            this.directionLabel.Location = new System.Drawing.Point(227, 123);
+            this.directionLabel.Location = new System.Drawing.Point(150, 96);
+            this.directionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.directionLabel.Name = "directionLabel";
-            this.directionLabel.Size = new System.Drawing.Size(322, 20);
+            this.directionLabel.Size = new System.Drawing.Size(303, 19);
             this.directionLabel.TabIndex = 4;
             this.directionLabel.Text = "From the choices below, which one do you prefer?";
             // 
+            // itemGroupBox
+            // 
+            this.itemGroupBox.Controls.Add(this.finishedLabel);
+            this.itemGroupBox.Controls.Add(this.userChoiceOne);
+            this.itemGroupBox.Controls.Add(this.userChoiceTwo);
+            this.itemGroupBox.Controls.Add(this.userChoiceThree);
+            this.itemGroupBox.Location = new System.Drawing.Point(79, 142);
+            this.itemGroupBox.Name = "itemGroupBox";
+            this.itemGroupBox.Size = new System.Drawing.Size(440, 100);
+            this.itemGroupBox.TabIndex = 5;
+            this.itemGroupBox.TabStop = false;
+            this.itemGroupBox.Text = "Choices";
+            // 
+            // finishedLabel
+            // 
+            this.finishedLabel.AutoSize = true;
+            this.finishedLabel.Location = new System.Drawing.Point(131, 45);
+            this.finishedLabel.Name = "finishedLabel";
+            this.finishedLabel.Size = new System.Drawing.Size(174, 19);
+            this.finishedLabel.TabIndex = 3;
+            this.finishedLabel.Text = "Thank you for taking the test";
+            this.finishedLabel.Visible = false;
+            // 
             // UserTest
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(600, 366);
+            this.Controls.Add(this.itemGroupBox);
             this.Controls.Add(this.directionLabel);
             this.Controls.Add(this.testButton);
-            this.Controls.Add(this.userChoiceThree);
-            this.Controls.Add(this.userChoiceTwo);
-            this.Controls.Add(this.userChoiceOne);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "UserTest";
+            this.Padding = new System.Windows.Forms.Padding(15, 49, 15, 16);
             this.Text = "User Test";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.itemGroupBox.ResumeLayout(false);
+            this.itemGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,6 +142,8 @@
         private MetroFramework.Controls.MetroRadioButton userChoiceThree;
         private MetroFramework.Controls.MetroButton testButton;
         private MetroFramework.Controls.MetroLabel directionLabel;
+        private System.Windows.Forms.GroupBox itemGroupBox;
+        private MetroFramework.Controls.MetroLabel finishedLabel;
     }
 }
 

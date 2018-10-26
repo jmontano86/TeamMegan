@@ -49,7 +49,7 @@ namespace UserTestLogic
             List<TestSession> testSessionList = new List<TestSession>();
             string error = "Cannot pull test session";
             // Pull existing test sessions
-            TestSessionList.GetTestSessions(testSessionList, ref error);
+            TestSession.GetTestSessions(testSessionList, ref error);
             foreach (var testSession in testSessionList)
             {
                 TestList.getTests(testList);

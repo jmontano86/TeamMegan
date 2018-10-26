@@ -59,7 +59,7 @@ namespace Results
 
         public static bool CreateResult(Result result)
         {
-            SqlConnection Connection = new SqlConnection();
+            SqlConnection Connection = DatabaseHelper.Connect();
             SqlCommand Command = new SqlCommand();
 
 
@@ -67,20 +67,16 @@ namespace Results
             {
                 Connection.Open();
                 Command.Connection = Connection;
-                Command.CommandText = "INSERT INTO Results (ResultID, SessionID, ItemID1, ItemID2, UserChoice) VALUES (@ResultID, @SessionID, @ItemID1, @ItemID2, @UserChoice);";
+                Command.CommandText = "INSERT INTO Results (SessionID, ItemID1, ItemID2, UserChoice) VALUES (@SessionID, @ItemID1, @ItemID2, @UserChoice);" +
+                    "SELECT CAST(scope_identity() AS int)";
 
-                Command.Parameters.AddWithValue("@ResultID, ", result.ResultID);
-                Command.Parameters.AddWithValue("@SessionID, ", result.SessionID);
-                Command.Parameters.AddWithValue("@ItemID1, ", result.ItemID1);
-                Command.Parameters.AddWithValue("@ItemID2, ", result.ItemID2);
-                Command.Parameters.AddWithValue("@UserChoice, ", result.UserChoice);
+                Command.Parameters.AddWithValue("@SessionID", result.SessionID);
+                Command.Parameters.AddWithValue("@ItemID1", result.ItemID1);
+                Command.Parameters.AddWithValue("@ItemID2", result.ItemID2);
+                Command.Parameters.AddWithValue("@UserChoice", result.UserChoice);
 
                 object a = Command.ExecuteScalar();
                 result.ResultID = (int)a;
-                result.SessionID = (int)a;
-                result.ItemID1 = (int)a;
-                result.ItemID2 = (int)a;
-                result.UserChoice = (int)a;
                 return true;
 
             }

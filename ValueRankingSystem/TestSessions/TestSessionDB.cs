@@ -57,7 +57,7 @@ namespace TestSessions
 
         public static bool CreateSession(TestSession testsession)
         {
-            SqlConnection Connection = new SqlConnection();
+            SqlConnection Connection = DatabaseHelper.Connect();
             SqlCommand Command = new SqlCommand();
          
 
@@ -65,18 +65,16 @@ namespace TestSessions
             {
                 Connection.Open();
                 Command.Connection = Connection;
-                Command.CommandText = "INSERT INTO TestSession (SessionID, TestID, UserID, CreationDate) VALUES (@SessionID, @TestID, @UserID, @CreationDate);";
+                Command.CommandText = "INSERT INTO TestSession (TestID, UserID, CreationDate) VALUES (@TestID, @UserID, @CreationDate);" +
+                    "SELECT CAST(scope_identity() AS int)";
 
-                Command.Parameters.AddWithValue("@SessionID, ", testsession.SessionID);
-                Command.Parameters.AddWithValue("@TestID, ", testsession.TestID);
-                Command.Parameters.AddWithValue("@UserID, ", testsession.UserID);
-                Command.Parameters.AddWithValue("@CreationDate, ", testsession.CreationDate);
+                Command.Parameters.AddWithValue("@TestID", testsession.TestID);
+                Command.Parameters.AddWithValue("@UserID", testsession.UserID);
+                Command.Parameters.AddWithValue("@CreationDate", testsession.CreationDate);
 
                 object a = Command.ExecuteScalar();
                 testsession.SessionID = (int)a;
-                testsession.TestID = (int)a;
-                testsession.UserID = (int)a;
-                testsession.CreationDate = (DateTime)a;
+                
                 return true;
 
             }
