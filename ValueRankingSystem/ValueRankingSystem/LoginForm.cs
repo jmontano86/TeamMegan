@@ -80,9 +80,9 @@ namespace ValueRankingSystem
                         //resultForm.ShowDiaglog();
                         break;
                     case UserClass.USER_ROLE:
-                        //TestsForm testForm = new TestsForm();
-                        //testForm.User = user;
-                        //testForm.ShowDialog();
+                        UserTest testForm = new UserTest();
+                        testForm.currentUser = user;
+                        testForm.ShowDialog();
                         break;
                     default:
                         //something seriously went wrong if we hit this

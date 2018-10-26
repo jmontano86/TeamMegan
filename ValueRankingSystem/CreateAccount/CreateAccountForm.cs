@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework;
 using Users;
+using MetroFramework.Controls;
 
 namespace CreateAccount
 {
@@ -40,34 +41,49 @@ namespace CreateAccount
             }
         }
 
-        private void validateInput()
+        private void validateInput(object sender)
         {
             //validate to make sure all inputs are valid before creating new account
             myErrorProvider.Clear();
-            //check to make sure a username is entered
-            if(nameTextBox.Text == "")
+            MetroTextBox tb = (MetroTextBox)sender;
+            switch (tb.Name)
             {
-                myErrorProvider.SetError(nameTextBox, "Please enter your name");
-                return;
+                case "nameTextBox":
+                    //check to make sure a username is entered
+                    if (nameTextBox.Text == "")
+                    {
+                        myErrorProvider.SetError(nameTextBox, "Please enter your name");
+                        nameTextBox.Focus();
+                    }
+                    break;
+                case "emailTextBox":
+                    //check for a valid email address
+                    if (!isEmailValid(emailTextBox.Text))
+                    {
+                        myErrorProvider.SetError(emailTextBox, "You must enter a valid email address");
+                        emailTextBox.Focus();
+                    }
+                    break;
+                case "passwordTextBox":
+                    //check to make sure password is at least 7 characters
+                    if (passwordTextBox.Text.Length < 7)
+                    {
+                        myErrorProvider.SetError(passwordTextBox, "Password must be at least 7 characters");
+                        passwordTextBox.Focus();
+                    }
+                    break;
+                case "reenterPasswordTextBox":
+                    if (passwordTextBox.Text != reenterPasswordTextBox.Text)
+                    {
+                        myErrorProvider.SetError(reenterPasswordTextBox, "Re-Enter Password Confirmation must match Password");
+                        reenterPasswordTextBox.Focus();
+                        break;
+                    }
+                    createButton.Enabled = true;
+                    break;
             }
-            //check for a valid email address
-            if (!isEmailValid(emailTextBox.Text))
-            {
-                myErrorProvider.SetError(emailTextBox, "You must enter a valid email address");
-                return;
-            }
-            //check to make sure password is at least 7 characters
-            if(passwordTextBox.Text.Length < 7)
-            {
-                myErrorProvider.SetError(passwordTextBox, "Password must be at least 7 characters");
-                return;
-            }
-            if(reenterPasswordTextBox.Text != "" && passwordTextBox.Text != reenterPasswordTextBox.Text)
-            {
-                myErrorProvider.SetError(reenterPasswordTextBox, "Re-Enter Password Confirmation must match Password");
-                return;
-            }
-            createButton.Enabled = false;
+        
+            
         }
         private void createButton_Click(object sender, EventArgs e)
         {
@@ -90,22 +106,22 @@ namespace CreateAccount
 
         private void nameTextBox_Leave(object sender, EventArgs e)
         {
-            validateInput();
+            validateInput(sender);
         }
 
         private void emailTextBox_Leave(object sender, EventArgs e)
         {
-            validateInput();
+            validateInput(sender);
         }
 
         private void passwordTextBox_Leave(object sender, EventArgs e)
         {
-            validateInput();
+            validateInput(sender);
         }
 
         private void reenterPasswordTextBox_Leave(object sender, EventArgs e)
         {
-            validateInput();
+            validateInput(sender);
         }
     }
 }
