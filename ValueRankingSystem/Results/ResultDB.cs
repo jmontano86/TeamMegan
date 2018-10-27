@@ -47,7 +47,7 @@ namespace Results
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("Error!");
+                Console.Error.WriteLine("Error! " + ex.ToString());
                 return false;
             }
             finally
@@ -67,9 +67,8 @@ namespace Results
             {
                 Connection.Open();
                 Command.Connection = Connection;
-                Command.CommandText = "INSERT INTO Results (ResultID, SessionID, ItemID1, ItemID2, UserChoice) VALUES (@ResultID, @SessionID, @ItemID1, @ItemID2, @UserChoice);";
+                Command.CommandText = "INSERT INTO Results (SessionID, ItemID1, ItemID2, UserChoice) VALUES (@SessionID, @ItemID1, @ItemID2, @UserChoice);";
 
-                Command.Parameters.AddWithValue("@ResultID, ", result.ResultID);
                 Command.Parameters.AddWithValue("@SessionID, ", result.SessionID);
                 Command.Parameters.AddWithValue("@ItemID1, ", result.ItemID1);
                 Command.Parameters.AddWithValue("@ItemID2, ", result.ItemID2);
@@ -77,10 +76,6 @@ namespace Results
 
                 object a = Command.ExecuteScalar();
                 result.ResultID = (int)a;
-                result.SessionID = (int)a;
-                result.ItemID1 = (int)a;
-                result.ItemID2 = (int)a;
-                result.UserChoice = (int)a;
                 return true;
 
             }

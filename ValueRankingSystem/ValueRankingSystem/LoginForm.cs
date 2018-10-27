@@ -3,6 +3,7 @@ using System.Net.Mail;
 using MetroFramework.Forms;
 using Users;
 using CreateAccount;
+using ResultsReporting;
 using MetroFramework;
 using System.Windows.Forms;
 
@@ -75,14 +76,14 @@ namespace ValueRankingSystem
                         //adminForm.ShowDiaglog();
                         break;
                     case UserClass.THERAPIST_ROLE:
-                        //ResultsForm resultForm = new ResultsForm();
+                        ResultsReportingForm resultForm = new ResultsReportingForm();
                         //resultForm.User = user;
-                        //resultForm.ShowDiaglog();
+                        resultForm.ShowDialog();
                         break;
                     case UserClass.USER_ROLE:
-                        UserTest testForm = new UserTest();
-                        testForm.currentUser = user;
-                        testForm.ShowDialog();
+                        //UserTest testForm = new UserTest();
+                        //testForm.currentUser = user;
+                        //testForm.ShowDialog();
                         break;
                     default:
                         //something seriously went wrong if we hit this

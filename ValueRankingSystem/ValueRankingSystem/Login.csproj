@@ -97,6 +97,10 @@
       <Project>{9a1ec708-47b5-48b0-86fa-588130e903ff}</Project>
       <Name>CreateAccount</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ResultsReporting\ResultsReporting.csproj">
+      <Project>{3c11ff76-905b-4a61-acae-0605d52d550d}</Project>
+      <Name>ResultsReporting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\User\Users.csproj">
       <Project>{0526df06-dd95-4ede-8b20-ddc18f6afe7d}</Project>
       <Name>Users</Name>
