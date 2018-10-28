@@ -4,6 +4,7 @@ using MetroFramework.Forms;
 using Users;
 using CreateAccount;
 using ResultsReporting;
+using AdminForms;
 using MetroFramework;
 using System.Windows.Forms;
 using MetroFramework.Controls;
@@ -90,8 +91,8 @@ namespace ValueRankingSystem
                 switch (user.strRole)
                 {
                     case UserClass.ADMIN_ROLE:
-                        //AdminForm adminForm = new AdminForm();
-                        //adminForm.ShowDiaglog();
+                        AdminForm adminForm = new AdminForm();
+                        adminForm.ShowDialog();
                         break;
                     case UserClass.THERAPIST_ROLE:
                         ResultsReportingForm resultForm = new ResultsReportingForm();
