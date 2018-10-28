@@ -8,16 +8,17 @@ using System.Data.SqlClient;
 
 namespace Results
 {
-    class ResultDB
+    public class ResultDB
     {
-        public static bool GetResults(List<Result> resultList, ref string error)
+        public static bool GetResults(List<ResultDisplay> resultList, ref string error, int UserID)
         {
-            List<Result> ResultList = new List<Result>();
+            List<ResultDisplay> ResultList = new List<ResultDisplay>();
+            
 
             SqlConnection Connection = DatabaseHelper.Connect();
             SqlDataReader ResultDataReader;
             SqlCommand Command;
-            Result result;
+            ResultDisplay result;
 
             try
             {
@@ -25,18 +26,21 @@ namespace Results
                 Command = new SqlCommand
                 {
                     Connection = Connection,
-                    CommandText = "SELECT ResultID, SessionID, ItemID1, ItemID2, UserChoice FROM Results;"
+                    CommandText = "SELECT ItemName, TotalScore, Wins, Losses, Ties FROM vResults WHERE UserID = @UserID;"   
                 };
+                Command.Parameters.AddWithValue("@UserID", UserID);
                 ResultDataReader = Command.ExecuteReader();
 
                 while (ResultDataReader.Read())
                 {
-                    result = new Result();
-                    result.ResultID = ResultDataReader.GetInt32(0);
-                    result.SessionID = ResultDataReader.GetInt32(1);
-                    result.ItemID1 = ResultDataReader.GetInt32(2);
-                    result.ItemID2 = ResultDataReader.GetInt32(3);
-                    result.UserChoice = ResultDataReader.GetInt32(4);
+
+                    result = new ResultDisplay();
+                    result.ItemName = ResultDataReader.GetString(0);
+                    result.TotalScore = ResultDataReader.GetInt32(1);
+                    result.Wins = ResultDataReader.GetInt32(2);
+                    result.Losses = ResultDataReader.GetInt32(3);
+                    result.Ties = ResultDataReader.GetInt32(4);
+                 
 
                     resultList.Add(result);
 

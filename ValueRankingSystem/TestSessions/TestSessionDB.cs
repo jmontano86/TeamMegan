@@ -57,7 +57,7 @@ namespace TestSessions
 
         public static bool CreateSession(TestSession testsession)
         {
-            SqlConnection Connection = new SqlConnection();
+            SqlConnection Connection = DatabaseHelper.Connect();
             SqlCommand Command = new SqlCommand();
          
 

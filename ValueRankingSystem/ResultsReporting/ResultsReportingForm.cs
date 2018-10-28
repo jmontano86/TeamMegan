@@ -47,19 +47,23 @@ namespace ResultsReporting
 
         private void patientComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<Result> resultList = new List<Result>();
-
             string error = "";
 
-            if (Result.GetResults(resultList, ref error))
+            List<ResultDisplay> resultList = new List<ResultDisplay>();
+            UserClass user = (UserClass)patientComboBox.SelectedItem;
+
+           
+
+
+            if(Result.GetResults(resultList, ref error, user._id))
             {
-                foreach (Result result in resultList)
-                {
-                    TestScoreListView.Items.Add(result.ToString());
-                }
+
             }
-            else
-                MessageBox.Show("Error!");
+                     
+
+
+            
+            
         }
     }
 }
