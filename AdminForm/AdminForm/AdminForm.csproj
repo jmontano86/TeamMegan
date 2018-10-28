@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9A1EC708-47B5-48B0-86FA-588130E903FF}</ProjectGuid>
+    <ProjectGuid>{6C80DF3B-C36C-44AE-BD9B-EA31523BA05F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>CreateAccount</RootNamespace>
-    <AssemblyName>CreateAccount</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AdminForm</RootNamespace>
+    <AssemblyName>AdminForm</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+
     </Reference>
     <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
@@ -42,6 +43,19 @@
     <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
     </Reference>
+
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlClient, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -58,16 +72,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateAccountForm.cs">
+    <Compile Include="AdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateAccountForm.Designer.cs">
-      <DependentUpon>CreateAccountForm.cs</DependentUpon>
+    <Compile Include="AdminForm.Designer.cs">
+      <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CreateAccountForm.resx">
-      <DependentUpon>CreateAccountForm.cs</DependentUpon>
+
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+
+    <EmbeddedResource Include="AdminForm.resx">
+      <DependentUpon>AdminForm.cs</DependentUpon>
+
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -93,18 +112,27 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj">
-      <Project>{e42ba06a-5d06-4f91-85e8-a49cbab3de1e}</Project>
-      <Name>Database</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UserTesting\UserTesting.csproj">
-      <Project>{2ae7a970-ad3f-4dc3-b74a-5fc4e546f45b}</Project>
-      <Name>UserTesting</Name>
+
+    <ProjectReference Include="..\CreateAccount\CreateAccount.csproj">
+      <Project>{9a1ec708-47b5-48b0-86fa-588130e903ff}</Project>
+      <Name>CreateAccount</Name>
     </ProjectReference>
     <ProjectReference Include="..\User\Users.csproj">
       <Project>{0526df06-dd95-4ede-8b20-ddc18f6afe7d}</Project>
       <Name>Users</Name>
+
+    <ProjectReference Include="..\DataAccessLibrary\DataAccessLibrary.csproj">
+      <Project>{b6ad0aa3-8202-4718-a628-defd86c00ccc}</Project>
+      <Name>DataAccessLibrary</Name>
+
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

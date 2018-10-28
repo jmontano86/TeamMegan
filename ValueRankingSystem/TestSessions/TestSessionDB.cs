@@ -65,13 +65,17 @@ namespace TestSessions
             {
                 Connection.Open();
                 Command.Connection = Connection;
-                Command.CommandText = "INSERT INTO TestSessions (TestID, UserID, CreationDate) VALUES (@TestID, @UserID, @CreationDate);";
+                Command.CommandText = "INSERT INTO TestSession (TestID, UserID, CreationDate) VALUES (@TestID, @UserID, @CreationDate);" +
+                    "SELECT CAST(scope_identity() AS int)";
+
 
                 Command.Parameters.AddWithValue("@TestID", testsession.TestID);
                 Command.Parameters.AddWithValue("@UserID", testsession.UserID);
                 Command.Parameters.AddWithValue("@CreationDate", testsession.CreationDate);
 
                 object a = Command.ExecuteScalar();
+                testsession.SessionID = (int)a;
+                
                 return true;
 
             }

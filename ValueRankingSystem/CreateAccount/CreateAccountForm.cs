@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework;
 using Users;
+using UserTesting;
 using MetroFramework.Controls;
 
 namespace CreateAccount
@@ -96,6 +97,9 @@ namespace CreateAccount
                     MessageBoxIcon.Error);
                 return;
             }
+            UserTest testForm = new UserTest();
+            testForm.currentUser = user;
+            testForm.ShowDialog();
             this.Close();
         }
 

@@ -8,6 +8,7 @@ using AdminForms;
 using MetroFramework;
 using System.Windows.Forms;
 using MetroFramework.Controls;
+using UserTesting;
 
 namespace ValueRankingSystem
 {
@@ -99,9 +100,9 @@ namespace ValueRankingSystem
                         resultForm.ShowDialog();
                         break;
                     case UserClass.USER_ROLE:
-                        //UserTest testForm = new UserTest();
-                        //testForm.currentUser = user;
-                        //testForm.ShowDialog();
+                        UserTest testForm = new UserTest();
+                        testForm.currentUser = user;
+                        testForm.ShowDialog();
                         break;
                     default:
                         //something seriously went wrong if we hit this

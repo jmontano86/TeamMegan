@@ -69,7 +69,9 @@ namespace Results
             try
             {
                 Connection.Open();
-                Command.CommandText = "INSERT INTO Results (SessionID, ItemID1, ItemID2, UserChoice) VALUES (@SessionID, @ItemID1, @ItemID2, @UserChoice);";
+                Command.Connection = Connection;
+                Command.CommandText = "INSERT INTO Results (SessionID, ItemID1, ItemID2, UserChoice) VALUES (@SessionID, @ItemID1, @ItemID2, @UserChoice);" +
+                    "SELECT CAST(scope_identity() AS int)";
 
                 Command.Parameters.AddWithValue("@SessionID", result.SessionID);
                 Command.Parameters.AddWithValue("@ItemID1", result.ItemID1);
