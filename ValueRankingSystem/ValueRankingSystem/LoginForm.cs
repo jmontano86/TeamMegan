@@ -72,12 +72,10 @@ namespace ValueRankingSystem
                 {
                     case UserClass.ADMIN_ROLE:
                         //AdminForm adminForm = new AdminForm();
-                        //adminForm.User = user;
                         //adminForm.ShowDiaglog();
                         break;
                     case UserClass.THERAPIST_ROLE:
                         ResultsReportingForm resultForm = new ResultsReportingForm();
-                        //resultForm.User = user;
                         resultForm.ShowDialog();
                         break;
                     case UserClass.USER_ROLE:

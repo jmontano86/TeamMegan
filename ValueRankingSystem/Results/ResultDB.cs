@@ -14,14 +14,13 @@ namespace Results
         {
             List<Result> ResultList = new List<Result>();
 
-            SqlConnection Connection = new SqlConnection();
+            SqlConnection Connection = DatabaseHelper.Connect();
             SqlDataReader ResultDataReader;
             SqlCommand Command;
             Result result;
 
             try
             {
-                Connection = DatabaseHelper.Connect();
                 Connection.Open();
                 Command = new SqlCommand
                 {
@@ -36,8 +35,8 @@ namespace Results
                     result.ResultID = ResultDataReader.GetInt32(0);
                     result.SessionID = ResultDataReader.GetInt32(1);
                     result.ItemID1 = ResultDataReader.GetInt32(2);
-                  //  result.ItemID2 = ResultDataReader.GetInt32(3);
-                  //  result.UserChoice = ResultDataReader.GetInt32(4);
+                    result.ItemID2 = ResultDataReader.GetInt32(3);
+                    result.UserChoice = ResultDataReader.GetInt32(4);
 
                     resultList.Add(result);
 
@@ -59,20 +58,19 @@ namespace Results
 
         public static bool CreateResult(Result result)
         {
-            SqlConnection Connection = new SqlConnection();
+            SqlConnection Connection = DatabaseHelper.Connect();
             SqlCommand Command = new SqlCommand();
 
 
             try
             {
                 Connection.Open();
-                Command.Connection = Connection;
                 Command.CommandText = "INSERT INTO Results (SessionID, ItemID1, ItemID2, UserChoice) VALUES (@SessionID, @ItemID1, @ItemID2, @UserChoice);";
 
-                Command.Parameters.AddWithValue("@SessionID, ", result.SessionID);
-                Command.Parameters.AddWithValue("@ItemID1, ", result.ItemID1);
-                Command.Parameters.AddWithValue("@ItemID2, ", result.ItemID2);
-                Command.Parameters.AddWithValue("@UserChoice, ", result.UserChoice);
+                Command.Parameters.AddWithValue("@SessionID", result.SessionID);
+                Command.Parameters.AddWithValue("@ItemID1", result.ItemID1);
+                Command.Parameters.AddWithValue("@ItemID2", result.ItemID2);
+                Command.Parameters.AddWithValue("@UserChoice", result.UserChoice);
 
                 object a = Command.ExecuteScalar();
                 result.ResultID = (int)a;
