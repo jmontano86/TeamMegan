@@ -8,15 +8,45 @@ namespace Users
 {
     public class UserClass
     {
-        public int _id { get; set; }
-        public string _username { get; set; }
-        public string _password { get; set; }
-        public string _emailAddress { get; set; }
-        public string _role { get; set; }
+        private int _id;
+        private string _username;
+        private string _password;
+        private string _emailAddress;
+        private string _role;
 
         public const string THERAPIST_ROLE = "T";
         public const string USER_ROLE = "U";
         public const string ADMIN_ROLE = "A";
+
+        public int intUserID
+        {
+            get {  return this._id; }
+            set { this._id = value; }
+        }
+
+        public string strUsername
+        {
+            get { return this._username; }
+            set { this._username = value; }
+        }
+
+        public string strPassword
+        {
+            get { return this._password; }
+            set { this._password = value; }
+        }
+
+        public string strEmailAddress
+        {
+            get { return this._emailAddress; }
+            set { this._emailAddress = value; }
+        }
+
+        public string strRole
+        {
+            get { return this._role; }
+            set { this._role = value; }
+        }
                
         public UserClass login(string strEmail, string strPassword)
         {
@@ -29,11 +59,11 @@ namespace Users
                 if(hashPassword(strPassword) == strUserItems[2])
                 {
                     Int32.TryParse(strUserItems[0], out int intID);
-                    this._id = intID;
-                    this._username = strUserItems[1];
-                    this._password = strUserItems[2];
-                    this._emailAddress = strUserItems[3];
-                    this._role = strUserItems[4];
+                    intUserID = intID;
+                    strUsername = strUserItems[1];
+                    strPassword = strUserItems[2];
+                    strEmailAddress = strUserItems[3];
+                    strRole = strUserItems[4];
                 }
 
             }
@@ -61,11 +91,11 @@ namespace Users
                 int intID = db.CreateAccount(strEmail, strHashedPassword, strUsername);
                 if (intID > 0)
                 {
-                    _id = intID;
-                    _emailAddress = strEmail;
-                    _password = strHashedPassword;
-                    _role = USER_ROLE;
-                    _username = strUsername;
+                    intUserID = intID;
+                    strEmailAddress = strEmail;
+                    strPassword = strHashedPassword;
+                    strRole = USER_ROLE;
+                    this.strUsername = strUsername;
                 }
 
                 return this;
@@ -79,7 +109,7 @@ namespace Users
         public override string ToString()
         {
             //ToString method override to display username for default method
-            return _username;
+            return strUsername;
         }
 
         private bool search(string strEmail)

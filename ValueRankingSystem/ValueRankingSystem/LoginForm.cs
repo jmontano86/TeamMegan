@@ -6,6 +6,7 @@ using CreateAccount;
 using ResultsReporting;
 using MetroFramework;
 using System.Windows.Forms;
+using MetroFramework.Controls;
 
 namespace ValueRankingSystem
 {
@@ -27,12 +28,13 @@ namespace ValueRankingSystem
         private void emailTextBox_Leave(object sender, EventArgs e)
         {
             //check to ensure we have both a valid email and a valid password
-            validateInput();
+            validateInput(sender);
         }
-        private void passwordTextBox_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+
+        private void passwordTextBox_Leave(object sender, EventArgs e)
         {
-            //validate password entered. Minimum length 8 characters
-            validateInput();
+            //validate password entered. Minimum length 7 characters
+            validateInput(sender);
         }
 
         private bool isEmailValid(string emailAddress)
@@ -47,15 +49,32 @@ namespace ValueRankingSystem
             }
         }
 
-        private void validateInput()
+        private void validateInput(object sender)
         {
+            MetroTextBox mtbSender = (MetroTextBox)sender;
+            string strSenderName = mtbSender.Name;
+            myErrorProvider.Clear();
             //validate to make sure a valid password was entered as well as a valid email address
-            if (isEmailValid(emailTextBox.Text) && passwordTextBox.Text != "" && passwordTextBox.Text.Length > 7)
+            if (strSenderName == "emailTextBox" && !isEmailValid(emailTextBox.Text) && emailTextBox.Text != "")
             {
-                loginButton.Enabled = true;
+                loginButton.Enabled = false;
+                myErrorProvider.SetError(emailTextBox, "You must enter a valid email address");
+                emailTextBox.Focus();
                 return;
             }
-            loginButton.Enabled = false;
+            if (strSenderName == "passwordTextBox" && passwordTextBox.Text != "" && passwordTextBox.Text.Length < 7)
+            {
+                loginButton.Enabled = false;
+                myErrorProvider.SetError(passwordTextBox, "Passwords must be at least 7 characters");
+                passwordTextBox.Focus();
+                return;
+            } else if(strSenderName == "passwordTextBox" && emailTextBox.Text != "" && passwordTextBox.Text != "") 
+            {
+                loginButton.Enabled = true;
+                loginButton.Focus();
+            }
+            
+
         }
 
         private void loginButton_Click(object sender, EventArgs e)
@@ -64,11 +83,11 @@ namespace ValueRankingSystem
             //TODO Create login validation
             UserClass user = new UserClass();
             user = user.login(emailTextBox.Text, passwordTextBox.Text);
-            if (user._id > 0)
+            if (user.intUserID > 0)
             {
                 //send to appropriate form: Admin, User, Therapist
                 //TODO: Call appropriate forms.
-                switch (user._role)
+                switch (user.strRole)
                 {
                     case UserClass.ADMIN_ROLE:
                         //AdminForm adminForm = new AdminForm();
@@ -87,6 +106,10 @@ namespace ValueRankingSystem
                         //something seriously went wrong if we hit this
                         break;
                 }
+                loginButton.Enabled = false;
+                passwordTextBox.Text = null;
+                emailTextBox.Text = null;
+                emailTextBox.Focus();
 
             } else
             {
@@ -107,5 +130,7 @@ namespace ValueRankingSystem
         {
             emailTextBox.Focus();
         }
+
+
     }
 }
