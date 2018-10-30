@@ -24,7 +24,7 @@ namespace UserTestLogic
             //Get all tests
             TestList.getTests(testList);
             //Only stores to an array tests that are available
-            foreach (var test in testList)
+            foreach (var test in testList.ToList())
             {
                 testExist = checkExistingTestSession(testList, user);
                 if (testExist != true)
