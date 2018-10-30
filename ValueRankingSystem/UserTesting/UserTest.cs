@@ -89,7 +89,7 @@ namespace UserTesting
                     currentTestSession.TestID = testItems[0].TestID;
                     currentTestSession.CreationDate = DateTime.Now;
                     TestSession.CreateSession(currentTestSession);
-
+                    Result.CreateSession(currentResult);
                 }
                 else if (userChoiceThree.Checked)
                 {
@@ -103,6 +103,7 @@ namespace UserTesting
                     currentTestSession.TestID = testItems[0].TestID;
                     currentTestSession.CreationDate = DateTime.Now;
                     TestSession.CreateSession(currentTestSession);
+                    Result.CreateSession(currentResult);
                 }
                 else
                 {
