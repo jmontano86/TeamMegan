@@ -5,7 +5,7 @@ using Microsoft.VisualBasic;
 using MetroFramework.Forms;
 using DataAccessLibrary;
 
-namespace AdminForm
+namespace AdminForms
 {
     public partial class AdminForm : MetroForm
     {
@@ -19,7 +19,7 @@ namespace AdminForm
         private void AdminForm_Load(object sender, EventArgs e)
         {
             List<Test> testList = new List<Test>();
-            if (TestList.getTests(testList))
+            if (TestList.getTests(ref testList))
             {
                 foreach(Test test in testList)
                 {

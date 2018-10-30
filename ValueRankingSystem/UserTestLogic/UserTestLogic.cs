@@ -22,7 +22,7 @@ namespace UserTestLogic
             bool testExist = false;
             List<Test> availTest = new List<Test>();
             //Get all tests
-            TestList.getTests(testList);
+            TestList.getTests(ref testList);
             //Only stores to an array tests that are available
             foreach (var test in testList.ToList())
             {
@@ -52,10 +52,10 @@ namespace UserTestLogic
             TestSession.GetTestSessions(testSessionList, ref error);
             foreach (var testSession in testSessionList)
             {
-                TestList.getTests(testList);
+                TestList.getTests(ref testList);
                 foreach (var test in testList)
                 {
-                    if (testSession.TestID == test.TestID && testSession.UserID == user._id)
+                    if (testSession.TestID == test.TestID && testSession.UserID == user.intUserID)
                     {
                         testExist = true;
                     }

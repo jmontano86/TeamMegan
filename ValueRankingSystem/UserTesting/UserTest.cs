@@ -25,7 +25,13 @@ namespace UserTesting
         {
             InitializeComponent();
         }
-        UserClass currentUser = new UserClass();
+        private UserClass _currentUser;
+
+        public UserClass currentUser
+        {
+            get { return _currentUser; }
+            set { _currentUser = value; }
+        }
         List<Test> testItems = new List<Test>();
         List<Item> itemList = new List<Item>();
         int itemID1 = 0;
@@ -38,7 +44,6 @@ namespace UserTesting
             //Get user data
             //currentUser = LoginForm.user;
             //Load tests into the radio buttons
-            currentUser._id = 1;
             UserTestLogic.UserTestLogic.loadTests(testItems, itemList, currentUser);
             populateRadio();
         }
@@ -80,7 +85,7 @@ namespace UserTesting
                     testButton.Text = "Finished";
                     itemGroupBox.Visible = false;
                     finishedLabel.Visible = true;
-                    currentTestSession.UserID = currentUser._id;
+                    currentTestSession.UserID = currentUser.intUserID;
                     currentTestSession.TestID = testItems[0].TestID;
                     currentTestSession.CreationDate = DateTime.Now;
                     TestSession.CreateSession(currentTestSession);
@@ -94,7 +99,7 @@ namespace UserTesting
                     testButton.Text = "Finished";
                     itemGroupBox.Visible = false;
                     finishedLabel.Visible = true;
-                    currentTestSession.UserID = currentUser._id;
+                    currentTestSession.UserID = currentUser.intUserID;
                     currentTestSession.TestID = testItems[0].TestID;
                     currentTestSession.CreationDate = DateTime.Now;
                     TestSession.CreateSession(currentTestSession);

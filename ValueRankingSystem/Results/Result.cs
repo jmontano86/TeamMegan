@@ -51,9 +51,9 @@ namespace Results
         }
 
            
-         public static bool GetResults(List<Result> resultList, ref string error)
+         public static bool GetResults(List<ResultDisplay> resultList, ref string error, int UserID)
          {
-             return ResultDB.GetResults(resultList, ref error);
+             return ResultDB.GetResults(resultList, ref error, UserID);
          }
 
          public static bool CreateSession(Result result)

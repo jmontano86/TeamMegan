@@ -1,4 +1,4 @@
-﻿namespace AdminForm
+﻿namespace AdminForms
 {
     partial class AdminForm
     {

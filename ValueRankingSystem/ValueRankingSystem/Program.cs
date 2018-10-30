@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AdminForms
+namespace ValueRankingSystem
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace AdminForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AdminForm());
+            Application.Run(new LoginForm());
         }
     }
 }
