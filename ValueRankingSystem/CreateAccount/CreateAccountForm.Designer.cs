@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
@@ -38,6 +39,8 @@
             this.reenterPasswordTextBox = new MetroFramework.Controls.MetroTextBox();
             this.createButton = new MetroFramework.Controls.MetroButton();
             this.cancelButton = new MetroFramework.Controls.MetroButton();
+            this.myErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.myErrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // metroLabel1
@@ -105,7 +108,7 @@
             this.nameTextBox.UseSelectable = true;
             this.nameTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.nameTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.nameTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.nameTextBox_KeyUp);
+            this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
             // emailTextBox
             // 
@@ -136,7 +139,7 @@
             this.emailTextBox.UseSelectable = true;
             this.emailTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.emailTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.emailTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.emailTextBox_KeyUp);
+            this.emailTextBox.Leave += new System.EventHandler(this.emailTextBox_Leave);
             // 
             // passwordTextBox
             // 
@@ -168,7 +171,7 @@
             this.passwordTextBox.UseSystemPasswordChar = true;
             this.passwordTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.passwordTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.passwordTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.passwordTextBox_KeyUp);
+            this.passwordTextBox.Leave += new System.EventHandler(this.passwordTextBox_Leave);
             // 
             // reenterPasswordTextBox
             // 
@@ -200,7 +203,7 @@
             this.reenterPasswordTextBox.UseSystemPasswordChar = true;
             this.reenterPasswordTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.reenterPasswordTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.reenterPasswordTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.reenterPasswordTextBox_KeyUp);
+            this.reenterPasswordTextBox.Leave += new System.EventHandler(this.reenterPasswordTextBox_Leave);
             // 
             // createButton
             // 
@@ -215,6 +218,7 @@
             // 
             // cancelButton
             // 
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Location = new System.Drawing.Point(267, 325);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(107, 23);
@@ -222,6 +226,10 @@
             this.cancelButton.Text = "Ca&ncel";
             this.cancelButton.UseSelectable = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // myErrorProvider
+            // 
+            this.myErrorProvider.ContainerControl = this;
             // 
             // CreateAccountForm
             // 
@@ -242,6 +250,8 @@
             this.Controls.Add(this.metroLabel1);
             this.Name = "CreateAccountForm";
             this.Text = "Create an Account";
+            this.Load += new System.EventHandler(this.CreateAccountForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.myErrorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -259,6 +269,7 @@
         private MetroFramework.Controls.MetroTextBox reenterPasswordTextBox;
         private MetroFramework.Controls.MetroButton createButton;
         private MetroFramework.Controls.MetroButton cancelButton;
+        private System.Windows.Forms.ErrorProvider myErrorProvider;
     }
 }
 

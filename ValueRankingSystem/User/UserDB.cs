@@ -82,25 +82,26 @@ namespace User
         {
             List<UserClass> UserList = new List<UserClass>();
 
-            SqlConnection Connection = new SqlConnection();
+            SqlConnection Connection = DatabaseHelper.Connect();
             SqlDataReader UsersDataReader;
             SqlCommand Command;
             UserClass user;
 
             try
             {
-                Connection = DatabaseHelper.Connect();
                 Connection.Open();
+
                 Command = new SqlCommand();
                 Command.Connection = Connection;
                 Command.CommandText = "SELECT UserID, Username FROM Users WHERE UserID IN (SELECT UserID FROM TestSessions);";
+
                 UsersDataReader = Command.ExecuteReader();
 
                 while (UsersDataReader.Read())
                 {
                     user = new UserClass();
-                    user._id = UsersDataReader.GetInt32(0);
-                    user._username = UsersDataReader.GetString(1);
+                    user.intUserID = UsersDataReader.GetInt32(0);
+                    user.strUsername = UsersDataReader.GetString(1);
 
                     userList.Add(user);
                 }
@@ -115,7 +116,10 @@ namespace User
             finally
             {
                 if (Connection != null)
+                {
                     Connection.Close();
+                    Connection.Dispose();
+                }
             }
         }
     }

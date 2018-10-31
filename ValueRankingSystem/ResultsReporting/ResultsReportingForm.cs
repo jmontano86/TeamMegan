@@ -62,8 +62,10 @@ namespace ResultsReporting
 
             TestScoreListView.Items.Clear();
 
+
             // Displays test results for a selected user.
             try
+
             {
                 if (Result.GetResults(resultList, ref error, user._id))
                 {
