@@ -10,6 +10,14 @@ namespace Results
 {
     public class ResultDB
     {
+
+        /* 
+        * Programmer: Megan Villwock
+        * Last Modified Date: 10/30/2018
+        * 
+        * Gets results from the database and stores it in class/objects.
+        * 
+        */
         public static bool GetResults(List<ResultDisplay> resultList, ref string error, int UserID)
         {
             List<ResultDisplay> ResultList = new List<ResultDisplay>();
@@ -22,6 +30,7 @@ namespace Results
 
             try
             {
+                // Get data from database for selected user.
                 Connection = DatabaseHelper.Connect();
                 Connection.Open();
                 Command = new SqlCommand

@@ -93,7 +93,7 @@ namespace User
                 Connection.Open();
                 Command = new SqlCommand();
                 Command.Connection = Connection;
-                Command.CommandText = "SELECT UserID, Username FROM Users;";
+                Command.CommandText = "SELECT UserID, Username FROM Users WHERE UserID IN (SELECT UserID FROM TestSessions);";
                 UsersDataReader = Command.ExecuteReader();
 
                 while (UsersDataReader.Read())
