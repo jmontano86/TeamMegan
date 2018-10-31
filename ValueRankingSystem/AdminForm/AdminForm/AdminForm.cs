@@ -19,7 +19,7 @@ namespace AdminForms
         private void AdminForm_Load(object sender, EventArgs e)
         {
             List<Test> testList = new List<Test>();
-            if (TestList.getTests(ref testList))
+            if (TestList.getTests(testList))
             {
                 foreach(Test test in testList)
                 {

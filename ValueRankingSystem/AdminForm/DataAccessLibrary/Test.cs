@@ -25,7 +25,7 @@ namespace DataAccessLibrary
 
     public static class TestList
     {
-        public static bool getTests(ref List<Test> testList)
+        public static bool getTests(List<Test> testList)
         {
             return TestDB.getTests(testList);
         }
