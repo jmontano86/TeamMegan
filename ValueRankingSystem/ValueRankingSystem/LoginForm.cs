@@ -70,10 +70,13 @@ namespace ValueRankingSystem
                 myErrorProvider.SetError(passwordTextBox, "Passwords must be at least 7 characters");
                 passwordTextBox.Focus();
                 return;
-            } else if(strSenderName == "passwordTextBox" && emailTextBox.Text != "" && passwordTextBox.Text != "") 
+            } else if(emailTextBox.Text != "" && passwordTextBox.Text != "") 
             {
                 loginButton.Enabled = true;
                 loginButton.Focus();
+            } else
+            {
+                loginButton.Enabled = false;
             }
             
 
