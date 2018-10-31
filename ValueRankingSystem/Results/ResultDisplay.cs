@@ -5,7 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Results
+    
 {
+/* 
+ * Programmer: Megan Villwock
+ * Last Modified Date: 10/30/2018
+ * 
+ * Class to hold results.
+ * 
+ */
+
+
     public class ResultDisplay
     {
         private string _itemName;
@@ -46,7 +56,7 @@ namespace Results
 
         public override string ToString()
         {
-            return ItemName;
+            return ItemName + " " + TotalScore + "" + Wins + "" + Ties + "" + Losses;
         }
 
     }
