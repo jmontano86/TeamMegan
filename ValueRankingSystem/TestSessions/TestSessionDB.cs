@@ -42,10 +42,10 @@ namespace TestSessions
                 while (TestSessionDataReader.Read())
                 {
                     testSession = new TestSession();
-                    testSession.SessionID = TestSessionDataReader.GetInt32(0);
-                    testSession.TestID = TestSessionDataReader.GetInt32(1);
-                    testSession.UserID = TestSessionDataReader.GetInt32(2);
-                    testSession.CreationDate = TestSessionDataReader.GetDateTime(3);
+                    testSession.intSessionID = TestSessionDataReader.GetInt32(0);
+                    testSession.intTestID = TestSessionDataReader.GetInt32(1);
+                    testSession.intUserID = TestSessionDataReader.GetInt32(2);
+                    testSession.datetimeCreationDate = TestSessionDataReader.GetDateTime(3);
 
                     testSessionList.Add(testSession);
 
@@ -79,12 +79,12 @@ namespace TestSessions
                     "SELECT CAST(scope_identity() AS int)";
 
 
-                Command.Parameters.AddWithValue("@TestID", testsession.TestID);
-                Command.Parameters.AddWithValue("@UserID", testsession.UserID);
-                Command.Parameters.AddWithValue("@CreationDate", testsession.CreationDate);
+                Command.Parameters.AddWithValue("@TestID", testsession.intTestID);
+                Command.Parameters.AddWithValue("@UserID", testsession.intUserID);
+                Command.Parameters.AddWithValue("@CreationDate", testsession.datetimeCreationDate);
 
                 object a = Command.ExecuteScalar();
-                testsession.SessionID = (int)a;
+                testsession.intSessionID = (int)a;
                 
                 return true;
 

@@ -24,31 +24,31 @@ namespace Results
         private int _ties;
         private int _losses;
 
-        public string ItemName
+        public string stringItemName
         {
             get { return _itemName; }
             set { _itemName = value; }
         }
 
-        public int TotalScore
+        public int intTotalScore
         {
             get { return _totalScore; }
             set { _totalScore = value; }
         }
 
-        public int Wins
+        public int intWins
         {
             get { return _wins; }
             set { _wins = value; }
         }
 
-        public int Ties
+        public int intTies
         {
             get { return _ties; }
             set { _ties = value; }
         }
 
-        public int Losses
+        public int intLosses
         {
             get { return _losses; }
             set { _losses = value; }
@@ -56,7 +56,7 @@ namespace Results
 
         public override string ToString()
         {
-            return ItemName + " " + TotalScore + "" + Wins + "" + Ties + "" + Losses;
+            return stringItemName + " " + intTotalScore + "" + intWins + "" + intTies + "" + intLosses;
         }
 
     }

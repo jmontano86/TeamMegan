@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Data;
 using MetroFramework.Forms;
 using UserTestLogic;
 using DataAccessLibrary;
@@ -55,8 +54,8 @@ namespace UserTesting
             userChoiceTwo.Text = itemList[1].Name;
             userChoiceThree.Text = "Undecided";
             // Populate variables
-            currentResult.ItemID1 = itemList[0].ItemID;
-            currentResult.ItemID2 = itemList[1].ItemID;
+            currentResult.intItemID1 = itemList[0].ItemID;
+            currentResult.intItemID2 = itemList[1].ItemID;
         }
         private void testButton_Click(object sender, EventArgs e)
         {
@@ -66,42 +65,42 @@ namespace UserTesting
 
                 if (userChoiceOne.Checked)
                 {
-                    currentResult.UserChoice = itemID1;
+                    currentResult.intUserChoice = itemID1;
                    
                     testButton.Text = "Finished";
                     itemGroupBox.Visible = false;
                     finishedLabel.Visible = true;
-                    currentTestSession.UserID = 1;//currentUser._id;
-                    currentTestSession.TestID = testItems[0].TestID;
-                    currentTestSession.CreationDate = DateTime.Now;
+                    currentTestSession.intUserID = 1;//currentUser._id;
+                    currentTestSession.intTestID = testItems[0].TestID;
+                    currentTestSession.datetimeCreationDate = DateTime.Now;
                     TestSession.CreateSession(currentTestSession);
-                    currentResult.SessionID = currentTestSession.SessionID;
+                    currentResult.intSessionID = currentTestSession.intSessionID;
                     Result.CreateSession(currentResult);
                 }
                 else if (userChoiceTwo.Checked)
                 {
-                    currentResult.UserChoice = itemID2;
+                    currentResult.intUserChoice = itemID2;
                     Result.CreateSession(currentResult);
                     testButton.Text = "Finished";
                     itemGroupBox.Visible = false;
                     finishedLabel.Visible = true;
-                    currentTestSession.UserID = currentUser.intUserID;
-                    currentTestSession.TestID = testItems[0].TestID;
-                    currentTestSession.CreationDate = DateTime.Now;
+                    currentTestSession.intUserID = currentUser.intUserID;
+                    currentTestSession.intTestID = testItems[0].TestID;
+                    currentTestSession.datetimeCreationDate = DateTime.Now;
                     TestSession.CreateSession(currentTestSession);
 
                 }
                 else if (userChoiceThree.Checked)
                 {
                     userChoice = 0;
-                    currentResult.UserChoice = userChoice;
+                    currentResult.intUserChoice = userChoice;
                     Result.CreateSession(currentResult);
                     testButton.Text = "Finished";
                     itemGroupBox.Visible = false;
                     finishedLabel.Visible = true;
-                    currentTestSession.UserID = currentUser.intUserID;
-                    currentTestSession.TestID = testItems[0].TestID;
-                    currentTestSession.CreationDate = DateTime.Now;
+                    currentTestSession.intUserID = currentUser.intUserID;
+                    currentTestSession.intTestID = testItems[0].TestID;
+                    currentTestSession.datetimeCreationDate = DateTime.Now;
                     TestSession.CreateSession(currentTestSession);
                 }
                 else

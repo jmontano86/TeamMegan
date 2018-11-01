@@ -67,7 +67,7 @@ namespace ResultsReporting
             try
 
             {
-                if (Result.GetResults(resultList, ref error, user._id))
+                if (Result.GetResults(resultList, ref error, user.intUserID))
                 {
                     
 
@@ -75,11 +75,11 @@ namespace ResultsReporting
                     {
                         // TestScoreListView.Items.Add(result.ToString());
                         ListViewItem lvi = new ListViewItem();
-                        lvi.Text = (result.ItemName);
-                        lvi.SubItems.Add(result.TotalScore.ToString());
-                        lvi.SubItems.Add(result.Wins.ToString());
-                        lvi.SubItems.Add(result.Ties.ToString());
-                        lvi.SubItems.Add(result.Losses.ToString());
+                        lvi.Text = (result.stringItemName);
+                        lvi.SubItems.Add(result.intTotalScore.ToString());
+                        lvi.SubItems.Add(result.intWins.ToString());
+                        lvi.SubItems.Add(result.intTies.ToString());
+                        lvi.SubItems.Add(result.intLosses.ToString());
 
                         TestScoreListView.Items.Add(lvi);
                     }

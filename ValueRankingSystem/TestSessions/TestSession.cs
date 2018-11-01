@@ -23,25 +23,25 @@ namespace TestSessions
         private DateTime _creationDate;
   
 
-        public int SessionID
+        public int intSessionID
         {
             get { return _sessionID; }
             set { _sessionID = value; }
         }
 
-        public int TestID
+        public int intTestID
         {
             get { return _testID; }
             set { _testID = value; }
         }
 
-        public int UserID
+        public int intUserID
         {
             get { return _userID; }
             set { _userID = value; }
         }
 
-        public DateTime CreationDate
+        public DateTime datetimeCreationDate
         {
             get { return _creationDate; }
             set { _creationDate = value; }
@@ -49,7 +49,7 @@ namespace TestSessions
 
         public override string ToString()
         {
-            return SessionID.ToString();
+            return intSessionID.ToString();
         }
 
       

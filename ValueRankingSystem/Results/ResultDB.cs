@@ -47,11 +47,11 @@ namespace Results
                 {
 
                     result = new ResultDisplay();
-                    result.ItemName = ResultDataReader.GetString(0);
-                    result.TotalScore = ResultDataReader.GetInt32(1);
-                    result.Wins = ResultDataReader.GetInt32(2);
-                    result.Losses = ResultDataReader.GetInt32(3);
-                    result.Ties = ResultDataReader.GetInt32(4);
+                    result.stringItemName = ResultDataReader.GetString(0);
+                    result.intTotalScore = ResultDataReader.GetInt32(1);
+                    result.intWins = ResultDataReader.GetInt32(2);
+                    result.intLosses = ResultDataReader.GetInt32(3);
+                    result.intTies = ResultDataReader.GetInt32(4);
                  
 
                     resultList.Add(result);
@@ -85,13 +85,13 @@ namespace Results
                 Command.CommandText = "INSERT INTO Results (SessionID, ItemID1, ItemID2, UserChoice) VALUES (@SessionID, @ItemID1, @ItemID2, @UserChoice);" +
                     "SELECT CAST(scope_identity() AS int)";
 
-                Command.Parameters.AddWithValue("@SessionID", result.SessionID);
-                Command.Parameters.AddWithValue("@ItemID1", result.ItemID1);
-                Command.Parameters.AddWithValue("@ItemID2", result.ItemID2);
-                Command.Parameters.AddWithValue("@UserChoice", result.UserChoice);
+                Command.Parameters.AddWithValue("@SessionID", result.intSessionID);
+                Command.Parameters.AddWithValue("@ItemID1", result.intItemID1);
+                Command.Parameters.AddWithValue("@ItemID2", result.intItemID2);
+                Command.Parameters.AddWithValue("@UserChoice", result.intUserChoice);
 
                 object a = Command.ExecuteScalar();
-                result.ResultID = (int)a;
+                result.intResultID = (int)a;
                 return true;
 
             }
