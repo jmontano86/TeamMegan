@@ -11,6 +11,14 @@ namespace TestSessions
 {
     public class TestSessionDB
     {
+        /* 
+        * Programmer: Megan Villwock
+        * Last Modified Date: 10/30/2018
+        * 
+        * Gets data from the database and stores it in class/objects.
+        * 
+        */
+
         public static bool GetTestSessions(List<TestSession> testSessionList, ref string error)
         {
             List<TestSession> TestSessionList = new List<TestSession>();
@@ -22,6 +30,7 @@ namespace TestSessions
 
             try
             {
+                // Connect to database and get data.
                 Connection = DatabaseHelper.Connect();
                 Connection.Open();
                 Command = new SqlCommand();
@@ -29,6 +38,7 @@ namespace TestSessions
                 Command.CommandText = "SELECT SessionID, TestID, UserID, CreationDate FROM TestSessions;";
                 TestSessionDataReader = Command.ExecuteReader();
 
+                // Add data to list.
                 while (TestSessionDataReader.Read())
                 {
                     testSession = new TestSession();

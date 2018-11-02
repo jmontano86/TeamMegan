@@ -111,19 +111,23 @@
             // TotalScoreHeader
             // 
             this.TotalScoreHeader.Text = "Total Score";
+            this.TotalScoreHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TotalScoreHeader.Width = 97;
             // 
             // WinsHeader
             // 
             this.WinsHeader.Text = "Wins";
+            this.WinsHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // TiesHeader
             // 
             this.TiesHeader.Text = "Ties";
+            this.TiesHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // LossesHeader
             // 
             this.LossesHeader.Text = "Losses";
+            this.LossesHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // TestScoreListView
             // 

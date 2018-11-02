@@ -15,6 +15,13 @@ using static TestSessions.TestSession;
 using Users;
 using Results;
 
+/* 
+ * Programmer: Megan Villwock
+ * Last Modified Date: 10/30/2018
+ * 
+ * Results reporting form that allows a user to select a user, test, and test date to view results.
+ * 
+ */
 
 namespace ResultsReporting
 {
@@ -27,8 +34,9 @@ namespace ResultsReporting
 
         private void ResultsReporting_Load(object sender, EventArgs e)
         {
+            // Loads the form with the list of users registered in the system.
+
             List<UserClass> userList = new List<UserClass>();
-            
             
             string error = "";
 
@@ -52,13 +60,36 @@ namespace ResultsReporting
             List<ResultDisplay> resultList = new List<ResultDisplay>();
             UserClass user = (UserClass)patientComboBox.SelectedItem;
 
-           
+            TestScoreListView.Items.Clear();
 
 
-            if(Result.GetResults(resultList, ref error, user.intUserID))
+            // Displays test results for a selected user.
+            try
+
             {
+                if (Result.GetResults(resultList, ref error, user.intUserID))
+                {
+                    
 
+                    foreach (ResultDisplay result in resultList)
+                    {
+                        // TestScoreListView.Items.Add(result.ToString());
+                        ListViewItem lvi = new ListViewItem();
+                        lvi.Text = (result.ItemName);
+                        lvi.SubItems.Add(result.TotalScore.ToString());
+                        lvi.SubItems.Add(result.Wins.ToString());
+                        lvi.SubItems.Add(result.Ties.ToString());
+                        lvi.SubItems.Add(result.Losses.ToString());
+
+                        TestScoreListView.Items.Add(lvi);
+                    }
+                }
             }
+            catch
+            {
+                MessageBox.Show("Error!");
+            }
+           
                      
 
 

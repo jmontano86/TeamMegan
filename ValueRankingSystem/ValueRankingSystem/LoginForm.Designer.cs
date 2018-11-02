@@ -57,7 +57,7 @@
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(95, 19);
             this.metroLabel2.TabIndex = 1;
-            this.metroLabel2.Text = "Email Address:";
+            this.metroLabel2.Text = "&Email Address:";
             // 
             // metroLabel3
             // 
@@ -65,8 +65,8 @@
             this.metroLabel3.Location = new System.Drawing.Point(52, 223);
             this.metroLabel3.Name = "metroLabel3";
             this.metroLabel3.Size = new System.Drawing.Size(66, 19);
-            this.metroLabel3.TabIndex = 2;
-            this.metroLabel3.Text = "Password:";
+            this.metroLabel3.TabIndex = 3;
+            this.metroLabel3.Text = "&Password:";
             // 
             // emailTextBox
             // 
@@ -93,7 +93,7 @@
             this.emailTextBox.SelectionStart = 0;
             this.emailTextBox.ShortcutsEnabled = true;
             this.emailTextBox.Size = new System.Drawing.Size(210, 23);
-            this.emailTextBox.TabIndex = 3;
+            this.emailTextBox.TabIndex = 2;
             this.emailTextBox.UseSelectable = true;
             this.emailTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.emailTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -129,7 +129,7 @@
             this.passwordTextBox.UseSystemPasswordChar = true;
             this.passwordTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.passwordTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.passwordTextBox.Leave += new System.EventHandler(this.passwordTextBox_Leave);
+            this.passwordTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.passwordTextBox_KeyPress);
             // 
             // loginButton
             // 

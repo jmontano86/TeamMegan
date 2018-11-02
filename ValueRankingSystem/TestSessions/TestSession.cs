@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace TestSessions
 {
+
+ /* 
+ * Programmer: Megan Villwock
+ * Last Modified Date: 10/30/2018
+ * 
+ * Class to hold test sessions.
+ * 
+ */
+
     public class TestSession
     {
         private int _sessionID;
