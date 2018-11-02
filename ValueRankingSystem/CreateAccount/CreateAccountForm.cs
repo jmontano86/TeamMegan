@@ -48,7 +48,7 @@ namespace CreateAccount
             //this prevents user from using shortcut to delete items
             //and still create account
             myErrorProvider.Clear();
-            if (nameTextBox.Text == "")
+            if (nameTextBox.Text.Trim() == "")
             {
                 createButton.Enabled = false;
                 //validate a name was entered
@@ -65,14 +65,14 @@ namespace CreateAccount
                 return false;
             }
             //check to make sure password is at least 7 characters
-            if (passwordTextBox.Text.Length < 7)
+            if (passwordTextBox.Text.Trim().Length < 7)
             {
                 createButton.Enabled = false;
                 myErrorProvider.SetError(passwordTextBox, "Password must be at least 7 characters");
                 passwordTextBox.Focus();
                 return false;
             }
-            if (passwordTextBox.Text != reenterPasswordTextBox.Text)
+            if (passwordTextBox.Text.Trim() != reenterPasswordTextBox.Text.Trim())
             {
                 createButton.Enabled = false;
                 myErrorProvider.SetError(reenterPasswordTextBox, "Re-Enter Password Confirmation must match Password");
@@ -87,7 +87,7 @@ namespace CreateAccount
             if (validateAllInput())
             {
                 UserClass user = new UserClass();
-                user = user.createUser(emailTextBox.Text, passwordTextBox.Text, nameTextBox.Text);
+                user = user.createUser(emailTextBox.Text.Trim(), passwordTextBox.Text.Trim(), nameTextBox.Text.Trim());
                 //TODO send User to Taking Test Screen. 
                 if (user == null)
                 {
@@ -104,13 +104,13 @@ namespace CreateAccount
 
         private void CreateAccountForm_Load(object sender, EventArgs e)
         {
-            nameTextBox.Focus();
+            this.Activate();
         }
 
         private void nameTextBox_Leave(object sender, EventArgs e)
         {
             myErrorProvider.Clear();
-            if (nameTextBox.Text == "")
+            if (nameTextBox.Text.Trim() == "")
             {
                 createButton.Enabled = false;
                 //validate a name was entered
@@ -135,7 +135,7 @@ namespace CreateAccount
         {
             myErrorProvider.Clear();
             //check to make sure password is at least 7 characters
-            if (passwordTextBox.Text.Length < 7)
+            if (passwordTextBox.Text.Trim().Length < 7)
             {
                 createButton.Enabled = false;
                 myErrorProvider.SetError(passwordTextBox, "Password must be at least 7 characters");
@@ -144,7 +144,7 @@ namespace CreateAccount
             if (passwordTextBox.Text != reenterPasswordTextBox.Text)
             {
                 createButton.Enabled = false;
-                if(reenterPasswordTextBox.Text != "")
+                if(reenterPasswordTextBox.Text.Trim() != "")
                 {
                     myErrorProvider.SetError(reenterPasswordTextBox, "Re-Enter Password Confirmation must match Password");
                 }

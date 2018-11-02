@@ -29,14 +29,34 @@ namespace ValueRankingSystem
 
         private void emailTextBox_Leave(object sender, EventArgs e)
         {
+            myErrorProvider.Clear();
             //check to ensure we have both a valid email and a valid password
-            validateInput(sender);
+            if (!isEmailValid(emailTextBox.Text) && emailTextBox.Text != "")
+            {
+                loginButton.Enabled = false;
+                myErrorProvider.SetError(emailTextBox, "You must enter a valid email address");
+                emailTextBox.Focus();
+                return;
+            }
         }
-
-        private void passwordTextBox_Leave(object sender, EventArgs e)
+        private void passwordTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //validate password entered. Minimum length 7 characters
-            validateInput(sender);
+            if (passwordTextBox.Text != "" && passwordTextBox.Text.Length < 7)
+            {
+                loginButton.Enabled = false;
+                myErrorProvider.SetError(passwordTextBox, "Passwords must be at least 7 characters");
+                passwordTextBox.Focus();
+                return;
+            }
+            else if (emailTextBox.Text != "" && passwordTextBox.Text != "")
+            {
+                myErrorProvider.Clear();
+                loginButton.Enabled = true;
+            }
+            else
+            {
+                loginButton.Enabled = false;
+            }
         }
 
         private bool isEmailValid(string emailAddress)
@@ -51,45 +71,14 @@ namespace ValueRankingSystem
             }
         }
 
-        private void validateInput(object sender)
-        {
-            MetroTextBox mtbSender = (MetroTextBox)sender;
-            string strSenderName = mtbSender.Name;
-            myErrorProvider.Clear();
-            //validate to make sure a valid password was entered as well as a valid email address
-            if (strSenderName == "emailTextBox" && !isEmailValid(emailTextBox.Text) && emailTextBox.Text != "")
-            {
-                loginButton.Enabled = false;
-                myErrorProvider.SetError(emailTextBox, "You must enter a valid email address");
-                emailTextBox.Focus();
-                return;
-            }
-            if (strSenderName == "passwordTextBox" && passwordTextBox.Text != "" && passwordTextBox.Text.Length < 7)
-            {
-                loginButton.Enabled = false;
-                myErrorProvider.SetError(passwordTextBox, "Passwords must be at least 7 characters");
-                passwordTextBox.Focus();
-                return;
-            } else if(emailTextBox.Text != "" && passwordTextBox.Text != "") 
-            {
-                loginButton.Enabled = true;
-                loginButton.Focus();
-            } else
-            {
-                loginButton.Enabled = false;
-            }
-            
-
-        }
-
         private void loginButton_Click(object sender, EventArgs e)
         {
             //All Data is validated, run login info
-            //TODO Create login validation
             UserClass user = new UserClass();
             user = user.login(emailTextBox.Text, passwordTextBox.Text);
             if (user.intUserID > 0)
             {
+                this.Hide();
                 //send to appropriate form: Admin, User, Therapist
                 //TODO: Call appropriate forms.
                 switch (user.strRole)
@@ -107,10 +96,9 @@ namespace ValueRankingSystem
                         testForm.currentUser = user;
                         testForm.ShowDialog();
                         break;
-                    default:
-                        //something seriously went wrong if we hit this
-                        break;
                 }
+                this.Show();
+                this.Activate();
                 loginButton.Enabled = false;
                 passwordTextBox.Text = null;
                 emailTextBox.Text = null;
@@ -120,6 +108,8 @@ namespace ValueRankingSystem
             {
                 MetroMessageBox.Show(this, "Username/Password Combination not found. Please try again!", "Login Failed",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                passwordTextBox.Focus();
+                passwordTextBox.SelectAll();
             }
         }
 
@@ -129,11 +119,13 @@ namespace ValueRankingSystem
             this.Hide();
             createForm.ShowDialog();
             this.Show();
+            this.Activate();
+            emailTextBox.Focus();
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            emailTextBox.Focus();
+            this.Activate();
         }
 
 

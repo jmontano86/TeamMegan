@@ -50,7 +50,7 @@
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(48, 19);
             this.metroLabel1.TabIndex = 0;
-            this.metroLabel1.Text = "Name:";
+            this.metroLabel1.Text = "&Name:";
             // 
             // metroLabel2
             // 
@@ -58,8 +58,8 @@
             this.metroLabel2.Location = new System.Drawing.Point(53, 149);
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(95, 19);
-            this.metroLabel2.TabIndex = 1;
-            this.metroLabel2.Text = "Email Address:";
+            this.metroLabel2.TabIndex = 2;
+            this.metroLabel2.Text = "&Email Address:";
             // 
             // metroLabel3
             // 
@@ -67,8 +67,8 @@
             this.metroLabel3.Location = new System.Drawing.Point(82, 207);
             this.metroLabel3.Name = "metroLabel3";
             this.metroLabel3.Size = new System.Drawing.Size(66, 19);
-            this.metroLabel3.TabIndex = 2;
-            this.metroLabel3.Text = "Password:";
+            this.metroLabel3.TabIndex = 4;
+            this.metroLabel3.Text = "&Password:";
             // 
             // metroLabel4
             // 
@@ -76,8 +76,8 @@
             this.metroLabel4.Location = new System.Drawing.Point(23, 265);
             this.metroLabel4.Name = "metroLabel4";
             this.metroLabel4.Size = new System.Drawing.Size(125, 19);
-            this.metroLabel4.TabIndex = 3;
-            this.metroLabel4.Text = "Re-Enter Password: ";
+            this.metroLabel4.TabIndex = 6;
+            this.metroLabel4.Text = "&Re-Enter Password: ";
             // 
             // nameTextBox
             // 
@@ -104,7 +104,7 @@
             this.nameTextBox.SelectionStart = 0;
             this.nameTextBox.ShortcutsEnabled = true;
             this.nameTextBox.Size = new System.Drawing.Size(219, 23);
-            this.nameTextBox.TabIndex = 4;
+            this.nameTextBox.TabIndex = 1;
             this.nameTextBox.UseSelectable = true;
             this.nameTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.nameTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -135,7 +135,7 @@
             this.emailTextBox.SelectionStart = 0;
             this.emailTextBox.ShortcutsEnabled = true;
             this.emailTextBox.Size = new System.Drawing.Size(219, 23);
-            this.emailTextBox.TabIndex = 5;
+            this.emailTextBox.TabIndex = 3;
             this.emailTextBox.UseSelectable = true;
             this.emailTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.emailTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -166,7 +166,7 @@
             this.passwordTextBox.SelectionStart = 0;
             this.passwordTextBox.ShortcutsEnabled = true;
             this.passwordTextBox.Size = new System.Drawing.Size(219, 23);
-            this.passwordTextBox.TabIndex = 6;
+            this.passwordTextBox.TabIndex = 5;
             this.passwordTextBox.UseSelectable = true;
             this.passwordTextBox.UseSystemPasswordChar = true;
             this.passwordTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));

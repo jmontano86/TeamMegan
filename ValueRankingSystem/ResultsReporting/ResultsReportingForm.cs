@@ -67,7 +67,7 @@ namespace ResultsReporting
             try
 
             {
-                if (Result.GetResults(resultList, ref error, user._id))
+                if (Result.GetResults(resultList, ref error, user.intUserID))
                 {
                     
 
