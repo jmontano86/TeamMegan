@@ -13,12 +13,16 @@ namespace UserTestLogic
 {
     public class UserTestLogic
     {
-        Test currentTest;
-        Item currentItem;
-
         
-        //Load Items using the testId as an indicator
-        public static List<Item> loadTests(List<Test> testList, List<Item> itemList, UserClass user)
+        /// <summary>
+        /// Accidentally wrote this for sprint 1 because I misunderstood my user story but the point of this was 
+        /// to load all the available tests that the user can take. Found out that this can be used in sprint 2
+        /// </summary>
+        /// <param name="testList"></param>
+        /// <param name="itemList"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public static List<Test> loadTests(List<Test> testList, List<Item> itemList, UserClass user)
         {
             bool testExist = false;
             List<Test> availTest = new List<Test>();
@@ -33,13 +37,14 @@ namespace UserTestLogic
                     availTest.Add(test);
                 }
             }
-            //Get all test items
-            foreach (var test in availTest)
-            {
-                //Only store test items that match test id and testSession does not exist yet
-                ItemList.getItems(itemList, test.TestID);
-            }
-            return itemList;
+            // Get all test items
+            // Need to rewrite this for sprint 2
+            //foreach (var test in availTest)
+            //{
+            //    //Only store test items that match test id and testSession does not exist yet
+            //    ItemList.getItems(itemList, test.TestID);
+            //}
+            return availTest;
         }
 
 

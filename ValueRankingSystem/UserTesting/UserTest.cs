@@ -8,14 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Data;
 using MetroFramework.Forms;
 using UserTestLogic;
 using DataAccessLibrary;
 using Users;
 using Results;
 using TestSessions;
-//using ValueRankingSystem; // This is not working. Still trying to figure out a file deletion error that occurred during local merge
 
 namespace UserTesting
 {
@@ -45,9 +43,6 @@ namespace UserTesting
         {
             bool testAlreadyTaken = false;
 
-
-            //Load tests into the radio buttons
-            //UserTestLogic.UserTestLogic.loadTests(testItems, itemList, currentUser);
             UserTestLogic.UserTestLogic.getItemPair(itemPairList);
             //Checks to see if user already took test
             testAlreadyTaken = UserTestLogic.UserTestLogic.userTookTest(currentUser, itemPairList[itemPairListIndex]);
@@ -109,7 +104,7 @@ namespace UserTesting
         {
             try
             {
-                // Change button to finish if all itemPairs have been accounted for
+                // Change button to finish if all itemPairs that have been accounted for
                 if (testDone == false)
                 {
                     if (userChoiceOne.Checked)
