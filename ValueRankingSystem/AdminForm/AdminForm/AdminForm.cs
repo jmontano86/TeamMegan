@@ -5,7 +5,7 @@ using Microsoft.VisualBasic;
 using MetroFramework.Forms;
 using DataAccessLibrary;
 
-namespace AdminForms
+namespace AdminForm
 {
     public partial class AdminForm : MetroForm
     {
@@ -14,129 +14,152 @@ namespace AdminForms
         {
             InitializeComponent();
         }
-        //Gets tests that do not exist in the testsessions table
-        //and puts them in the editTestCombobox
+        //Gets tests and puts them in the editTestComboBox
         private void AdminForm_Load(object sender, EventArgs e)
         {
+            currentTest = new Test();
             List<Test> testList = new List<Test>();
-            if (TestList.getTests(ref testList))
+            string stringErrorString = "";
+            if (TestList.getTests(testList, stringErrorString))
             {
                 foreach(Test test in testList)
                 {
                     editTestComboBox.Items.Add(test.TestName);
                 }
             }
+            else
+            {
+                MessageBox.Show(stringErrorString);
+            }
+            this.Activate();
         }
-        //Gets the test name and number of items from the user
-        //and sets up the new test based on input
+        //Gets the test name and sets up the new test
         private void addTestButton_Click(object sender, EventArgs e)
         {
-            String strInputOne = Interaction.InputBox("Please enter a test name", "Add a test");
-            String strInputTwo = Interaction.InputBox("Please enter the number of items you wish to add", "Add items");
-            int intInputTwo = 0;
-            try
+            String strInputOne = Interaction.InputBox("Please enter a test name", "Add a test").Trim();
+            if(strInputOne != "")
             {
-                Int32.TryParse(strInputTwo, out intInputTwo);
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a whole number");
-            }
-
-            if (intInputTwo < 2)
-            {
-                MessageBox.Show("Please enter a number greater than 1");
-            }
-            else
-            {
-                itemsDataGrid.Rows.Clear();
-                itemsDataGrid.Rows.Add();
-                currentTest = new Test();
-                currentTest.TestName = strInputOne;
-                for (int i = 0; i < intInputTwo; i++)
+                if (checkTestNames(strInputOne))
                 {
-                    DataGridViewRow row = (DataGridViewRow)itemsDataGrid.Rows[i].Clone();
-                    row.Cells[0].Value = (i + 1).ToString();
-                    row.Cells[1].Value = null;
-                    itemsDataGrid.Rows.Add(row);
+                    MessageBox.Show("The " + strInputOne + " test already exists");
                 }
-                cancelButton.Enabled = true;
-                addItemButton.Enabled = true;
-                deleteItemButton.Enabled = true;
-                testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
-                testNameLabel.Visible = true;
-                deleteTestButton.Enabled = false;
-                itemsDataGrid.Rows.RemoveAt(0);
-            }
-            
-        }
-
-        //Deletes the selected item and fixes the indexing of the items after the deleted item
-        //Checks the cells for 2+ filled out items
-        private void deleteItemButton_Click(object sender, EventArgs e)
-        {
-            if (itemsDataGrid.RowCount > 0)
-            {
-                foreach (DataGridViewRow row in itemsDataGrid.Rows)
+                else
                 {
-                    if (row.Index > itemsDataGrid.CurrentRow.Index)
+                    itemsDataGrid.Rows.Clear();
+                    currentTest.TestName = "";
+                    currentTest.TestID = 0;
+                    currentTest.TestName = strInputOne;
+                    cancelButton.Enabled = true;
+                    addItemButton.Enabled = true;
+                    deleteItemButton.Enabled = true;
+                    testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
+                    testNameLabel.Visible = true;
+                    deleteTestButton.Enabled = false;
+                    itemsDataGrid.Focus();
+                }
+            }
+        }
+        //Check the test name provided to see if it already exists
+        private bool checkTestNames(string strTestName)
+        {
+            List<string> listTestNameList = new List<string>();
+            bool sameName = false;
+            string stringErrorString = "";
+            if (TestList.getTestNames(listTestNameList, stringErrorString))
+            {
+                foreach (string name in listTestNameList)
+                {
+                    if (strTestName.ToUpper() == name.ToUpper())
                     {
-                        int intCurrentCell;
-                        Int32.TryParse(row.Cells[0].Value.ToString(), out intCurrentCell);
-                        row.Cells[0].Value = (intCurrentCell - 1).ToString();
+                        sameName = true;
                     }
                 }
-                itemsDataGrid.Rows.RemoveAt(itemsDataGrid.CurrentCell.RowIndex);
-                checkCells();
-                deleteItemButton.Enabled = true;
             }
-            else
+            return sameName;
+        }
+        //Deletes the selected item
+        private void deleteItemButton_Click(object sender, EventArgs e)
+        {
+            itemsDataGrid.Rows.RemoveAt(itemsDataGrid.CurrentCell.RowIndex);
+            deleteItemButton.Enabled = true;
+            if(itemsDataGrid.RowCount == 0)
             {
                 deleteItemButton.Enabled = false;
             }
+            itemsDataGrid.Focus();
         }
 
         //Adds a row to the data grid
         private void addItemButton_Click(object sender, EventArgs e)
         {
             int intIndex = itemsDataGrid.Rows.Add();
-            itemsDataGrid.Rows[intIndex].Cells[0].Value = (intIndex + 1).ToString();
-            itemsDataGrid.Rows[intIndex].Cells[1].Value = null;
+            itemsDataGrid.Rows[intIndex].Cells[0].Value = null;
+            itemsDataGrid.Focus();
             deleteItemButton.Enabled = true;
         }
 
-        //Clears the rows on the data grid and disables all applicable buttons
+        //Resets test if it exists on the database, clears the form if it doesn't
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            itemsDataGrid.Rows.Clear();
-            cancelButton.Enabled = false;
-            finishButton.Enabled = false;
-            addItemButton.Enabled = false;
-            deleteItemButton.Enabled = false;
-            testNameLabel.Visible = false;
-            deleteTestButton.Enabled = false;
-        }
-
-        //When the cell being edited is finished editing, call the checkCells method
-        private void itemsDataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            checkCells();
-        }
-
-        //Checks the cells to see how many are filled out.
-        //If there are 2+ filled out, then the finish button is enabled
-        //If 1 or fewer are filled out, then the finish button is disabled
-        private void checkCells()
-        {
-            int intFilledOutCells = 0;
-            foreach (DataGridViewRow row in itemsDataGrid.Rows)
+            string stringErrorString = "";
+            if(currentTest.TestID != 0)
             {
-                if (row.Cells[1].Value != null)
+                List<Item> listItemsList = new List<Item>();
+                if(ItemList.getItems(listItemsList, currentTest.TestID, stringErrorString))
                 {
-                    intFilledOutCells++;
+                    itemsDataGrid.Rows.Clear();
+                    foreach(Item item in listItemsList)
+                    {
+                        int intIndex = itemsDataGrid.Rows.Add();
+                        itemsDataGrid.Rows[intIndex].Cells[0].Value = item.Name;
+                    }
                 }
             }
-            if (intFilledOutCells > 1)
+            else
+            {
+                itemsDataGrid.Rows.Clear();
+                cancelButton.Enabled = false;
+                finishButton.Enabled = false;
+                addItemButton.Enabled = false;
+                deleteItemButton.Enabled = false;
+                testNameLabel.Visible = false;
+                deleteTestButton.Enabled = false;
+                currentTest.TestName = "";
+                currentTest.TestID = 0;
+            }
+        }
+
+        //When the cell being edited is finished editing:
+        private void itemsDataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            //Test all items in the datagrid for duplicate items
+            for (int o = 0; o < itemsDataGrid.RowCount; o++)
+            {
+                for (int i = 0; i < itemsDataGrid.RowCount; i++)
+                {
+                    if (itemsDataGrid.Rows[i].Cells[0].Value != null
+                        && itemsDataGrid.Rows[o].Cells[0].Value != null && 
+                        itemsDataGrid.Rows[i].Cells[0].Value.ToString().ToUpper() ==
+                        itemsDataGrid.Rows[o].Cells[0].Value.ToString().ToUpper() && i != o)
+                    {
+                        MessageBox.Show(itemsDataGrid.Rows[i].Cells[0].Value + "is a duplicate.");
+                        itemsDataGrid.Rows.RemoveAt(i);
+                    }
+                }
+            }
+            //Add a new row if you're at the bottom row
+            if (itemsDataGrid.CurrentRow.Index == itemsDataGrid.Rows.Count)
+            {
+                int intCurrentCell = itemsDataGrid.Rows.Add();
+                itemsDataGrid.Rows[intCurrentCell].Cells[0].Selected = true;
+            }
+            //Trim the current cell's content
+            if(itemsDataGrid.CurrentCell.Value != null)
+            {
+                itemsDataGrid.CurrentCell.Value = itemsDataGrid.CurrentCell.Value.ToString().Trim();
+            }
+            //Enable or disable the finish button based on the number of filled out cells
+            if (checkCells())
             {
                 finishButton.Enabled = true;
             }
@@ -145,26 +168,92 @@ namespace AdminForms
                 finishButton.Enabled = false;
             }
         }
+
+        //Checks the cells to see how many are filled out.
+        private bool checkCells()
+        {
+            int intFilledOutCells = 0;
+            bool moreThan2Items;
+            foreach (DataGridViewRow row in itemsDataGrid.Rows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    intFilledOutCells++;
+                }
+            }
+            if (intFilledOutCells > 1)
+            {
+                moreThan2Items = true;
+            }
+            else
+            {
+                moreThan2Items = false;
+            }
+            return moreThan2Items;
+        }
         //Adds test to tests table and items to items table
         private void finishButton_Click(object sender, EventArgs e)
         {
-            List<string> itemNames = new List<string>();
-            //Get the items from the data grid and add them to the list
-            foreach(DataGridViewRow row in itemsDataGrid.Rows)
+            string stringErrorString = "";
+            bool isExistingTest = false;
+            //If a test with the same name exists, delete it and its items
+            if (checkTestNames(currentTest.TestName))
             {
-                if(row.Cells[1].Value != null)
+                ItemList.deleteItems(currentTest.TestID, stringErrorString);
+                TestList.deleteTest(currentTest.TestID, stringErrorString);
+                isExistingTest = true;
+            }
+            //Delete null cells
+            for(int i = itemsDataGrid.Rows.Count - 1; i > 1; i--)
+            {
+                if(itemsDataGrid.Rows[i].Cells[0].Value == null)
                 {
-                    itemNames.Add(row.Cells[1].Value.ToString());
+                    itemsDataGrid.Rows.RemoveAt(i);
                 }
             }
-            //Add the test and the items to the database
-            if (TestList.addTest(currentTest))
+            if (checkCells())
             {
-                if (ItemList.addItems(itemNames, currentTest.TestID))
+                List<string> listItemNames = new List<string>();
+                //Get the items from the itemsDataGrid and add them to the list
+                foreach (DataGridViewRow row in itemsDataGrid.Rows)
                 {
-                    MessageBox.Show(currentTest.TestName + " has been added");
-                    finishButton.Enabled = true;
+                    if (row.Cells[0].Value != null)
+                    {
+                        listItemNames.Add(row.Cells[0].Value.ToString());
+                    }
                 }
+                //Add the test and the items to the database
+                if (TestList.addTest(currentTest, stringErrorString))
+                {
+                    if (ItemList.addItems(listItemNames, currentTest.TestID, stringErrorString))
+                    {
+                        if (isExistingTest)
+                        {
+                            MessageBox.Show("The " + currentTest.TestName + " test has been overwritten");
+                        }
+                        else
+                        {
+                            MessageBox.Show("The " + currentTest.TestName + " test has been added");
+                        }
+                        deleteTestButton.Enabled = true;
+                        if (!editTestComboBox.Items.Contains(currentTest.TestName))
+                        {
+                            editTestComboBox.Items.Add(currentTest.TestName);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(stringErrorString);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(stringErrorString);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Duplicate items were removed.  There are now less than 2 items for this test.  Please add more items");
             }
         }
         //Deletes the current test
@@ -173,9 +262,26 @@ namespace AdminForms
             if (MessageBox.Show("Are you sure you want to delete the " + currentTest.TestName +
                 " test?", "Delete test?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                ItemList.deleteItems(currentTest.TestID);
-                TestList.deleteTest(currentTest.TestID);
-                editTestComboBox.Items.Remove(editTestComboBox.SelectedItem);
+                string stringErrorString = "";
+                if (ItemList.deleteItems(currentTest.TestID, stringErrorString))
+                {
+                    if (TestList.deleteTest(currentTest.TestID, stringErrorString))
+                    {
+                        MessageBox.Show("The " + currentTest.TestName + " test has been deleted");
+                        editTestComboBox.Items.Remove(currentTest.TestName);
+                        currentTest.TestID = 0;
+                        currentTest.TestName = "";
+                        cancelButton.PerformClick();
+                    }
+                    else
+                    {
+                        MessageBox.Show(stringErrorString);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(stringErrorString);
+                }
             }
         }
         //When the edit test combobox selection changes, get the test ID and the items for that test
@@ -183,32 +289,68 @@ namespace AdminForms
         {
             Test test = new Test();
             test.TestName = editTestComboBox.SelectedItem.ToString();
-            if (TestList.getTestID(test))
+            string stringErrorString = "";
+            //Get the ID for the selected test and get the items from that test and put them in the itemsDataGrid
+            if (TestList.getTestID(test, stringErrorString))
             {
                 List<Item> listItemsList = new List<Item>();
-                if (ItemList.getItems(listItemsList, test.TestID))
+                if (ItemList.getItems(listItemsList, test.TestID, stringErrorString))
                 {
                     itemsDataGrid.Rows.Clear();
-                    itemsDataGrid.Rows.Add();
                     foreach (Item item in listItemsList)
                     {
-                        DataGridViewRow row = (DataGridViewRow)itemsDataGrid.Rows[0].Clone();
-                        row.Cells[0].Value = item.ItemID.ToString();
-                        row.Cells[1].Value = item.Name;
-                        itemsDataGrid.Rows.Add(row);
+                        int intIndex = itemsDataGrid.Rows.Add();
+                        itemsDataGrid.Rows[intIndex].Cells[0].Value = item.Name;
                     }
-                    itemsDataGrid.Rows.RemoveAt(0);
                     currentTest = test;
-                    testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
-                    testNameLabel.Visible = true;
-                    cancelButton.Enabled = true;
-                    addItemButton.Enabled = true;
-                    deleteItemButton.Enabled = true;
+
+                    //Check if selected test is in testsessions and set controls accordingly
+                    List<int> listTestSessionIDs = new List<int>();
+                    bool isTestSessionID = false;
+                    if (TestList.getTestSessions(listTestSessionIDs, stringErrorString))
+                    {
+                        foreach(int intTestID in listTestSessionIDs)
+                        {
+                            if(test.TestID == intTestID)
+                            {
+                                isTestSessionID = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(stringErrorString);
+                        cancelButton.PerformClick();
+                    }
+                    if (isTestSessionID)
+                    {
+                        testNameLabel.Text = "You are now viewing the " + currentTest.TestName + " test";
+                        testNameLabel.Visible = true;
+                        cancelButton.Enabled = true;
+                        addItemButton.Enabled = false;
+                        deleteItemButton.Enabled = false;
+                        deleteTestButton.Enabled = false;
+                        finishButton.Enabled = false;
+                    }
+                    else
+                    {
+                        testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
+                        testNameLabel.Visible = true;
+                        cancelButton.Enabled = true;
+                        addItemButton.Enabled = true;
+                        deleteItemButton.Enabled = true;
+                        deleteTestButton.Enabled = true;
+                        finishButton.Enabled = true;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error finding items for the " + test.TestName + " test.");
                 }
             }
             else
             {
-                MessageBox.Show("Could not find test '" + editTestComboBox.SelectedValue.ToString() + " test'");
+                MessageBox.Show("Could not find the '" + editTestComboBox.SelectedValue.ToString() + " test'");
             }
         }
     }

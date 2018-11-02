@@ -1,4 +1,4 @@
-﻿namespace AdminForms
+﻿namespace AdminForm
 {
     partial class AdminForm
     {
@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.itemsDataGrid = new System.Windows.Forms.DataGridView();
-            this.itemNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.itemNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deleteItemButton = new MetroFramework.Controls.MetroButton();
             this.addItemButton = new MetroFramework.Controls.MetroButton();
@@ -47,19 +46,12 @@
             this.itemsDataGrid.AllowUserToAddRows = false;
             this.itemsDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.itemsDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.itemNumberColumn,
             this.itemNameColumn});
-            this.itemsDataGrid.Location = new System.Drawing.Point(170, 75);
+            this.itemsDataGrid.Location = new System.Drawing.Point(177, 75);
             this.itemsDataGrid.Name = "itemsDataGrid";
-            this.itemsDataGrid.Size = new System.Drawing.Size(321, 196);
+            this.itemsDataGrid.Size = new System.Drawing.Size(234, 196);
             this.itemsDataGrid.TabIndex = 24;
             this.itemsDataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.itemsDataGrid_CellEndEdit);
-            // 
-            // itemNumberColumn
-            // 
-            this.itemNumberColumn.HeaderText = "Item number";
-            this.itemNumberColumn.Name = "itemNumberColumn";
-            this.itemNumberColumn.ReadOnly = true;
             // 
             // itemNameColumn
             // 
@@ -70,7 +62,7 @@
             // deleteItemButton
             // 
             this.deleteItemButton.Enabled = false;
-            this.deleteItemButton.Location = new System.Drawing.Point(336, 309);
+            this.deleteItemButton.Location = new System.Drawing.Point(256, 307);
             this.deleteItemButton.Name = "deleteItemButton";
             this.deleteItemButton.Size = new System.Drawing.Size(75, 23);
             this.deleteItemButton.TabIndex = 18;
@@ -81,7 +73,7 @@
             // addItemButton
             // 
             this.addItemButton.Enabled = false;
-            this.addItemButton.Location = new System.Drawing.Point(257, 309);
+            this.addItemButton.Location = new System.Drawing.Point(177, 307);
             this.addItemButton.Name = "addItemButton";
             this.addItemButton.Size = new System.Drawing.Size(73, 23);
             this.addItemButton.TabIndex = 19;
@@ -92,7 +84,7 @@
             // finishButton
             // 
             this.finishButton.Enabled = false;
-            this.finishButton.Location = new System.Drawing.Point(336, 338);
+            this.finishButton.Location = new System.Drawing.Point(256, 336);
             this.finishButton.Name = "finishButton";
             this.finishButton.Size = new System.Drawing.Size(74, 23);
             this.finishButton.TabIndex = 20;
@@ -103,7 +95,7 @@
             // cancelButton
             // 
             this.cancelButton.Enabled = false;
-            this.cancelButton.Location = new System.Drawing.Point(416, 338);
+            this.cancelButton.Location = new System.Drawing.Point(336, 336);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 21;
@@ -135,7 +127,7 @@
             // testNameLabel
             // 
             this.testNameLabel.AutoSize = true;
-            this.testNameLabel.Location = new System.Drawing.Point(170, 274);
+            this.testNameLabel.Location = new System.Drawing.Point(177, 274);
             this.testNameLabel.Name = "testNameLabel";
             this.testNameLabel.Size = new System.Drawing.Size(81, 19);
             this.testNameLabel.TabIndex = 25;
@@ -144,7 +136,8 @@
             // 
             // deleteTestButton
             // 
-            this.deleteTestButton.Location = new System.Drawing.Point(418, 309);
+            this.deleteTestButton.Enabled = false;
+            this.deleteTestButton.Location = new System.Drawing.Point(338, 307);
             this.deleteTestButton.Name = "deleteTestButton";
             this.deleteTestButton.Size = new System.Drawing.Size(73, 23);
             this.deleteTestButton.TabIndex = 26;
@@ -156,7 +149,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(553, 465);
+            this.ClientSize = new System.Drawing.Size(475, 465);
             this.Controls.Add(this.deleteTestButton);
             this.Controls.Add(this.itemsDataGrid);
             this.Controls.Add(this.deleteItemButton);
@@ -178,8 +171,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView itemsDataGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn itemNumberColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn itemNameColumn;
         private MetroFramework.Controls.MetroButton deleteItemButton;
         private MetroFramework.Controls.MetroButton addItemButton;
         private MetroFramework.Controls.MetroButton finishButton;
@@ -188,6 +179,7 @@
         private MetroFramework.Controls.MetroComboBox editTestComboBox;
         private MetroFramework.Controls.MetroLabel testNameLabel;
         private MetroFramework.Controls.MetroButton deleteTestButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn itemNameColumn;
     }
 }
 

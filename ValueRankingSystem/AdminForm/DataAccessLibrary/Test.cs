@@ -25,21 +25,29 @@ namespace DataAccessLibrary
 
     public static class TestList
     {
-        public static bool getTests(ref List<Test> testList)
+        public static bool getTests(List<Test> listTestList, string stringErrorString)
         {
-            return TestDB.getTests(testList);
+            return TestDB.getTests(listTestList, stringErrorString);
         }
-        public static bool addTest(Test test)
+        public static bool getTestSessions(List<int> listTestIDList, string stringErrorString)
         {
-            return TestDB.addTest(test);
+            return TestDB.getTestSessions(listTestIDList, stringErrorString);
         }
-        public static bool deleteTest(int intTestID)
+        public static bool getTestNames(List<string> listTestNames, string stringErrorString)
         {
-            return TestDB.deleteTest(intTestID);
+            return TestDB.getTestNames(listTestNames, stringErrorString);
         }
-        public static bool getTestID(Test test)
+        public static bool addTest(Test test, string stringErrorString)
         {
-            return TestDB.getTestID(test);
+            return TestDB.addTest(test, stringErrorString);
+        }
+        public static bool deleteTest(int intTestID, string stringErrorString)
+        {
+            return TestDB.deleteTest(intTestID, stringErrorString);
+        }
+        public static bool getTestID(Test test, string stringErrorString)
+        {
+            return TestDB.getTestID(test, stringErrorString);
         }
     }
 }
