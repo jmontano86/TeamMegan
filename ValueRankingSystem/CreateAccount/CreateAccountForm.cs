@@ -116,7 +116,10 @@ namespace CreateAccount
                 //validate a name was entered
                 myErrorProvider.SetError(nameTextBox, "Please enter your name");
                 nameTextBox.Focus();
+                return;
             }
+            
+
         }
 
         private void emailTextBox_Leave(object sender, EventArgs e)
@@ -128,6 +131,14 @@ namespace CreateAccount
                 createButton.Enabled = false;
                 myErrorProvider.SetError(emailTextBox, "You must enter a valid email address");
                 emailTextBox.Focus();
+                return;
+            }
+
+            if(UserClass.search(emailTextBox.Text.Trim()))
+            {
+                MetroMessageBox.Show(this, "You are already registered!", "User Already Exists", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
             }
         }
 

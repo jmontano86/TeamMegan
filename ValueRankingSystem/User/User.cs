@@ -86,7 +86,7 @@ namespace Users
             UserDB db = new UserDB();
             //TODO: Compare database with email address to ensure no prior registration
             string strHashedPassword = hashPassword(strPassword);
-            if (!search(strEmail))
+            if (!UserClass.search(strEmail))
             {
                 int intID = db.CreateAccount(strEmail, strHashedPassword, strUsername);
                 if (intID > 0)
@@ -112,7 +112,7 @@ namespace Users
             return strUsername;
         }
 
-        private bool search(string strEmail)
+        public static bool search(string strEmail)
         {
             //find existing user
             UserDB db = new UserDB();
