@@ -65,7 +65,7 @@ namespace TestSessions
             {
                 Connection.Open();
                 Command.Connection = Connection;
-                Command.CommandText = "INSERT INTO TestSession (TestID, UserID, CreationDate) VALUES (@TestID, @UserID, @CreationDate);" +
+                Command.CommandText = "INSERT INTO TestSessions (TestID, UserID, CreationDate) VALUES (@TestID, @UserID, @CreationDate);" +
                     "SELECT CAST(scope_identity() AS int)";
 
 

@@ -32,87 +32,122 @@ namespace UserTesting
             get { return _currentUser; }
             set { _currentUser = value; }
         }
-        List<Test> testItems = new List<Test>();
+        List<ItemPair> itemPairList = new List<ItemPair>();
+        //List<Test> testItems = new List<Test>();
         List<Item> itemList = new List<Item>();
-        int itemID1 = 0;
-        int itemID2 = 0;
-        int userChoice = 0;
-        Result currentResult = new Result();
+        List<Result> allCurrentResults = new List<Result>();
+        ItemPair itemPair = new ItemPair();
+        int itemPairListIndex = 0;
+        bool testDone = false;
+
         TestSession currentTestSession = new TestSession();
         private void Form1_Load(object sender, EventArgs e)
         {
             //Get user data
             //currentUser = LoginForm.user;
             //Load tests into the radio buttons
-            UserTestLogic.UserTestLogic.loadTests(testItems, itemList, currentUser);
-            populateRadio();
+            //UserTestLogic.UserTestLogic.loadTests(testItems, itemList, currentUser);
+            UserTestLogic.UserTestLogic.getItemPair(itemPairList);
+            //populateRadio();
+            // Get Item Pairs
+            populateGroupBox(itemPairList, itemPairListIndex);
         }
 
         // Changes the radio buttons based content in array
-        private void populateRadio()
+        public void populateRadio(ItemPair itemPair, Result currentResult)
         {
-            userChoiceOne.Text = itemList[0].Name;
-            userChoiceTwo.Text = itemList[1].Name;
+            userChoiceOne.Text = itemPair.Item1.Name;
+            userChoiceTwo.Text = itemPair.Item2.Name;
             userChoiceThree.Text = "Undecided";
             // Populate variables
-            currentResult.ItemID1 = itemList[0].ItemID;
-            currentResult.ItemID2 = itemList[1].ItemID;
+            currentResult.ItemID1 = itemPair.Item1.ItemID;
+            currentResult.ItemID2 = itemPair.Item2.ItemID;
         }
+        // Gets the next index in the itemPairList
+        private void populateGroupBox(List<ItemPair> listItemPairList, int itemPairListIndex)
+        {
+            Result currentResult = new Result();
+            if (itemPairListIndex > listItemPairList.Count-1)
+            {
+                testDone = true;
+                // write to test session table
+                List<TestSession> testSessionList = new List<TestSession>();
+                currentTestSession.UserID = currentUser.intUserID;
+                currentTestSession.TestID = 1; // Need to change this for sprint 2
+                currentTestSession.CreationDate = DateTime.Now;
+                TestSession.CreateSession(currentTestSession);
+                // Get session ID
+                int sessionID = 0;
+                sessionID = UserTestLogic.UserTestLogic.getCurrentSessionId(sessionID);
+                foreach (var currentSesResult in allCurrentResults)
+                {
+                    currentSesResult.SessionID = sessionID;
+                    Result.CreateSession(currentSesResult);
+                }
+                userChoiceOne.Visible = false;
+                userChoiceTwo.Visible = false;
+                userChoiceThree.Visible = false;
+                finishedLabel.Visible = true;
+                testButton.Visible = false;
+            }
+            else
+            {
+                // Populate groupbox radio buttons with itempair by index
+                ItemPair newItemPair = new ItemPair();
+                newItemPair = itemPairList[itemPairListIndex];
+                populateRadio(newItemPair, currentResult);
+                
+            }
+        }
+ 
         private void testButton_Click(object sender, EventArgs e)
         {
             try
             {
-                // Get existing test sessions
+                // Change button to finish if all itemPairs have been accounted for
+                if (testDone == false)
+                {
+                    if (userChoiceOne.Checked)
+                    {
+                        //Stores user choice in currentResult
+                        
+                        currentResult.UserChoice = currentResult.ItemID1;
+                        //Stores currentResult into an array of results
+                        allCurrentResults.Add(currentResult);
+                        itemPairListIndex++;
+                        populateGroupBox(itemPairList ,itemPairListIndex);
 
-                if (userChoiceOne.Checked)
-                {
-                    currentResult.UserChoice = itemID1;
-                   
-                    testButton.Text = "Finished";
-                    itemGroupBox.Visible = false;
-                    finishedLabel.Visible = true;
-                    currentTestSession.UserID = 1;//currentUser._id;
-                    currentTestSession.TestID = testItems[0].TestID;
-                    currentTestSession.CreationDate = DateTime.Now;
-                    TestSession.CreateSession(currentTestSession);
-                    currentResult.SessionID = currentTestSession.SessionID;
-                    Result.CreateSession(currentResult);
+                    }
+                    else if (userChoiceTwo.Checked)
+                    {
+                        //Stores user choice in currentResult
+                        currentResult.UserChoice = currentResult.ItemID2;
+                        //Stores currentResults into an array of results
+                        allCurrentResults.Add(currentResult);
+                        itemPairListIndex++;
+                        populateGroupBox(itemPairList, itemPairListIndex);
+                        
+                    }
+                    else if (userChoiceThree.Checked)
+                    {
+                        //Stores user choice in currentResult
+                        currentResult.UserChoice = 0;
+                        //Stores currentResults into an array of results
+                        allCurrentResults.Add(currentResult);
+                        itemPairListIndex++;
+                        populateGroupBox(itemPairList, itemPairListIndex);
+                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please make a choice");
+                    }
                 }
-                else if (userChoiceTwo.Checked)
-                {
-                    currentResult.UserChoice = itemID2;
-                    Result.CreateSession(currentResult);
-                    testButton.Text = "Finished";
-                    itemGroupBox.Visible = false;
-                    finishedLabel.Visible = true;
-                    currentTestSession.UserID = currentUser.intUserID;
-                    currentTestSession.TestID = testItems[0].TestID;
-                    currentTestSession.CreationDate = DateTime.Now;
-                    TestSession.CreateSession(currentTestSession);
-                    Result.CreateSession(currentResult);
-                }
-                else if (userChoiceThree.Checked)
-                {
-                    userChoice = 0;
-                    currentResult.UserChoice = userChoice;
-                    Result.CreateSession(currentResult);
-                    testButton.Text = "Finished";
-                    itemGroupBox.Visible = false;
-                    finishedLabel.Visible = true;
-                    currentTestSession.UserID = currentUser.intUserID;
-                    currentTestSession.TestID = testItems[0].TestID;
-                    currentTestSession.CreationDate = DateTime.Now;
-                    TestSession.CreateSession(currentTestSession);
-                    Result.CreateSession(currentResult);
-                }
-                else
-                {
-                    MessageBox.Show("Please make a choice");
-                }
+                
             }
             catch
             {
-                MessageBox.Show("Something went wrong with the display");
+                MessageBox.Show("Something went wrong with gathering item data");
             }
         }
         
