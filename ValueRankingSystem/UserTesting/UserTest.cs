@@ -43,30 +43,35 @@ namespace UserTesting
         TestSession currentTestSession = new TestSession();
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Get user data
-            //currentUser = LoginForm.user;
+            bool testAlreadyTaken = false;
+
+
             //Load tests into the radio buttons
             //UserTestLogic.UserTestLogic.loadTests(testItems, itemList, currentUser);
             UserTestLogic.UserTestLogic.getItemPair(itemPairList);
-            //populateRadio();
+            //Checks to see if user already took test
+            testAlreadyTaken = UserTestLogic.UserTestLogic.userTookTest(currentUser, itemPairList[itemPairListIndex]);
+            if (testAlreadyTaken == true)
+            {
+                MessageBox.Show("You have already taken this test");
+                this.Close();
+            }
             // Get Item Pairs
             populateGroupBox(itemPairList, itemPairListIndex);
+           
+
         }
 
         // Changes the radio buttons based content in array
-        public void populateRadio(ItemPair itemPair, Result currentResult)
+        public void populateRadio(ItemPair itemPair)
         {
             userChoiceOne.Text = itemPair.Item1.Name;
             userChoiceTwo.Text = itemPair.Item2.Name;
             userChoiceThree.Text = "Undecided";
-            // Populate variables
-            currentResult.ItemID1 = itemPair.Item1.ItemID;
-            currentResult.ItemID2 = itemPair.Item2.ItemID;
         }
         // Gets the next index in the itemPairList
         private void populateGroupBox(List<ItemPair> listItemPairList, int itemPairListIndex)
         {
-            Result currentResult = new Result();
             if (itemPairListIndex > listItemPairList.Count-1)
             {
                 testDone = true;
@@ -95,7 +100,7 @@ namespace UserTesting
                 // Populate groupbox radio buttons with itempair by index
                 ItemPair newItemPair = new ItemPair();
                 newItemPair = itemPairList[itemPairListIndex];
-                populateRadio(newItemPair, currentResult);
+                populateRadio(newItemPair);
                 
             }
         }
@@ -110,18 +115,25 @@ namespace UserTesting
                     if (userChoiceOne.Checked)
                     {
                         //Stores user choice in currentResult
-                        
+                        Result currentResult = new Result();
+                        currentResult.UserChoice = currentResult.ItemID1;
+                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
                         currentResult.UserChoice = currentResult.ItemID1;
                         //Stores currentResult into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;
+                        Result newResult = new Result();
                         populateGroupBox(itemPairList ,itemPairListIndex);
 
                     }
                     else if (userChoiceTwo.Checked)
                     {
-                        //Stores user choice in currentResult
-                        currentResult.UserChoice = currentResult.ItemID2;
+                        Result currentResult = new Result();
+                        currentResult.UserChoice = currentResult.ItemID1;
+                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
+                        currentResult.UserChoice = currentResult.ItemID1;
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;
@@ -130,7 +142,10 @@ namespace UserTesting
                     }
                     else if (userChoiceThree.Checked)
                     {
-                        //Stores user choice in currentResult
+                        Result currentResult = new Result();
+                        currentResult.UserChoice = currentResult.ItemID1;
+                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
                         currentResult.UserChoice = 0;
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);

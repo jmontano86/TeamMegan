@@ -105,5 +105,28 @@ namespace UserTestLogic
             testSessionID = testSessions[testSessions.Count - 1].SessionID;
             return testSessionID;
         }
+        // Check to see if the user 
+        public static bool userTookTest(UserClass currentUser, ItemPair itemPair)
+        {
+            List<TestSession> currentTestSessions = new List<TestSession>();
+            List<Test> testList = new List<Test>();
+            bool alreadyTookTest = false;
+            int itemID = 0;
+            string errorStuff = "Error getting test sessions";
+            // Get Test ID but needs item id first
+            itemID = itemPair.Item1.ItemID;
+            // Grab Existing Test Sessions
+            GetTestSessions(currentTestSessions, ref errorStuff);
+            // Get list of tests
+            int testID = 1;
+            foreach (var currentTestSession in currentTestSessions)
+            {
+                if (currentTestSession.TestID == testID && currentTestSession.UserID == currentUser.intUserID)
+                {
+                    alreadyTookTest = true;
+                }
+            }
+            return alreadyTookTest;
+        }
     }
 }
