@@ -8,18 +8,46 @@ namespace Users
 {
     public class UserClass
     {
-        public int _id { get; set; }
-        public string _username { get; set; }
-        public string _password { get; set; }
-        public string _emailAddress { get; set; }
-        public string _role { get; set; }
+        private int _id;
+        private string _username;
+        private string _password;
+        private string _emailAddress;
+        private string _role;
 
         public const string THERAPIST_ROLE = "T";
         public const string USER_ROLE = "U";
         public const string ADMIN_ROLE = "A";
 
+        public int intUserID
+        {
+            get {  return this._id; }
+            set { this._id = value; }
+        }
 
+        public string strUsername
+        {
+            get { return this._username; }
+            set { this._username = value; }
+        }
 
+        public string strPassword
+        {
+            get { return this._password; }
+            set { this._password = value; }
+        }
+
+        public string strEmailAddress
+        {
+            get { return this._emailAddress; }
+            set { this._emailAddress = value; }
+        }
+
+        public string strRole
+        {
+            get { return this._role; }
+            set { this._role = value; }
+        }
+               
         public UserClass login(string strEmail, string strPassword)
         {
             UserDB db = new UserDB();
@@ -31,11 +59,11 @@ namespace Users
                 if(hashPassword(strPassword) == strUserItems[2])
                 {
                     Int32.TryParse(strUserItems[0], out int intID);
-                    this._id = intID;
-                    this._username = strUserItems[1];
-                    this._password = strUserItems[2];
-                    this._emailAddress = strUserItems[3];
-                    this._role = strUserItems[4];
+                    intUserID = intID;
+                    strUsername = strUserItems[1];
+                    strPassword = strUserItems[2];
+                    strEmailAddress = strUserItems[3];
+                    strRole = strUserItems[4];
                 }
 
             }
@@ -58,25 +86,52 @@ namespace Users
             UserDB db = new UserDB();
             //TODO: Compare database with email address to ensure no prior registration
             string strHashedPassword = hashPassword(strPassword);
-            int intID = db.CreateAccount(strEmail, strHashedPassword, strUsername);
-            if (intID > 0)
+            if (!UserClass.search(strEmail))
             {
-                _id = intID;
-                _emailAddress = strEmail;
-                _password = strHashedPassword;
-                _role = USER_ROLE;
-                _username = strUsername;
-            }
+                int intID = db.CreateAccount(strEmail, strHashedPassword, strUsername);
+                if (intID > 0)
+                {
+                    intUserID = intID;
+                    strEmailAddress = strEmail;
+                    strPassword = strHashedPassword;
+                    strRole = USER_ROLE;
+                    this.strUsername = strUsername;
+                }
 
-            return this;
+                return this;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        private bool search(string strEmail)
+        public override string ToString()
+        {
+            //ToString method override to display username for default method
+            return strUsername;
+        }
+
+        public static bool search(string strEmail)
         {
             //find existing user
-            //true for exists
-            //false for not exists
+            UserDB db = new UserDB();
+            List<string> strUsers = new List<string>();
+            strUsers = db.LookupUser(strEmail);
+            if (strUsers.Count > 0)
+            {
+                if (strUsers[3] == strEmail)
+                {
+                    //already registered
+                    return true;
+                }
+            }//not registered, ok to process
             return false;
+        }
+
+        public static bool GetUsers(List<UserClass> userList, ref string error)
+        {
+            return UserDB.GetUsers(userList, ref error);
         }
     }
 }

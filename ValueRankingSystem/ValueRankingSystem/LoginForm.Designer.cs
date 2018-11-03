@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
@@ -35,6 +36,8 @@
             this.passwordTextBox = new MetroFramework.Controls.MetroTextBox();
             this.loginButton = new MetroFramework.Controls.MetroButton();
             this.createAccountButton = new MetroFramework.Controls.MetroButton();
+            this.myErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.myErrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // metroLabel1
@@ -54,7 +57,7 @@
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(95, 19);
             this.metroLabel2.TabIndex = 1;
-            this.metroLabel2.Text = "Email Address:";
+            this.metroLabel2.Text = "&Email Address:";
             // 
             // metroLabel3
             // 
@@ -62,8 +65,8 @@
             this.metroLabel3.Location = new System.Drawing.Point(52, 223);
             this.metroLabel3.Name = "metroLabel3";
             this.metroLabel3.Size = new System.Drawing.Size(66, 19);
-            this.metroLabel3.TabIndex = 2;
-            this.metroLabel3.Text = "Password:";
+            this.metroLabel3.TabIndex = 3;
+            this.metroLabel3.Text = "&Password:";
             // 
             // emailTextBox
             // 
@@ -90,7 +93,7 @@
             this.emailTextBox.SelectionStart = 0;
             this.emailTextBox.ShortcutsEnabled = true;
             this.emailTextBox.Size = new System.Drawing.Size(210, 23);
-            this.emailTextBox.TabIndex = 3;
+            this.emailTextBox.TabIndex = 2;
             this.emailTextBox.UseSelectable = true;
             this.emailTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.emailTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -149,6 +152,10 @@
             this.createAccountButton.UseSelectable = true;
             this.createAccountButton.Click += new System.EventHandler(this.createAccountButton_Click);
             // 
+            // myErrorProvider
+            // 
+            this.myErrorProvider.ContainerControl = this;
+            // 
             // LoginForm
             // 
             this.AcceptButton = this.loginButton;
@@ -164,6 +171,8 @@
             this.Controls.Add(this.metroLabel1);
             this.Name = "LoginForm";
             this.Text = "Value Ranking System Login Page";
+            this.Load += new System.EventHandler(this.LoginForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.myErrorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,6 +187,7 @@
         private MetroFramework.Controls.MetroTextBox passwordTextBox;
         private MetroFramework.Controls.MetroButton loginButton;
         private MetroFramework.Controls.MetroButton createAccountButton;
+        private System.Windows.Forms.ErrorProvider myErrorProvider;
     }
 }
 

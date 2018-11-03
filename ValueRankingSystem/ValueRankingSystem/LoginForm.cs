@@ -3,6 +3,12 @@ using System.Net.Mail;
 using MetroFramework.Forms;
 using Users;
 using CreateAccount;
+using ResultsReporting;
+using AdminForm;
+using MetroFramework;
+using System.Windows.Forms;
+using MetroFramework.Controls;
+using UserTesting;
 
 namespace ValueRankingSystem
 {
@@ -23,13 +29,34 @@ namespace ValueRankingSystem
 
         private void emailTextBox_Leave(object sender, EventArgs e)
         {
+            myErrorProvider.Clear();
             //check to ensure we have both a valid email and a valid password
-            validateInput();
+            if (!isEmailValid(emailTextBox.Text) && emailTextBox.Text != "")
+            {
+                loginButton.Enabled = false;
+                myErrorProvider.SetError(emailTextBox, "You must enter a valid email address");
+                emailTextBox.Focus();
+                return;
+            }
         }
-        private void passwordTextBox_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void passwordTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //validate password entered. Minimum length 8 characters
-            validateInput();
+            if (passwordTextBox.Text != "" && passwordTextBox.Text.Length < 7)
+            {
+                loginButton.Enabled = false;
+                myErrorProvider.SetError(passwordTextBox, "Passwords must be at least 7 characters");
+                passwordTextBox.Focus();
+                return;
+            }
+            else if (emailTextBox.Text != "" && passwordTextBox.Text != "")
+            {
+                myErrorProvider.Clear();
+                loginButton.Enabled = true;
+            }
+            else
+            {
+                loginButton.Enabled = false;
+            }
         }
 
         private bool isEmailValid(string emailAddress)
@@ -44,52 +71,45 @@ namespace ValueRankingSystem
             }
         }
 
-        private void validateInput()
-        {
-            //validate to make sure a valid password was entered as well as a valid email address
-            if (isEmailValid(emailTextBox.Text) && passwordTextBox.Text != "" && passwordTextBox.Text.Length > 7)
-            {
-                loginButton.Enabled = true;
-                return;
-            }
-            loginButton.Enabled = false;
-        }
-
         private void loginButton_Click(object sender, EventArgs e)
         {
             //All Data is validated, run login info
-            //TODO Create login validation
             UserClass user = new UserClass();
             user = user.login(emailTextBox.Text, passwordTextBox.Text);
-            if (user._id > 0)
+            if (user.intUserID > 0)
             {
+                this.Hide();
                 //send to appropriate form: Admin, User, Therapist
                 //TODO: Call appropriate forms.
-                switch (user._role)
+                switch (user.strRole)
                 {
                     case UserClass.ADMIN_ROLE:
-                        //AdminForm adminForm = new AdminForm();
-                        //adminForm.User = user;
-                        //adminForm.ShowDiaglog();
+                        AdminForm.AdminForm adminForm = new AdminForm.AdminForm();
+                        adminForm.ShowDialog();
                         break;
                     case UserClass.THERAPIST_ROLE:
-                        //ResultsForm resultForm = new ResultsForm();
-                        //resultForm.User = user;
-                        //resultForm.ShowDiaglog();
+                        ResultsReportingForm resultForm = new ResultsReportingForm();
+                        resultForm.ShowDialog();
                         break;
                     case UserClass.USER_ROLE:
-                        //TestsForm testForm = new TestsForm();
-                        //testForm.User = user;
-                        //testForm.ShowDialog();
-                        break;
-                    default:
-                        //something seriously went wrong if we hit this
+                        UserTest testForm = new UserTest();
+                        testForm.currentUser = user;
+                        testForm.ShowDialog();
                         break;
                 }
+                this.Show();
+                this.Activate();
+                loginButton.Enabled = false;
+                passwordTextBox.Text = null;
+                emailTextBox.Text = null;
+                emailTextBox.Focus();
 
             } else
             {
-                //password mismatch. error provider, label, message box? 
+                MetroMessageBox.Show(this, "Username/Password Combination not found. Please try again!", "Login Failed",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                passwordTextBox.Focus();
+                passwordTextBox.SelectAll();
             }
         }
 
@@ -99,6 +119,15 @@ namespace ValueRankingSystem
             this.Hide();
             createForm.ShowDialog();
             this.Show();
+            this.Activate();
+            emailTextBox.Focus();
         }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            this.Activate();
+        }
+
+
     }
 }
