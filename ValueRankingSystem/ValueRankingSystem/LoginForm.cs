@@ -4,7 +4,7 @@ using MetroFramework.Forms;
 using Users;
 using CreateAccount;
 using ResultsReporting;
-using AdminForms;
+using AdminForm;
 using MetroFramework;
 using System.Windows.Forms;
 using MetroFramework.Controls;

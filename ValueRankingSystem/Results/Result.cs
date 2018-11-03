@@ -14,31 +14,31 @@ namespace Results
         private int _itemID2;
         private int _userChoice;
 
-        public int ResultID
+        public int intResultID
         {
             get { return _resultID; }
             set { _resultID = value; }
         }
 
-        public int SessionID
+        public int intSessionID
         {
             get { return _sessionID; }
             set { _sessionID = value; }
         }
 
-        public int ItemID1
+        public int intItemID1
         {
             get { return _itemID1; }
             set { _itemID1 = value; }
         }
 
-        public int ItemID2
+        public int intItemID2
         {
             get { return _itemID2; }
             set { _itemID2 = value; }
         }
 
-        public int UserChoice
+        public int intUserChoice
         {
             get { return _userChoice; }
             set { _userChoice = value; }

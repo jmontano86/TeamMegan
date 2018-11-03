@@ -61,7 +61,7 @@ namespace UserTestLogic
                 TestList.getTests(testList);
                 foreach (var test in testList)
                 {
-                    if (testSession.TestID == test.TestID && testSession.UserID == user.intUserID)
+                    if (testSession.intTestID == test.TestID && testSession.intUserID == user.intUserID)
                     {
                         testExist = true;
                     }
