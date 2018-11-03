@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 
 namespace DataAccessLibrary
 {
     class ItemDB
     {
-        public static bool getItems(List<Item> listItemList, int intTestID)
+        //Get all the items from the test ID that is provided and add them to the list that is provided
+        public static bool getItems(List<Item> listItemList, int intTestID, string stringErrorString)
         {
             SqlConnection connection = new SqlConnection();
             SqlDataReader reader;
@@ -22,14 +22,13 @@ namespace DataAccessLibrary
                 connection.Open();
                 command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT ItemID, ItemName FROM TestItems WHERE TestID = @TestID";
+                command.CommandText = "SELECT ItemName FROM TestItems WHERE TestID = @TestID";
                 command.Parameters.AddWithValue("@TestID", intTestID);
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     item = new Item();
-                    item.ItemID = reader.GetInt32(0);
-                    item.Name = reader.GetString(1);
+                    item.Name = reader.GetString(0);
                     listItemList.Add(item);
                 }
                 reader.Close();
@@ -37,7 +36,7 @@ namespace DataAccessLibrary
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                stringErrorString = ex.Message.ToString();
                 return false;
             }
             finally
@@ -45,8 +44,8 @@ namespace DataAccessLibrary
                 connection.Close();
             }
         }
-
-        public static bool deleteItems(int intTestID)
+        //Delete the items from the test with the test ID that is provided
+        public static bool deleteItems(int intTestID, string stringErrorString)
         {
             SqlConnection connection = new SqlConnection();
             SqlCommand command;
@@ -63,7 +62,7 @@ namespace DataAccessLibrary
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                stringErrorString = ex.Message.ToString();
                 return false;
             }
             finally
@@ -71,7 +70,8 @@ namespace DataAccessLibrary
                 connection.Close();
             }
         }
-        public static bool addItems(List<string> itemNames, int intTestID)
+        //Add items to the test form the list that is provided to the test with the ID that is provided
+        public static bool addItems(List<string> itemNames, int intTestID, string stringErrorString)
         {
             SqlConnection connection = new SqlConnection();
             SqlCommand command;
@@ -93,7 +93,7 @@ namespace DataAccessLibrary
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                stringErrorString = ex.Message.ToString();
                 return false;
             }
             finally

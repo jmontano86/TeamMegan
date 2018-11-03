@@ -8,14 +8,7 @@ namespace DataAccessLibrary
 {
     public class Item
     {
-        int intItemID;
         string strItemName;
-
-        public int ItemID
-        {
-            get { return intItemID; }
-            set { intItemID = value; }
-        }
         public string Name
         {
             get { return strItemName; }
@@ -25,17 +18,17 @@ namespace DataAccessLibrary
 
     public static class ItemList
     {
-        public static bool getItems(List<Item> listItemList, int intTestID)
+        public static bool getItems(List<Item> listItemList, int intTestID, string stringErrorString)
         {
-            return ItemDB.getItems(listItemList, intTestID);
+            return ItemDB.getItems(listItemList, intTestID, stringErrorString);
         }
-        public static bool deleteItems(int intTestID)
+        public static bool deleteItems(int intTestID, string stringErrorString)
         {
-            return ItemDB.deleteItems(intTestID);
+            return ItemDB.deleteItems(intTestID, stringErrorString);
         }
-        public static bool addItems(List<string> itemNames, int intTestID)
+        public static bool addItems(List<string> itemNames, int intTestID, string stringErrorString)
         {
-            return ItemDB.addItems(itemNames, intTestID);
+            return ItemDB.addItems(itemNames, intTestID, stringErrorString);
         }
     }
 }
