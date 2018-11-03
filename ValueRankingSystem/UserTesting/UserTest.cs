@@ -130,7 +130,7 @@ namespace UserTesting
                         currentResult.intUserChoice = currentResult.intItemID1;
                         currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
                         currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.intUserChoice = currentResult.intItemID1;
+                        currentResult.intUserChoice = currentResult.intItemID2;
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;
