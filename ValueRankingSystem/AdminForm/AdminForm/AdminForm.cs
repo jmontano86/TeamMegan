@@ -139,10 +139,10 @@ namespace AdminForm
                 {
                     if (itemsDataGrid.Rows[i].Cells[0].Value != null
                         && itemsDataGrid.Rows[o].Cells[0].Value != null && 
-                        itemsDataGrid.Rows[i].Cells[0].Value.ToString().ToUpper() ==
-                        itemsDataGrid.Rows[o].Cells[0].Value.ToString().ToUpper() && i != o)
+                        itemsDataGrid.Rows[i].Cells[0].Value.ToString().Trim().ToUpper() ==
+                        itemsDataGrid.Rows[o].Cells[0].Value.ToString().Trim().ToUpper() && i != o)
                     {
-                        MessageBox.Show(itemsDataGrid.Rows[i].Cells[0].Value + "is a duplicate.");
+                        MessageBox.Show(itemsDataGrid.Rows[i].Cells[0].Value + " is a duplicate.");
                         itemsDataGrid.Rows.RemoveAt(i);
                     }
                 }

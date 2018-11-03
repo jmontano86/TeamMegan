@@ -72,16 +72,16 @@ namespace UserTesting
                 testDone = true;
                 // write to test session table
                 List<TestSession> testSessionList = new List<TestSession>();
-                currentTestSession.UserID = currentUser.intUserID;
-                currentTestSession.TestID = 1; // Need to change this for sprint 2
-                currentTestSession.CreationDate = DateTime.Now;
+                currentTestSession.intUserID = currentUser.intUserID;
+                currentTestSession.intTestID = 1; // Need to change this for sprint 2
+                currentTestSession.datetimeCreationDate = DateTime.Now;
                 TestSession.CreateSession(currentTestSession);
                 // Get session ID
-                int sessionID = 0;
+                int sessionID = currentTestSession.intSessionID;
                 sessionID = UserTestLogic.UserTestLogic.getCurrentSessionId(sessionID);
                 foreach (var currentSesResult in allCurrentResults)
                 {
-                    currentSesResult.SessionID = sessionID;
+                    currentSesResult.intSessionID = sessionID;
                     Result.CreateSession(currentSesResult);
                 }
                 userChoiceOne.Visible = false;
@@ -96,7 +96,9 @@ namespace UserTesting
                 ItemPair newItemPair = new ItemPair();
                 newItemPair = itemPairList[itemPairListIndex];
                 populateRadio(newItemPair);
-                
+                userChoiceOne.Checked = false;
+                userChoiceTwo.Checked = false;
+                userChoiceThree.Checked = false;
             }
         }
  
@@ -111,10 +113,10 @@ namespace UserTesting
                     {
                         //Stores user choice in currentResult
                         Result currentResult = new Result();
-                        currentResult.UserChoice = currentResult.ItemID1;
-                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.UserChoice = currentResult.ItemID1;
+                        currentResult.intUserChoice = currentResult.intItemID1;
+                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
+                        currentResult.intUserChoice = currentResult.intItemID1;
                         //Stores currentResult into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;
@@ -125,10 +127,10 @@ namespace UserTesting
                     else if (userChoiceTwo.Checked)
                     {
                         Result currentResult = new Result();
-                        currentResult.UserChoice = currentResult.ItemID1;
-                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.UserChoice = currentResult.ItemID1;
+                        currentResult.intUserChoice = currentResult.intItemID1;
+                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
+                        currentResult.intUserChoice = currentResult.intItemID1;
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;
@@ -138,10 +140,10 @@ namespace UserTesting
                     else if (userChoiceThree.Checked)
                     {
                         Result currentResult = new Result();
-                        currentResult.UserChoice = currentResult.ItemID1;
-                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.UserChoice = 0;
+                        currentResult.intUserChoice = currentResult.intItemID1;
+                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
+                        currentResult.intUserChoice = 0;
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;

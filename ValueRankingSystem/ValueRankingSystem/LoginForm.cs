@@ -84,7 +84,7 @@ namespace ValueRankingSystem
                 switch (user.strRole)
                 {
                     case UserClass.ADMIN_ROLE:
-                        AdminForm adminForm = new AdminForm();
+                        AdminForm.AdminForm adminForm = new AdminForm.AdminForm();
                         adminForm.ShowDialog();
                         break;
                     case UserClass.THERAPIST_ROLE:

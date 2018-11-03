@@ -27,7 +27,7 @@ namespace UserTestLogic
             bool testExist = false;
             List<Test> availTest = new List<Test>();
             //Get all tests
-            TestList.getTests(testList);
+            TestList.getTests(testList, "Error getting items");
             //Only stores to an array tests that are available
             foreach (var test in testList.ToList())
             {
@@ -58,7 +58,7 @@ namespace UserTestLogic
             TestSession.GetTestSessions(testSessionList, ref error);
             foreach (var testSession in testSessionList)
             {
-                TestList.getTests(testList);
+                TestList.getTests(testList, "Error Getting Items");
                 foreach (var test in testList)
                 {
                     if (testSession.intTestID == test.TestID && testSession.intUserID == user.intUserID)
@@ -77,7 +77,7 @@ namespace UserTestLogic
             // Get all items from the database
            
             List<Item> itemList = new List<Item>();
-            ItemList.getItems(itemList, 1);
+            ItemList.getItems(itemList, 1, "Error getting items");
 
             // Pair up items
       
@@ -107,7 +107,7 @@ namespace UserTestLogic
             List<TestSession> testSessions = new List<TestSession>();
             // Get sessionID recently written
             GetTestSessions(testSessions, ref error);
-            testSessionID = testSessions[testSessions.Count - 1].SessionID;
+            testSessionID = testSessions[testSessions.Count - 1].intSessionID;
             return testSessionID;
         }
         // Check to see if the user 
@@ -126,7 +126,7 @@ namespace UserTestLogic
             int testID = 1;
             foreach (var currentTestSession in currentTestSessions)
             {
-                if (currentTestSession.TestID == testID && currentTestSession.UserID == currentUser.intUserID)
+                if (currentTestSession.intTestID == testID && currentTestSession.intUserID == currentUser.intUserID)
                 {
                     alreadyTookTest = true;
                 }

@@ -8,7 +8,14 @@ namespace DataAccessLibrary
 {
     public class Item
     {
+        int intItemID;
         string strItemName;
+
+        public int ItemID
+        {
+            get { return intItemID; }
+            set { intItemID = value; }
+        }
         public string Name
         {
             get { return strItemName; }

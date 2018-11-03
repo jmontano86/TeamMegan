@@ -22,13 +22,14 @@ namespace DataAccessLibrary
                 connection.Open();
                 command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT ItemName FROM TestItems WHERE TestID = @TestID";
+                command.CommandText = "SELECT ItemID, ItemName FROM TestItems WHERE TestID = @TestID";
                 command.Parameters.AddWithValue("@TestID", intTestID);
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     item = new Item();
-                    item.Name = reader.GetString(0);
+                    item.Name = reader.GetString(1);
+                    item.ItemID = reader.GetInt32(0);
                     listItemList.Add(item);
                 }
                 reader.Close();
