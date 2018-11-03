@@ -42,7 +42,7 @@
             // 
             this.userChoiceOne.AutoSize = true;
             this.userChoiceOne.Location = new System.Drawing.Point(61, 49);
-            this.userChoiceOne.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.userChoiceOne.Margin = new System.Windows.Forms.Padding(2);
             this.userChoiceOne.Name = "userChoiceOne";
             this.userChoiceOne.Size = new System.Drawing.Size(60, 15);
             this.userChoiceOne.TabIndex = 0;
@@ -53,7 +53,7 @@
             // 
             this.userChoiceTwo.AutoSize = true;
             this.userChoiceTwo.Location = new System.Drawing.Point(165, 49);
-            this.userChoiceTwo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.userChoiceTwo.Margin = new System.Windows.Forms.Padding(2);
             this.userChoiceTwo.Name = "userChoiceTwo";
             this.userChoiceTwo.Size = new System.Drawing.Size(60, 15);
             this.userChoiceTwo.TabIndex = 1;
@@ -64,7 +64,7 @@
             // 
             this.userChoiceThree.AutoSize = true;
             this.userChoiceThree.Location = new System.Drawing.Point(269, 49);
-            this.userChoiceThree.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.userChoiceThree.Margin = new System.Windows.Forms.Padding(2);
             this.userChoiceThree.Name = "userChoiceThree";
             this.userChoiceThree.Size = new System.Drawing.Size(115, 15);
             this.userChoiceThree.TabIndex = 2;
@@ -74,7 +74,7 @@
             // testButton
             // 
             this.testButton.Location = new System.Drawing.Point(214, 275);
-            this.testButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.testButton.Margin = new System.Windows.Forms.Padding(2);
             this.testButton.Name = "testButton";
             this.testButton.Size = new System.Drawing.Size(170, 54);
             this.testButton.TabIndex = 3;
@@ -108,11 +108,11 @@
             // finishedLabel
             // 
             this.finishedLabel.AutoSize = true;
-            this.finishedLabel.Location = new System.Drawing.Point(131, 45);
+            this.finishedLabel.Location = new System.Drawing.Point(52, 45);
             this.finishedLabel.Name = "finishedLabel";
-            this.finishedLabel.Size = new System.Drawing.Size(174, 19);
+            this.finishedLabel.Size = new System.Drawing.Size(322, 19);
             this.finishedLabel.TabIndex = 3;
-            this.finishedLabel.Text = "Thank you for taking the test";
+            this.finishedLabel.Text = "Thank you for taking the test. Please close this window";
             this.finishedLabel.Visible = false;
             // 
             // UserTest
@@ -123,9 +123,9 @@
             this.Controls.Add(this.itemGroupBox);
             this.Controls.Add(this.directionLabel);
             this.Controls.Add(this.testButton);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "UserTest";
-            this.Padding = new System.Windows.Forms.Padding(15, 49, 15, 16);
+            this.Padding = new System.Windows.Forms.Padding(15, 60, 15, 16);
             this.Text = "User Test";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.itemGroupBox.ResumeLayout(false);

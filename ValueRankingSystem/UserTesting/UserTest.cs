@@ -8,14 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Data;
 using MetroFramework.Forms;
 using UserTestLogic;
 using DataAccessLibrary;
 using Users;
 using Results;
 using TestSessions;
-//using ValueRankingSystem; // This is not working. Still trying to figure out a file deletion error that occurred during local merge
 
 namespace UserTesting
 {
@@ -32,87 +30,134 @@ namespace UserTesting
             get { return _currentUser; }
             set { _currentUser = value; }
         }
-        List<Test> testItems = new List<Test>();
+        List<ItemPair> itemPairList = new List<ItemPair>();
+        //List<Test> testItems = new List<Test>();
         List<Item> itemList = new List<Item>();
-        int itemID1 = 0;
-        int itemID2 = 0;
-        int userChoice = 0;
-        Result currentResult = new Result();
+        List<Result> allCurrentResults = new List<Result>();
+        ItemPair itemPair = new ItemPair();
+        int itemPairListIndex = 0;
+        bool testDone = false;
+
         TestSession currentTestSession = new TestSession();
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Get user data
-            //currentUser = LoginForm.user;
-            //Load tests into the radio buttons
-            UserTestLogic.UserTestLogic.loadTests(testItems, itemList, currentUser);
-            populateRadio();
+            bool testAlreadyTaken = false;
+
+            UserTestLogic.UserTestLogic.getItemPair(itemPairList);
+            //Checks to see if user already took test
+            testAlreadyTaken = UserTestLogic.UserTestLogic.userTookTest(currentUser, itemPairList[itemPairListIndex]);
+            if (testAlreadyTaken == true)
+            {
+                MessageBox.Show("You have already taken this test");
+                this.Close();
+            }
+            // Get Item Pairs
+            populateGroupBox(itemPairList, itemPairListIndex);
+           
+
         }
 
         // Changes the radio buttons based content in array
-        private void populateRadio()
+        public void populateRadio(ItemPair itemPair)
         {
-            userChoiceOne.Text = itemList[0].Name;
-            userChoiceTwo.Text = itemList[1].Name;
+            userChoiceOne.Text = itemPair.Item1.Name;
+            userChoiceTwo.Text = itemPair.Item2.Name;
             userChoiceThree.Text = "Undecided";
-            // Populate variables
-            currentResult.ItemID1 = itemList[0].ItemID;
-            currentResult.ItemID2 = itemList[1].ItemID;
         }
+        // Gets the next index in the itemPairList
+        private void populateGroupBox(List<ItemPair> listItemPairList, int itemPairListIndex)
+        {
+            if (itemPairListIndex > listItemPairList.Count-1)
+            {
+                testDone = true;
+                // write to test session table
+                List<TestSession> testSessionList = new List<TestSession>();
+                currentTestSession.UserID = currentUser.intUserID;
+                currentTestSession.TestID = 1; // Need to change this for sprint 2
+                currentTestSession.CreationDate = DateTime.Now;
+                TestSession.CreateSession(currentTestSession);
+                // Get session ID
+                int sessionID = 0;
+                sessionID = UserTestLogic.UserTestLogic.getCurrentSessionId(sessionID);
+                foreach (var currentSesResult in allCurrentResults)
+                {
+                    currentSesResult.SessionID = sessionID;
+                    Result.CreateSession(currentSesResult);
+                }
+                userChoiceOne.Visible = false;
+                userChoiceTwo.Visible = false;
+                userChoiceThree.Visible = false;
+                finishedLabel.Visible = true;
+                testButton.Visible = false;
+            }
+            else
+            {
+                // Populate groupbox radio buttons with itempair by index
+                ItemPair newItemPair = new ItemPair();
+                newItemPair = itemPairList[itemPairListIndex];
+                populateRadio(newItemPair);
+                
+            }
+        }
+ 
         private void testButton_Click(object sender, EventArgs e)
         {
             try
             {
-                // Get existing test sessions
+                // Change button to finish if all itemPairs that have been accounted for
+                if (testDone == false)
+                {
+                    if (userChoiceOne.Checked)
+                    {
+                        //Stores user choice in currentResult
+                        Result currentResult = new Result();
+                        currentResult.UserChoice = currentResult.ItemID1;
+                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
+                        currentResult.UserChoice = currentResult.ItemID1;
+                        //Stores currentResult into an array of results
+                        allCurrentResults.Add(currentResult);
+                        itemPairListIndex++;
+                        Result newResult = new Result();
+                        populateGroupBox(itemPairList ,itemPairListIndex);
 
-                if (userChoiceOne.Checked)
-                {
-                    currentResult.UserChoice = itemID1;
-                   
-                    testButton.Text = "Finished";
-                    itemGroupBox.Visible = false;
-                    finishedLabel.Visible = true;
-                    currentTestSession.UserID = 1;//currentUser._id;
-                    currentTestSession.TestID = testItems[0].TestID;
-                    currentTestSession.CreationDate = DateTime.Now;
-                    TestSession.CreateSession(currentTestSession);
-                    currentResult.SessionID = currentTestSession.SessionID;
-                    Result.CreateSession(currentResult);
+                    }
+                    else if (userChoiceTwo.Checked)
+                    {
+                        Result currentResult = new Result();
+                        currentResult.UserChoice = currentResult.ItemID1;
+                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
+                        currentResult.UserChoice = currentResult.ItemID1;
+                        //Stores currentResults into an array of results
+                        allCurrentResults.Add(currentResult);
+                        itemPairListIndex++;
+                        populateGroupBox(itemPairList, itemPairListIndex);
+                        
+                    }
+                    else if (userChoiceThree.Checked)
+                    {
+                        Result currentResult = new Result();
+                        currentResult.UserChoice = currentResult.ItemID1;
+                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
+                        currentResult.UserChoice = 0;
+                        //Stores currentResults into an array of results
+                        allCurrentResults.Add(currentResult);
+                        itemPairListIndex++;
+                        populateGroupBox(itemPairList, itemPairListIndex);
+                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please make a choice");
+                    }
                 }
-                else if (userChoiceTwo.Checked)
-                {
-                    currentResult.UserChoice = itemID2;
-                    Result.CreateSession(currentResult);
-                    testButton.Text = "Finished";
-                    itemGroupBox.Visible = false;
-                    finishedLabel.Visible = true;
-                    currentTestSession.UserID = currentUser.intUserID;
-                    currentTestSession.TestID = testItems[0].TestID;
-                    currentTestSession.CreationDate = DateTime.Now;
-                    TestSession.CreateSession(currentTestSession);
-                    Result.CreateSession(currentResult);
-                }
-                else if (userChoiceThree.Checked)
-                {
-                    userChoice = 0;
-                    currentResult.UserChoice = userChoice;
-                    Result.CreateSession(currentResult);
-                    testButton.Text = "Finished";
-                    itemGroupBox.Visible = false;
-                    finishedLabel.Visible = true;
-                    currentTestSession.UserID = currentUser.intUserID;
-                    currentTestSession.TestID = testItems[0].TestID;
-                    currentTestSession.CreationDate = DateTime.Now;
-                    TestSession.CreateSession(currentTestSession);
-                    Result.CreateSession(currentResult);
-                }
-                else
-                {
-                    MessageBox.Show("Please make a choice");
-                }
+                
             }
             catch
             {
-                MessageBox.Show("Something went wrong with the display");
+                MessageBox.Show("Something went wrong with gathering item data");
             }
         }
         
