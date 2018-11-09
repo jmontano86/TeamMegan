@@ -77,7 +77,7 @@ namespace UserTesting
                 currentTestSession.datetimeCreationDate = DateTime.Now;
                 TestSession.CreateSession(currentTestSession);
 
-                int sessionID = currentTestSession.SessionID;
+                int sessionID = currentTestSession.intSessionID;
 
 
                 foreach (var currentSesResult in allCurrentResults)
@@ -114,10 +114,10 @@ namespace UserTesting
                     {
                         //Stores user choice in currentResult
                         Result currentResult = new Result();
-
-                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.UserChoice = currentResult.ItemID1;
+                        
+                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
+                        currentResult.intUserChoice = currentResult.intItemID1;
 
                         //Stores currentResult into an array of results
                         allCurrentResults.Add(currentResult);
@@ -129,9 +129,9 @@ namespace UserTesting
                     {
                         Result currentResult = new Result();
 
-                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.UserChoice = currentResult.ItemID2;
+                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
+                        currentResult.intUserChoice = currentResult.intItemID2;
 
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
@@ -143,9 +143,9 @@ namespace UserTesting
                     {
                         Result currentResult = new Result();
 
-                        currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.UserChoice = 0;
+                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
+                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
+                        currentResult.intUserChoice = 0;
 
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
