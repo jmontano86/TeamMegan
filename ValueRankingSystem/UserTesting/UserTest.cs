@@ -42,7 +42,7 @@ namespace UserTesting
         private void Form1_Load(object sender, EventArgs e)
         {
             bool testAlreadyTaken = false;
-
+            testButton.Enabled = false;
             UserTestLogic.UserTestLogic.getItemPair(itemPairList);
             //Checks to see if user already took test
             testAlreadyTaken = UserTestLogic.UserTestLogic.userTookTest(currentUser, itemPairList[itemPairListIndex]);
@@ -76,9 +76,8 @@ namespace UserTesting
                 currentTestSession.TestID = 1; // Need to change this for sprint 2
                 currentTestSession.CreationDate = DateTime.Now;
                 TestSession.CreateSession(currentTestSession);
-                // Get session ID
-                int sessionID = 0;
-                sessionID = UserTestLogic.UserTestLogic.getCurrentSessionId(sessionID);
+                int sessionID = currentTestSession.SessionID;
+
                 foreach (var currentSesResult in allCurrentResults)
                 {
                     currentSesResult.SessionID = sessionID;
@@ -111,24 +110,21 @@ namespace UserTesting
                     {
                         //Stores user choice in currentResult
                         Result currentResult = new Result();
-                        currentResult.UserChoice = currentResult.ItemID1;
                         currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
                         currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
                         currentResult.UserChoice = currentResult.ItemID1;
                         //Stores currentResult into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;
-                        Result newResult = new Result();
                         populateGroupBox(itemPairList ,itemPairListIndex);
 
                     }
                     else if (userChoiceTwo.Checked)
                     {
                         Result currentResult = new Result();
-                        currentResult.UserChoice = currentResult.ItemID1;
                         currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
                         currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.UserChoice = currentResult.ItemID1;
+                        currentResult.UserChoice = currentResult.ItemID2;
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;
@@ -138,7 +134,6 @@ namespace UserTesting
                     else if (userChoiceThree.Checked)
                     {
                         Result currentResult = new Result();
-                        currentResult.UserChoice = currentResult.ItemID1;
                         currentResult.ItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
                         currentResult.ItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
                         currentResult.UserChoice = 0;
@@ -160,6 +155,24 @@ namespace UserTesting
                 MessageBox.Show("Something went wrong with gathering item data");
             }
         }
-        
+
+        private void userChoiceOne_CheckedChanged(object sender, EventArgs e)
+        {
+            testButton.Enabled = true;
+        }
+
+        private void userChoiceTwo_CheckedChanged(object sender, EventArgs e)
+        {
+            testButton.Enabled = true;
+        }
+
+        private void userChoiceThree_CheckedChanged(object sender, EventArgs e)
+        {
+            testButton.Enabled = true;
+        }
+        public static Result savesResults(Result currentResult, List<ItemPair> itemPairList, int itemPairListIndex)
+        {
+            return currentResult;
+        }
     }
 }
