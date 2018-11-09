@@ -48,6 +48,7 @@
             this.userChoiceOne.TabIndex = 0;
             this.userChoiceOne.Text = "demo1";
             this.userChoiceOne.UseSelectable = true;
+            this.userChoiceOne.CheckedChanged += new System.EventHandler(this.userChoiceOne_CheckedChanged);
             // 
             // userChoiceTwo
             // 
@@ -59,6 +60,7 @@
             this.userChoiceTwo.TabIndex = 1;
             this.userChoiceTwo.Text = "demo2";
             this.userChoiceTwo.UseSelectable = true;
+            this.userChoiceTwo.CheckedChanged += new System.EventHandler(this.userChoiceTwo_CheckedChanged);
             // 
             // userChoiceThree
             // 
@@ -70,6 +72,7 @@
             this.userChoiceThree.TabIndex = 2;
             this.userChoiceThree.Text = "demoCantDecide";
             this.userChoiceThree.UseSelectable = true;
+            this.userChoiceThree.CheckedChanged += new System.EventHandler(this.userChoiceThree_CheckedChanged);
             // 
             // testButton
             // 
@@ -108,7 +111,7 @@
             // finishedLabel
             // 
             this.finishedLabel.AutoSize = true;
-            this.finishedLabel.Location = new System.Drawing.Point(52, 45);
+            this.finishedLabel.Location = new System.Drawing.Point(52, 16);
             this.finishedLabel.Name = "finishedLabel";
             this.finishedLabel.Size = new System.Drawing.Size(322, 19);
             this.finishedLabel.TabIndex = 3;
