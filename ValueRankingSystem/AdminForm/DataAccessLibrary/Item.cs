@@ -21,7 +21,13 @@ namespace DataAccessLibrary
             get { return strItemName; }
             set { strItemName = value; }
         }
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
+
+
 
     public static class ItemList
     {

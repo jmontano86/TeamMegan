@@ -136,8 +136,16 @@ namespace CreateAccount
 
             if(UserClass.search(emailTextBox.Text.Trim()))
             {
-                MetroMessageBox.Show(this, "You are already registered!", "User Already Exists", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                DialogResult result = MetroMessageBox.Show(this, "You are already registered! Cancel Registration?", "User Already Exists", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                if (result == DialogResult.Yes)
+                {
+                    this.Close();
+                } else
+                {
+                    emailTextBox.Text = "";
+                    emailTextBox.Focus();
+                }
                 return;
             }
         }

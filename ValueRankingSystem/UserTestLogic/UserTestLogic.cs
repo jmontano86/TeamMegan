@@ -133,6 +133,5 @@ namespace UserTestLogic
             }
             return alreadyTookTest;
         }
-        
     }
 }

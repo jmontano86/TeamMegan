@@ -28,5 +28,15 @@ namespace UserTestLogic
             get { return _index; }
             set { _index = value; }
         }
+
+        //Programmer: Jeremiah Montano
+        //Date: November 11, 2018
+        ///<summary>Gets list of Custom Item Pairs for custom comparison test</summary>
+        public static List<ItemPair> getCustomItemPair(int intTestID)
+        {
+            ItemPairDB db = new ItemPairDB();
+            List<ItemPair> itemPair = db.GetCustomItemPairs(intTestID);
+            return itemPair;
+        }
     }
 }

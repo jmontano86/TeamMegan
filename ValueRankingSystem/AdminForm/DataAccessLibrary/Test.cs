@@ -10,6 +10,7 @@ namespace DataAccessLibrary
     {
         int intTestID;
         string strTestName;
+        int intCustomTest; //there is a custom comparison test if this equal 1
 
         public int TestID
         {
@@ -20,6 +21,11 @@ namespace DataAccessLibrary
         {
             get { return strTestName; }
             set { strTestName = value; }
+        }
+        public int CustomTest
+        {
+            get { return intCustomTest; }
+            set { intCustomTest = value; }
         }
     }
 

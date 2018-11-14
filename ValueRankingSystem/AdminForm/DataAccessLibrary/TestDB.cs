@@ -19,7 +19,7 @@ namespace DataAccessLibrary
                 connection.Open();
                 command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT TestID, TestName FROM Tests";
+                command.CommandText = "SELECT TestID, TestName, CustomTest FROM Tests";
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
