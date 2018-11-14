@@ -9,6 +9,8 @@ namespace DataAccessLibrary
     public class Item
     {
         string strItemName;
+        //TODO: ADD IMAGE/IMAGE LOCATION
+
         public string Name
         {
             get { return strItemName; }

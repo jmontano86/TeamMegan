@@ -52,8 +52,9 @@ namespace DataAccessLibrary
                 connection.Open();
                 command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "INSERT INTO Tests(TestName, CreationDate) VALUES (@TestName, @CreationDate); SELECT Scope_Identity()";
+                command.CommandText = "INSERT INTO Tests(TestName, TestType, CreationDate) VALUES (@TestName, @TestType, @CreationDate); SELECT Scope_Identity()";
                 command.Parameters.AddWithValue("@TestName", test.TestName);
+                command.Parameters.AddWithValue("@TestType", test.TestType);
                 DateTime myDateTime = DateTime.Now;
                 string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss");
                 command.Parameters.AddWithValue("@CreationDate", sqlFormattedDate);
@@ -177,6 +178,37 @@ namespace DataAccessLibrary
                 while (reader.Read())
                 {
                     listTestNames.Add(reader.GetString(0));
+                }
+                reader.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                stringErrorString = ex.Message.ToString();
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        public static bool getTestType(Test test, string stringErrorString)
+        {
+            SqlConnection connection = new SqlConnection();
+            SqlDataReader reader;
+            SqlCommand command;
+            try
+            {
+                connection = DatabaseHelper.Connect();
+                connection.Open();
+                command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "SELECT TestType FROM Tests WHERE TestID = @TestID";
+                command.Parameters.AddWithValue("@TestID", test.TestID);
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    test.TestType = reader.GetString(0);
                 }
                 reader.Close();
                 return true;

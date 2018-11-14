@@ -44,6 +44,7 @@ namespace DataAccessLibrary
                 connection.Close();
             }
         }
+        //TODO: GET IMAGES
         //Delete the items from the test with the test ID that is provided
         public static bool deleteItems(int intTestID, string stringErrorString)
         {
@@ -101,5 +102,6 @@ namespace DataAccessLibrary
                 connection.Close();
             }
         }
+        //TODO: ADD IMAGES
     }
 }
