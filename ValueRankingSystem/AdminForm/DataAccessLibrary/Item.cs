@@ -16,6 +16,7 @@ namespace DataAccessLibrary
             get { return intItemID; }
             set { intItemID = value; }
         }
+        //TODO: ADD IMAGE/IMAGE LOCATION
         public string Name
         {
             get { return strItemName; }

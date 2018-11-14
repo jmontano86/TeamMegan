@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using MetroFramework.Forms;
 using DataAccessLibrary;
+using System.Drawing;
+using System.IO;
 
 namespace AdminForm
 {
@@ -50,12 +52,19 @@ namespace AdminForm
                     currentTest.TestName = "";
                     currentTest.TestID = 0;
                     currentTest.TestName = strInputOne;
+                    currentTest.TestType = "T";
                     cancelButton.Enabled = true;
                     addItemButton.Enabled = true;
                     deleteItemButton.Enabled = true;
                     testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
                     testNameLabel.Visible = true;
                     deleteTestButton.Enabled = false;
+                    itemsDataGrid.ReadOnly = false;
+                    testTypeComboBox.Enabled = true;
+                    imagePictureBox.Image = null;
+                    imagePictureBox.Enabled = false;
+                    imagePictureBox.Visible = false;
+                    testTypeComboBox.Text = "Text";
                     itemsDataGrid.Focus();
                 }
             }
@@ -88,6 +97,10 @@ namespace AdminForm
                 deleteItemButton.Enabled = false;
             }
             itemsDataGrid.Focus();
+            if(currentTest.TestType == "I" || currentTest.TestType == "TI")
+            {
+                imagePictureBox.Image = null;
+            }
         }
 
         //Adds a row to the data grid
@@ -120,6 +133,8 @@ namespace AdminForm
                 deleteItemButton.Enabled = false;
                 testNameLabel.Visible = false;
                 deleteTestButton.Enabled = false;
+                imagePictureBox.Image = null;
+                testTypeComboBox.Enabled = false;
                 currentTest.TestName = "";
             }
         }
@@ -168,7 +183,6 @@ namespace AdminForm
         private bool checkCells()
         {
             int intFilledOutCells = 0;
-            bool moreThan2Items;
             foreach (DataGridViewRow row in itemsDataGrid.Rows)
             {
                 if (row.Cells[0].Value != null)
@@ -178,13 +192,12 @@ namespace AdminForm
             }
             if (intFilledOutCells > 1)
             {
-                moreThan2Items = true;
+                return true;
             }
             else
             {
-                moreThan2Items = false;
+                return false;
             }
-            return moreThan2Items;
         }
         //Adds test to tests table and items to items table
         private void finishButton_Click(object sender, EventArgs e)
@@ -210,6 +223,7 @@ namespace AdminForm
             {
                 List<string> listItemNames = new List<string>();
                 //Get the items from the itemsDataGrid and add them to the list
+                //TODO: ADD IMAGES TO A LIST IF TESTTYPECOMBOBOX INDEX == 2 OR 3
                 foreach (DataGridViewRow row in itemsDataGrid.Rows)
                 {
                     if (row.Cells[0].Value != null)
@@ -218,6 +232,7 @@ namespace AdminForm
                     }
                 }
                 //Add the test and the items to the database
+                //TODO: ADD TEST TYPE
                 if (TestList.addTest(currentTest, stringErrorString))
                 {
                     if (ItemList.addItems(listItemNames, currentTest.TestID, stringErrorString))
@@ -299,6 +314,30 @@ namespace AdminForm
                         int intIndex = itemsDataGrid.Rows.Add();
                         itemsDataGrid.Rows[intIndex].Cells[0].Value = item.Name;
                     }
+                    //Get the test type and set the testTypeComboBox accordingly
+                    /*if (TestList.getTestType(test, stringErrorString))
+                    {
+                        if(test.TestType == "T")
+                        {
+                            testTypeComboBox.SelectedIndex = 0;
+                        }
+                        else if(test.TestType == "I")
+                        {
+                            testTypeComboBox.SelectedIndex = 1;
+                        }
+                        else if(test.TestType == "TI")
+                        {
+                            testTypeComboBox.SelectedIndex = 2;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Test type is not valid");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(stringErrorString);
+                    }*/
                     currentTest = test;
 
                     //Check if selected test is in testsessions and set controls accordingly
@@ -329,7 +368,8 @@ namespace AdminForm
                         deleteTestButton.Enabled = false;
                         finishButton.Enabled = false;
                         customButton.Enabled = true;
-                        itemsDataGrid.Enabled = false;
+                        itemsDataGrid.ReadOnly = true;
+                        testTypeComboBox.Enabled = false;
                     }
                     else
                     {
@@ -341,7 +381,8 @@ namespace AdminForm
                         deleteTestButton.Enabled = true;
                         finishButton.Enabled = true;
                         customButton.Enabled = true;
-                        itemsDataGrid.Enabled = true;
+                        itemsDataGrid.ReadOnly = true;
+                        testTypeComboBox.Enabled = true;
                     }
                 }
                 else
@@ -354,7 +395,6 @@ namespace AdminForm
                 MessageBox.Show("Could not find the '" + editTestComboBox.SelectedValue.ToString() + " test'");
             }
         }
-
         private void customButton_Click(object sender, EventArgs e)
         {
             //Programmer: Jeremiah Montano
@@ -364,6 +404,91 @@ namespace AdminForm
             customForm.currentTest = currentTest;
             customForm.itemList = listItemsList;
             customForm.ShowDialog();
+        }
+        private void AdminForm_DragEnter(object sender, DragEventArgs e)
+        {
+            int x = this.PointToClient(new Point(e.X, e.Y)).X;
+            int y = this.PointToClient(new Point(e.X, e.Y)).Y;
+            if (currentTest.TestName == "" || itemsDataGrid.RowCount == 0 || currentTest.TestType == "T")
+            {
+                e.Effect = DragDropEffects.None;
+            }
+            else
+            {
+                string[] file = (string[])e.Data.GetData(DataFormats.FileDrop);
+                //MessageBox.Show(Path.GetExtension(file[0]));
+                if (Path.GetExtension(file[0]) == ".url")
+                {
+                    e.Effect = DragDropEffects.Link;
+                }
+                else if (Path.GetExtension(file[0]) == ".png" || Path.GetExtension(file[0]) == ".jpg" || Path.GetExtension(file[0]) == ".bmp" ||
+                    Path.GetExtension(file[0]) == ".jpeg")
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
+                else
+                {
+                    e.Effect = DragDropEffects.None;
+                }
+            }
+        }
+
+        private void AdminForm_DragDrop(object sender, DragEventArgs e)
+        {
+            int x = this.PointToClient(new Point(e.X, e.Y)).X;
+            int y = this.PointToClient(new Point(e.X, e.Y)).Y;
+            if (x >= imagePictureBox.Location.X && x <= imagePictureBox.Location.X + imagePictureBox.Width &&
+                y >= imagePictureBox.Location.Y && y <= imagePictureBox.Location.Y + imagePictureBox.Height)
+            {
+                string[] file = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (Path.GetExtension(file[0]) == ".url")
+                {
+                    imagePictureBox.Load(file[0]);
+                }
+                else if (Path.GetExtension(file[0]) == ".png" || Path.GetExtension(file[0]) == ".jpg" || Path.GetExtension(file[0]) == ".bmp" ||
+                    Path.GetExtension(file[0]) == ".jpeg")
+                {
+                    imagePictureBox.Image = Image.FromFile(file[0]);
+                }
+                itemsDataGrid.Rows[itemsDataGrid.CurrentRow.Index].Cells[1].Value = Path.GetFullPath(file[0]);
+            }
+        }
+
+        private void imagePictureBox_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Bitmap) && testTypeComboBox.SelectedIndex == 1 || testTypeComboBox.SelectedIndex == 2)
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void testTypeComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if(testTypeComboBox.SelectedIndex == 0)
+            {
+                currentTest.TestType = "T";
+                imagePictureBox.Hide();
+                imagePictureBox.Enabled = false;
+                imagePictureBox.Visible = false;
+            }
+            else if(testTypeComboBox.SelectedIndex == 1)
+            {
+                currentTest.TestType = "I";
+                imagePictureBox.Show();
+                imagePictureBox.Enabled = true;
+                imagePictureBox.Visible = true;
+            }
+            else if(testTypeComboBox.SelectedIndex == 2)
+            {
+                currentTest.TestType = "TI";
+                imagePictureBox.Show();
+                imagePictureBox.Enabled = true;
+                imagePictureBox.Visible = true;
+            }
         }
     }
 }

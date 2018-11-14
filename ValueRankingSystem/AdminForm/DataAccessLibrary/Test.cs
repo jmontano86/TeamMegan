@@ -11,6 +11,7 @@ namespace DataAccessLibrary
         int intTestID;
         string strTestName;
         int intCustomTest; //there is a custom comparison test if this equal 1
+        string strTestType;
 
         public int TestID
         {
@@ -26,6 +27,11 @@ namespace DataAccessLibrary
         {
             get { return intCustomTest; }
             set { intCustomTest = value; }
+		}
+        public string TestType
+        {
+            get { return strTestType; }
+            set { strTestType = value; }
         }
     }
 
@@ -43,6 +49,7 @@ namespace DataAccessLibrary
         {
             return TestDB.getTestNames(listTestNames, stringErrorString);
         }
+        //TODO: ADD TEST TYPE
         public static bool addTest(Test test, string stringErrorString)
         {
             return TestDB.addTest(test, stringErrorString);
@@ -54,6 +61,10 @@ namespace DataAccessLibrary
         public static bool getTestID(Test test, string stringErrorString)
         {
             return TestDB.getTestID(test, stringErrorString);
+        }
+        public static bool getTestType(Test test, string stringErrorString)
+        {
+            return TestDB.getTestType(test, stringErrorString);
         }
     }
 }

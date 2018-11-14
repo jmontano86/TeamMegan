@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.itemsDataGrid = new System.Windows.Forms.DataGridView();
-            this.itemNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deleteItemButton = new MetroFramework.Controls.MetroButton();
             this.addItemButton = new MetroFramework.Controls.MetroButton();
             this.finishButton = new MetroFramework.Controls.MetroButton();
@@ -39,7 +38,14 @@
             this.testNameLabel = new MetroFramework.Controls.MetroLabel();
             this.deleteTestButton = new MetroFramework.Controls.MetroButton();
             this.customButton = new MetroFramework.Controls.MetroButton();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.testTypeComboBox = new MetroFramework.Controls.MetroComboBox();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.imagePictureBox = new System.Windows.Forms.PictureBox();
+            this.itemNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.itemsDataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imagePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // itemsDataGrid
@@ -47,18 +53,14 @@
             this.itemsDataGrid.AllowUserToAddRows = false;
             this.itemsDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.itemsDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.itemNameColumn});
+            this.itemNameColumn,
+            this.ImageColumn});
             this.itemsDataGrid.Location = new System.Drawing.Point(177, 75);
+            this.itemsDataGrid.MultiSelect = false;
             this.itemsDataGrid.Name = "itemsDataGrid";
-            this.itemsDataGrid.Size = new System.Drawing.Size(234, 196);
+            this.itemsDataGrid.Size = new System.Drawing.Size(359, 196);
             this.itemsDataGrid.TabIndex = 24;
             this.itemsDataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.itemsDataGrid_CellEndEdit);
-            // 
-            // itemNameColumn
-            // 
-            this.itemNameColumn.HeaderText = "Item name";
-            this.itemNameColumn.Name = "itemNameColumn";
-            this.itemNameColumn.Width = 150;
             // 
             // deleteItemButton
             // 
@@ -118,7 +120,7 @@
             // 
             this.editTestComboBox.FormattingEnabled = true;
             this.editTestComboBox.ItemHeight = 23;
-            this.editTestComboBox.Location = new System.Drawing.Point(24, 105);
+            this.editTestComboBox.Location = new System.Drawing.Point(23, 140);
             this.editTestComboBox.Name = "editTestComboBox";
             this.editTestComboBox.Size = new System.Drawing.Size(121, 29);
             this.editTestComboBox.TabIndex = 23;
@@ -156,13 +158,77 @@
             this.customButton.Text = "&Custom Test";
             this.customButton.UseSelectable = true;
             this.customButton.Click += new System.EventHandler(this.customButton_Click);
+
+			//
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(24, 118);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(66, 19);
+            this.metroLabel1.TabIndex = 27;
+            this.metroLabel1.Text = "Edit a test";
+            // 
+            // testTypeComboBox
+            // 
+            this.testTypeComboBox.FormattingEnabled = true;
+            this.testTypeComboBox.ItemHeight = 23;
+            this.testTypeComboBox.Items.AddRange(new object[] {
+            "Text",
+            "Image",
+            "Text and image"});
+            this.testTypeComboBox.Location = new System.Drawing.Point(23, 214);
+            this.testTypeComboBox.Name = "testTypeComboBox";
+            this.testTypeComboBox.Size = new System.Drawing.Size(121, 29);
+            this.testTypeComboBox.TabIndex = 28;
+            this.testTypeComboBox.UseSelectable = true;
+            this.testTypeComboBox.SelectionChangeCommitted += new System.EventHandler(this.testTypeComboBox_SelectionChangeCommitted);
+            // 
+            // metroLabel2
+            // 
+            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.Location = new System.Drawing.Point(24, 189);
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Size = new System.Drawing.Size(59, 19);
+            this.metroLabel2.TabIndex = 29;
+            this.metroLabel2.Text = "Test type";
+            // 
+            // imagePictureBox
+            // 
+            this.imagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imagePictureBox.Location = new System.Drawing.Point(575, 75);
+            this.imagePictureBox.Name = "imagePictureBox";
+            this.imagePictureBox.Size = new System.Drawing.Size(319, 341);
+            this.imagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.imagePictureBox.TabIndex = 30;
+            this.imagePictureBox.TabStop = false;
+            this.imagePictureBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.imagePictureBox_DragEnter);
+            // 
+            // itemNameColumn
+            // 
+            this.itemNameColumn.HeaderText = "Item name";
+            this.itemNameColumn.Name = "itemNameColumn";
+            this.itemNameColumn.Width = 150;
+            // 
+            // ImageColumn
+            // 
+            this.ImageColumn.HeaderText = "Image";
+            this.ImageColumn.Name = "ImageColumn";
+            this.ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ImageColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ImageColumn.Width = 150;
             // 
             // AdminForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(475, 465);
             this.Controls.Add(this.customButton);
+            this.ClientSize = new System.Drawing.Size(917, 465);
+            this.Controls.Add(this.imagePictureBox);
+            this.Controls.Add(this.metroLabel2);
+            this.Controls.Add(this.testTypeComboBox);
+            this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.deleteTestButton);
             this.Controls.Add(this.itemsDataGrid);
             this.Controls.Add(this.deleteItemButton);
@@ -175,7 +241,10 @@
             this.Name = "AdminForm";
             this.Text = "Admin Form";
             this.Load += new System.EventHandler(this.AdminForm_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.AdminForm_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.AdminForm_DragEnter);
             ((System.ComponentModel.ISupportInitialize)(this.itemsDataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imagePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -192,8 +261,13 @@
         private MetroFramework.Controls.MetroComboBox editTestComboBox;
         private MetroFramework.Controls.MetroLabel testNameLabel;
         private MetroFramework.Controls.MetroButton deleteTestButton;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroComboBox testTypeComboBox;
+        private MetroFramework.Controls.MetroLabel metroLabel2;
+        private System.Windows.Forms.PictureBox imagePictureBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn itemNameColumn;
         private MetroFramework.Controls.MetroButton customButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ImageColumn;
     }
 }
 
