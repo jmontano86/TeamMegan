@@ -34,6 +34,11 @@ namespace BusinessData
         {
             get { return intCustomTest; }
             set { intCustomTest = value; }
+		}
+        public string TestType
+        {
+            get { return strTestType; }
+            set { strTestType = value; }
         }
     }
 
@@ -51,6 +56,7 @@ namespace BusinessData
         {
             return TestDB.getTestNames(listTestNames, stringErrorString);
         }
+        //TODO: ADD TEST TYPE
         public static bool addTest(Test test, string stringErrorString)
         {
             return TestDB.addTest(test, stringErrorString);
@@ -62,6 +68,10 @@ namespace BusinessData
         public static bool getTestID(Test test, string stringErrorString)
         {
             return TestDB.getTestID(test, stringErrorString);
+        }
+        public static bool getTestType(Test test, string stringErrorString)
+        {
+            return TestDB.getTestType(test, stringErrorString);
         }
     }
 }
