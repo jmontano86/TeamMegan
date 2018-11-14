@@ -3,27 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login", "ValueRankingSystem\Login.csproj", "{D982C20E-F90E-4325-A236-EB8249444997}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gui", "Gui\Gui.csproj", "{6C80DF3B-C36C-44AE-BD9B-EA31523BA05F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users", "User\Users.csproj", "{0526DF06-DD95-4EDE-8B20-DDC18F6AFE7D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateAccount", "CreateAccount\CreateAccount.csproj", "{9A1EC708-47B5-48B0-86FA-588130E903FF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{E42BA06A-5D06-4F91-85E8-A49CBAB3DE1E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResultsReporting", "ResultsReporting\ResultsReporting.csproj", "{3C11FF76-905B-4A61-ACAE-0605D52D550D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSessions", "TestSessions\TestSessions.csproj", "{7AC6EF7E-CFD9-4751-A319-DD448EFD31BC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Results", "Results\Results.csproj", "{5B85ABB9-3A6A-41A5-931F-400EB9FEAEC4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminForm", "AdminForm\AdminForm\AdminForm.csproj", "{6C80DF3B-C36C-44AE-BD9B-EA31523BA05F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLibrary", "AdminForm\DataAccessLibrary\DataAccessLibrary.csproj", "{B6AD0AA3-8202-4718-A628-DEFD86C00CCC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserTesting", "UserTesting\UserTesting.csproj", "{2AE7A970-AD3F-4DC3-B74A-5FC4E546F45B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserTestLogic", "UserTestLogic\UserTestLogic.csproj", "{7B2205F2-99DD-4E34-8DB3-C4300B34FD94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessData", "BusinessData\BusinessData.csproj", "{B6AD0AA3-8202-4718-A628-DEFD86C00CCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
