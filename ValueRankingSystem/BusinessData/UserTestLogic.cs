@@ -8,39 +8,32 @@ namespace BusinessData
 {
     public class UserTestLogic
     {
-        
-        /// <summary>
-        /// Accidentally wrote this for sprint 1 because I misunderstood my user story but the point of this was 
-        /// to load all the available tests that the user can take. Found out that this can be used in sprint 2
-        /// </summary>
-        /// <param name="testList"></param>
-        /// <param name="itemList"></param>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public static List<Test> loadTests(List<Test> testList, List<Item> itemList, UserClass user)
-        {
-            bool testExist = false;
-            List<Test> availTest = new List<Test>();
-            //Get all tests
-            TestList.getTests(testList, "Error getting items");
-            //Only stores to an array tests that are available
-            foreach (var test in testList.ToList())
-            {
-                testExist = checkExistingTestSession(testList, user);
-                if (testExist != true)
-                {
-                    availTest.Add(test);
-                }
-            }
-            // Get all test items
-            // Need to rewrite this for sprint 2
-            //foreach (var test in availTest)
-            //{
-            //    //Only store test items that match test id and testSession does not exist yet
-            //    ItemList.getItems(itemList, test.TestID);
-            //}
-            return availTest;
-        }
+        //Duplicate between loadItemList and getItemPair function
+        ///// <summary>
+        ///// Accidentally wrote this for sprint 1 because I misunderstood my user story but the point of this was 
+        ///// to load all the available items that the user can take. Found out that this can be used in sprint 2
+        ///// </summary>
+        ///// <param name="testList"></param>
+        ///// <param name="itemList"></param>
+        ///// <param name="user"></param>
+        ///// <returns></returns>
+        //public static List<Item> loadItemList(int testID, List<ItemPair> itemPairList, UserClass user)
+        //{
+        //    bool testExist = false;
+        //    List<Item> itemList = new List<Item>();
+        //    //Get all tests
+        //    ItemList.getItems(itemList, testID, "Error getting items");
+        //    //Only stores to an array items that are available
+
+        //    // Get all test items
+        //    // Need to rewrite this for sprint 2
+        //    //foreach (var test in availTest)
+        //    //{
+        //    //    //Only store test items that match test id and testSession does not exist yet
+        //    //    ItemList.getItems(itemList, test.TestID);
+        //    //}
+        //    return itemList;
+        //}
 
 
         // Need to check to see if the User already has taken a test
@@ -67,12 +60,12 @@ namespace BusinessData
         }
         //Objective: Find ItemPairs
         //Create list that pairs up items
-        public static List<ItemPair> getItemPair(List<ItemPair> itemPair)
+        public static List<ItemPair> getItemPair(int testID, List<ItemPair> itemPair)
         {
             // Get all items from the database
            
             List<Item> itemList = new List<Item>();
-            ItemList.getItems(itemList, 1, "Error getting items");
+            ItemList.getItems(itemList, testID, "Could not load items");
 
             // Pair up items
       

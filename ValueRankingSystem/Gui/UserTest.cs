@@ -26,6 +26,12 @@ namespace Gui
             get { return _currentUser; }
             set { _currentUser = value; }
         }
+        private int _testID;
+        public int currentTestID
+        {
+            get { return _testID; }
+            set { _testID = value; }
+        }
         List<ItemPair> itemPairList = new List<ItemPair>();
         //List<Test> testItems = new List<Test>();
         List<Item> itemList = new List<Item>();
@@ -37,20 +43,12 @@ namespace Gui
         TestSession currentTestSession = new TestSession();
         private void Form1_Load(object sender, EventArgs e)
         {
-            bool testAlreadyTaken = false;
             testButton.Enabled = false;
-            BusinessData.UserTestLogic.getItemPair(itemPairList);
-            //Checks to see if user already took test
-            testAlreadyTaken = BusinessData.UserTestLogic.userTookTest(currentUser, itemPairList[itemPairListIndex]);
-            if (testAlreadyTaken == true)
-            {
-                MessageBox.Show("You have already taken this test");
-                this.Close();
-            }
-            // Get Item Pairs
+            //Load itemPairs that was selected in test selection form
+            BusinessData.UserTestLogic.getItemPair(currentTestID, itemPairList);
+            
+            // Get Item Pairs and populate groupbox
             populateGroupBox(itemPairList, itemPairListIndex);
-           
-
         }
 
         // Changes the radio buttons based content in array

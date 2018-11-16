@@ -35,13 +35,13 @@ namespace BusinessData
             get { return intCustomTest; }
             set { intCustomTest = value; }
 		}
-        public string TestType
+        public override string ToString()
         {
-            get { return strTestType; }
-            set { strTestType = value; }
+            //ToString method override to display testName for default method
+            return TestName;
         }
     }
-
+    
     public static class TestList
     {
         public static bool getTests(List<Test> listTestList, string stringErrorString)
