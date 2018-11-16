@@ -67,7 +67,7 @@ namespace Gui
                 // write to test session table
                 List<TestSession> testSessionList = new List<TestSession>();
                 currentTestSession.intUserID = currentUser.intUserID;
-                currentTestSession.intTestID = 1; // Need to change this for sprint 2
+                currentTestSession.intTestID = currentTestID; // Need to change this for sprint 2
                 currentTestSession.datetimeCreationDate = DateTime.Now;
                 TestSession.CreateSession(currentTestSession);
 
