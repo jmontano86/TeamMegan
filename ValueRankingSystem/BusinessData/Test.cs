@@ -35,11 +35,6 @@ namespace BusinessData
             get { return intCustomTest; }
             set { intCustomTest = value; }
 		}
-        public string TestType
-        {
-            get { return strTestType; }
-            set { strTestType = value; }
-        }
     }
 
     public static class TestList
