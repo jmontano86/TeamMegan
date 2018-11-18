@@ -94,9 +94,9 @@ namespace Gui
                         MessageBoxIcon.Error);
                     return;
                 }
-                UserTest testForm = new UserTest();
-                testForm.currentUser = user;
-                testForm.ShowDialog();
+                TestSelectionForm testSelectionForm = new TestSelectionForm();
+                testSelectionForm.currentUser = user;
+                testSelectionForm.ShowDialog();
                 this.Close();
             }
         }

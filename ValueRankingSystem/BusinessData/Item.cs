@@ -10,12 +10,20 @@ namespace BusinessData
     {
         int intItemID;
         string strItemName;
+        int intTestID;
 
         public int ItemID
         {
             get { return intItemID; }
             set { intItemID = value; }
         }
+        //TODO: ADD TESTID IN ORDER TO POPULATE MULTIPLE TESTS FOR USERTESTING. Added by Kevin for Sprint 2
+        public int TestID
+        {
+            get { return intTestID; }
+            set { intTestID = value; }
+        }
+
         //TODO: ADD IMAGE/IMAGE LOCATION
         public string Name
         {
@@ -27,8 +35,6 @@ namespace BusinessData
             return this.Name;
         }
     }
-
-
 
     public static class ItemList
     {

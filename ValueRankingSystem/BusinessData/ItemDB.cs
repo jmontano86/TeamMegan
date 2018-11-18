@@ -10,6 +10,15 @@ namespace BusinessData
     class ItemDB
     {
         //Get all the items from the test ID that is provided and add them to the list that is provided
+        /// <summary>
+        /// Need to get test items with testID included in the pull.
+        /// Looks like this was already added by somebody.
+        /// Sprint 2
+        /// </summary>
+        /// <param name="listItemList"></param>
+        /// <param name="intTestID"></param>
+        /// <param name="stringErrorString"></param>
+        /// <returns> listeItemList </returns>
         public static bool getItems(List<Item> listItemList, int intTestID, string stringErrorString)
         {
             SqlConnection connection = new SqlConnection();
@@ -22,7 +31,7 @@ namespace BusinessData
                 connection.Open();
                 command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT ItemID, ItemName FROM TestItems WHERE TestID = @TestID";
+                command.CommandText = "SELECT ItemID, ItemName, TestID FROM TestItems WHERE TestID = @TestID";
                 command.Parameters.AddWithValue("@TestID", intTestID);
                 reader = command.ExecuteReader();
                 while (reader.Read())
@@ -30,6 +39,7 @@ namespace BusinessData
                     item = new Item();
                     item.Name = reader.GetString(1);
                     item.ItemID = reader.GetInt32(0);
+                    item.TestID = reader.GetInt32(2);
                     listItemList.Add(item);
                 }
                 reader.Close();
