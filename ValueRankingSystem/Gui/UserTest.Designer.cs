@@ -111,7 +111,7 @@
             // finishedLabel
             // 
             this.finishedLabel.AutoSize = true;
-            this.finishedLabel.Location = new System.Drawing.Point(52, 16);
+            this.finishedLabel.Location = new System.Drawing.Point(54, 44);
             this.finishedLabel.Name = "finishedLabel";
             this.finishedLabel.Size = new System.Drawing.Size(322, 19);
             this.finishedLabel.TabIndex = 3;

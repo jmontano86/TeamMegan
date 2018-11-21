@@ -60,7 +60,7 @@ namespace BusinessData
         }
         //Objective: Find ItemPairs
         //Create list that pairs up items
-        public static List<ItemPair> getItemPair(int testID, List<ItemPair> itemPair)
+        public static List<ItemPair> getItemPair(int testID, List<ItemPair> itemPairList)
         {
             // Get all items from the database
            
@@ -82,11 +82,18 @@ namespace BusinessData
                     // Populates first parameter of itemPair
                     itemInsta.Item1 = itemList[j];
                     itemInsta.Item2 = itemList[i];
-                    itemPair.Add(itemInsta);
+
+
+
+
+
+
+
+                 itemPairList.Add(itemInsta);
 
                 }
             }
-            return itemPair;
+            return itemPairList;
         }
 
         public static int getCurrentSessionId(int testSessionID)
@@ -120,6 +127,33 @@ namespace BusinessData
                 }
             }
             return alreadyTookTest;
+        }
+        /// <summary>
+        /// Randmizes the number that will be used to assign itempairs to populate radio buttons
+        /// </summary>
+        public static List<Item> itemToAssign(ItemPair itemPair, List<Item> itemToAssign)
+        {
+            List<Item> randomItemList = new List<Item>();
+            // Assign "Undecided" as an item
+            Item unChoice = new Item();
+            unChoice.ItemID = 0;
+            unChoice.Name = "Undecided";
+            unChoice.TestID = itemPair.Item1.TestID;
+            // Generate random number
+            Random rndNum = new Random();
+            // Assigns rndNum to itemPair          
+            randomItemList.Add(itemPair.Item1);
+            randomItemList.Add(itemPair.Item2);
+            randomItemList.Add(unChoice);
+            // items to assign
+            // puts the itempair in random order
+            while (randomItemList.Count > 0)
+            {
+                int rndNumAssign = rndNum.Next(0, randomItemList.Count);
+                itemToAssign.Add(randomItemList[rndNumAssign]);
+                randomItemList.RemoveAt(rndNumAssign);
+            }
+            return itemToAssign;
         }
     }
 }
