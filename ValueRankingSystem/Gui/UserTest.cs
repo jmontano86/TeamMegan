@@ -50,6 +50,10 @@ namespace Gui
             
             // Get Item Pairs and populate groupbox
             populateGroupBox(itemPairList, itemPairListIndex);
+
+            // Load denominator for Progress Bar
+            denominatorChange(itemPairList.Count);
+
         }
 
         // Changes the radio buttons based content in array
@@ -101,6 +105,8 @@ namespace Gui
                 userChoiceOne.Checked = false;
                 userChoiceTwo.Checked = false;
                 userChoiceThree.Checked = false;
+                // Load numerator for progress bar
+                numeratorChange(itemPairList.Count, itemPairListIndex);
             }
         }
  
@@ -219,6 +225,23 @@ namespace Gui
         public static Result savesResults(Result currentResult, List<ItemPair> itemPairList, int itemPairListIndex)
         {
             return currentResult;
+        }
+
+        /// Creating progress bar - Kevin Khlom 11/21/18
+
+        private void denominatorChange(int itemPairListIndex)
+        {
+            denominatorLabel.Text = itemPairListIndex.ToString();
+        }
+        private void numeratorChange(int numeratorSet, int itemPairListIndex)
+        {
+            
+            int numeratorNum = numeratorSet;
+            numeratorNum = +itemPairListIndex + 1;
+            numeratorLabel.Text = numeratorNum.ToString();
+            testProgressBar.Value = numeratorNum;
+            testProgressBar.Maximum = itemPairList.Count();
+            testProgressBar.Minimum = 0;
         }
     }
 }
