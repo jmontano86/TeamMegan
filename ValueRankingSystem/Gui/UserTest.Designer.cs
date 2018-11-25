@@ -35,6 +35,10 @@
             this.directionLabel = new MetroFramework.Controls.MetroLabel();
             this.itemGroupBox = new System.Windows.Forms.GroupBox();
             this.finishedLabel = new MetroFramework.Controls.MetroLabel();
+            this.testProgressBar = new MetroFramework.Controls.MetroProgressBar();
+            this.numeratorLabel = new MetroFramework.Controls.MetroLabel();
+            this.slashLabel = new MetroFramework.Controls.MetroLabel();
+            this.denominatorLabel = new MetroFramework.Controls.MetroLabel();
             this.itemGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,18 +115,56 @@
             // finishedLabel
             // 
             this.finishedLabel.AutoSize = true;
-            this.finishedLabel.Location = new System.Drawing.Point(52, 16);
+            this.finishedLabel.Location = new System.Drawing.Point(54, 44);
             this.finishedLabel.Name = "finishedLabel";
             this.finishedLabel.Size = new System.Drawing.Size(322, 19);
             this.finishedLabel.TabIndex = 3;
             this.finishedLabel.Text = "Thank you for taking the test. Please close this window";
             this.finishedLabel.Visible = false;
             // 
+            // testProgressBar
+            // 
+            this.testProgressBar.Location = new System.Drawing.Point(197, 372);
+            this.testProgressBar.Name = "testProgressBar";
+            this.testProgressBar.Size = new System.Drawing.Size(203, 23);
+            this.testProgressBar.TabIndex = 6;
+            // 
+            // numeratorLabel
+            // 
+            this.numeratorLabel.AutoSize = true;
+            this.numeratorLabel.Location = new System.Drawing.Point(416, 372);
+            this.numeratorLabel.Name = "numeratorLabel";
+            this.numeratorLabel.Size = new System.Drawing.Size(15, 19);
+            this.numeratorLabel.TabIndex = 7;
+            this.numeratorLabel.Text = "x";
+            // 
+            // slashLabel
+            // 
+            this.slashLabel.AutoSize = true;
+            this.slashLabel.Location = new System.Drawing.Point(433, 372);
+            this.slashLabel.Name = "slashLabel";
+            this.slashLabel.Size = new System.Drawing.Size(14, 19);
+            this.slashLabel.TabIndex = 8;
+            this.slashLabel.Text = "/";
+            // 
+            // denominatorLabel
+            // 
+            this.denominatorLabel.AutoSize = true;
+            this.denominatorLabel.Location = new System.Drawing.Point(449, 372);
+            this.denominatorLabel.Name = "denominatorLabel";
+            this.denominatorLabel.Size = new System.Drawing.Size(15, 19);
+            this.denominatorLabel.TabIndex = 9;
+            this.denominatorLabel.Text = "x";
+            // 
             // UserTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 366);
+            this.ClientSize = new System.Drawing.Size(600, 426);
+            this.Controls.Add(this.denominatorLabel);
+            this.Controls.Add(this.slashLabel);
+            this.Controls.Add(this.numeratorLabel);
+            this.Controls.Add(this.testProgressBar);
             this.Controls.Add(this.itemGroupBox);
             this.Controls.Add(this.directionLabel);
             this.Controls.Add(this.testButton);
@@ -147,6 +189,10 @@
         private MetroFramework.Controls.MetroLabel directionLabel;
         private System.Windows.Forms.GroupBox itemGroupBox;
         private MetroFramework.Controls.MetroLabel finishedLabel;
+        private MetroFramework.Controls.MetroProgressBar testProgressBar;
+        private MetroFramework.Controls.MetroLabel numeratorLabel;
+        private MetroFramework.Controls.MetroLabel slashLabel;
+        private MetroFramework.Controls.MetroLabel denominatorLabel;
     }
 }
 

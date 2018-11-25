@@ -35,6 +35,7 @@ namespace Gui
         List<ItemPair> itemPairList = new List<ItemPair>();
         //List<Test> testItems = new List<Test>();
         List<Item> itemList = new List<Item>();
+        List<Item> itemToAssign = new List<Item>();
         List<Result> allCurrentResults = new List<Result>();
         ItemPair itemPair = new ItemPair();
         int itemPairListIndex = 0;
@@ -49,14 +50,24 @@ namespace Gui
             
             // Get Item Pairs and populate groupbox
             populateGroupBox(itemPairList, itemPairListIndex);
+
+            // Load denominator for Progress Bar
+            denominatorChange(itemPairList.Count);
+
         }
 
         // Changes the radio buttons based content in array
-        public void populateRadio(ItemPair itemPair)
+        public List<Item> populateRadio(ItemPair itemPair)
         {
-            userChoiceOne.Text = itemPair.Item1.Name;
-            userChoiceTwo.Text = itemPair.Item2.Name;
-            userChoiceThree.Text = "Undecided";
+            // Randomizes where the item pairs are assigned to the userChoice Radio boxes: Kevin Khlom Sprint 2
+            List<Item> itemToAssign = new List<Item>();
+            // Function that randomizes the pairings
+            UserTestLogic.itemToAssign(itemPair, itemToAssign);
+            userChoiceOne.Text = itemToAssign[0].Name;
+            userChoiceTwo.Text = itemToAssign[1].Name;
+            userChoiceThree.Text = itemToAssign[2].Name;
+
+            return itemToAssign;
         }
         // Gets the next index in the itemPairList
         private void populateGroupBox(List<ItemPair> listItemPairList, int itemPairListIndex)
@@ -90,10 +101,12 @@ namespace Gui
                 // Populate groupbox radio buttons with itempair by index
                 ItemPair newItemPair = new ItemPair();
                 newItemPair = itemPairList[itemPairListIndex];
-                populateRadio(newItemPair);
+                itemToAssign = populateRadio(newItemPair);
                 userChoiceOne.Checked = false;
                 userChoiceTwo.Checked = false;
                 userChoiceThree.Checked = false;
+                // Load numerator for progress bar
+                numeratorChange(itemPairList.Count, itemPairListIndex);
             }
         }
  
@@ -108,11 +121,22 @@ namespace Gui
                     {
                         //Stores user choice in currentResult
                         Result currentResult = new Result();
+                        // write to current Result of intItemID1 if it is not undecided
                         
-                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.intUserChoice = currentResult.intItemID1;
-
+                        for (int i = 0; i < itemToAssign.Count; i++)
+                        {
+                            if (itemToAssign[i].ItemID != 0 && currentResult.intItemID1 == 0)
+                            {
+                                currentResult.intItemID1 = itemToAssign[i].ItemID;
+                                //itemToAssign.RemoveAt(i);
+                            }
+                            else if (itemToAssign[i].ItemID != 0 && currentResult.intItemID2 == 0)
+                            {
+                                currentResult.intItemID2 = itemToAssign[i].ItemID;
+                                //itemToAssign.RemoveAt(i);
+                            }
+                        }
+                        currentResult.intUserChoice = itemToAssign[0].ItemID;
                         //Stores currentResult into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;
@@ -123,9 +147,21 @@ namespace Gui
                     {
                         Result currentResult = new Result();
 
-                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.intUserChoice = currentResult.intItemID2;
+                        for (int i = 0; i < itemToAssign.Count; i++)
+                        {
+                            if (itemToAssign[i].ItemID != 0 && currentResult.intItemID1 == 0)
+                            {
+                                currentResult.intItemID1 = itemToAssign[i].ItemID;
+                                //itemToAssign.RemoveAt(i);
+                            }
+                            else if (itemToAssign[i].ItemID != 0 && currentResult.intItemID2 == 0)
+                            {
+                                currentResult.intItemID2 = itemToAssign[i].ItemID;
+                                //itemToAssign.RemoveAt(i);
+                            }
+                        }
+
+                        currentResult.intUserChoice = itemToAssign[1].ItemID;
 
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
@@ -137,9 +173,21 @@ namespace Gui
                     {
                         Result currentResult = new Result();
 
-                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.intUserChoice = 0;
+                        for (int i = 0; i < itemToAssign.Count; i++)
+                        {
+                            if (itemToAssign[i].ItemID != 0 && currentResult.intItemID1 == 0)
+                            {
+                                currentResult.intItemID1 = itemToAssign[i].ItemID;
+                                //itemToAssign.RemoveAt(i);
+                            }
+                            else if (itemToAssign[i].ItemID != 0 && currentResult.intItemID2 == 0)
+                            {
+                                currentResult.intItemID2 = itemToAssign[i].ItemID;
+                               // itemToAssign.RemoveAt(i);
+                            }
+                        }
+                        currentResult.intUserChoice = itemToAssign[2].ItemID;
+
 
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
@@ -156,7 +204,7 @@ namespace Gui
             }
             catch
             {
-                MessageBox.Show("Something went wrong with gathering item data");
+                MessageBox.Show("Could not write current result");
             }
         }
 
@@ -177,6 +225,23 @@ namespace Gui
         public static Result savesResults(Result currentResult, List<ItemPair> itemPairList, int itemPairListIndex)
         {
             return currentResult;
+        }
+
+        /// Creating progress bar - Kevin Khlom 11/21/18
+
+        private void denominatorChange(int itemPairListIndex)
+        {
+            denominatorLabel.Text = itemPairListIndex.ToString();
+        }
+        private void numeratorChange(int numeratorSet, int itemPairListIndex)
+        {
+            
+            int numeratorNum = numeratorSet;
+            numeratorNum = +itemPairListIndex + 1;
+            numeratorLabel.Text = numeratorNum.ToString();
+            testProgressBar.Value = numeratorNum;
+            testProgressBar.Maximum = itemPairList.Count();
+            testProgressBar.Minimum = 0;
         }
     }
 }
