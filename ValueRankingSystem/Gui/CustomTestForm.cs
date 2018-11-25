@@ -26,7 +26,8 @@ namespace Gui
         public Test currentTest;
         public List<Item> itemList;
         private bool isExisting;
-        private string strDragName;
+        public string strError;
+        private int intShuffleBit;
         public CustomTestForm()
         {
             InitializeComponent();
@@ -44,17 +45,21 @@ namespace Gui
             //check to see if custom test already exists, if so populate the information
             List<ItemPair> itemPairs = new List<ItemPair>();
             itemPairs = ItemPair.getCustomItemPair(currentTest.TestID);
-                if (itemPairs != null)
+            if (itemPairs != null)
+            {
+                isExisting = true;
+                foreach (ItemPair listItem in itemPairs)
                 {
-                    isExisting = true;
-                    //add item pairs to list boxes
+                    item1ListBox.Items.Add(listItem.Item1);
+                    item2ListBox.Items.Add(listItem.Item2);
                 }
+            }
         }
 
         private void option1Button_Click(object sender, EventArgs e)
         {
             //Add selected item to Option 1. If no selection, raise error
-            if(itemsListBox.SelectedIndex > -1)
+            if (itemsListBox.SelectedIndex > -1)
             {
                 item1ListBox.Items.Add(itemsListBox.SelectedItem);
             }
@@ -113,7 +118,8 @@ namespace Gui
             if (item1ListBox.SelectedIndex > -1)
             {
                 item1ListBox.Items.RemoveAt(item1ListBox.SelectedIndex);
-            } else
+            }
+            else
             {
                 customErrorProvider.SetIconAlignment(item1ListBox, ErrorIconAlignment.TopLeft);
                 customErrorProvider.SetError(item1ListBox, "You must select an Item first!");
@@ -194,36 +200,48 @@ namespace Gui
              * 5) if 1 or 2 pairs, throw error message
              */
 
-            if(item1ListBox.Items.Count < 1 || item2ListBox.Items.Count <1)
+            if (item1ListBox.Items.Count < 1 || item2ListBox.Items.Count < 1)
             {
-                //validation 3 failed, 0 pairs are given. save shuffle option only
+                //validation 3, 0 pairs are given. save shuffle option only
+                if (isExisting)
+                {
+                    bool delResult = ItemPair.delCustomItemPair(currentTest.TestID, strError);
+                    if (!delResult)
+                    {
+                        MetroMessageBox.Show(this, "The following error has occurred: " + strError, "Error Adding Items!",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                Test.updateCustomTest(currentTest.TestID, 0, intShuffleBit);
                 return;
             }
             if (item1ListBox.Items.Count != item2ListBox.Items.Count)
             {
                 //validation 1 failed, items mismatch
-                //Remove extra items and re-validate?
+                //Remove extra items and save?
                 DialogResult result = MetroMessageBox.Show(this, "The number of items don't match, would you like to remove extra items?",
                     "Remove Extra Items?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
                     //remove extra results
-                    if(item1ListBox.Items.Count > item2ListBox.Items.Count)
+                    if (item1ListBox.Items.Count > item2ListBox.Items.Count)
                     {
-                        for(int i = item1ListBox.Items.Count; i > item2ListBox.Items.Count; i--)
+                        for (int i = item1ListBox.Items.Count; i > item2ListBox.Items.Count; i--)
                         {
                             item1ListBox.Items.RemoveAt(i - 1);
                         }
-                    } else
+                    }
+                    else
                     {
                         for (int i = item2ListBox.Items.Count; i > item1ListBox.Items.Count; i--)
                         {
                             item2ListBox.Items.RemoveAt(i - 1);
                         }
                     }
-                    MetroMessageBox.Show(this, "Please double check your entries and press 'Finish' when completed", "Extra Items Deleted",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } else
+                    //Continue validation to ensure number of pairs is still valid
+                }
+                else
                 {
                     return;
                 }
@@ -234,6 +252,49 @@ namespace Gui
                 MetroMessageBox.Show(this, "You must enter at least 3 pairs of items!", "Not Enough Pairs",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+            //All validation has been made, we will write items to database
+            List<ItemPair> pairList = new List<ItemPair>();
+            for (int x = 0; x < item1ListBox.Items.Count; x++)
+            {
+                ItemPair pair = new ItemPair();
+                pair.Item1 = (Item)item1ListBox.Items[x];
+                pair.Item2 = (Item)item2ListBox.Items[x];
+                pairList.Add(pair);
+            }
+            if (isExisting)
+            {
+                bool delResult = ItemPair.delCustomItemPair(currentTest.TestID, strError);
+                if (!delResult)
+                {
+                    MetroMessageBox.Show(this, "The following error has occurred: " + strError, "Error Adding Items!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            if (item1ListBox.Items.Count > 0)
+            {
+                bool addResult = ItemPair.addCustomItemPair(pairList, currentTest.TestID, strError);
+                if (!addResult)
+                {
+                    MetroMessageBox.Show(this, "The following error has occurred: " + strError, "Error Adding Items!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                Test.updateCustomTest(currentTest.TestID, 1, intShuffleBit);
+                isExisting = true;
+                //items successfully saved. Party up!
+            }
+        }
+
+        private void shuffleCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (shuffleCheckBox.Checked)
+            {
+                intShuffleBit = 1;
+            } else
+            {
+                intShuffleBit = 0;
             }
         }
     }

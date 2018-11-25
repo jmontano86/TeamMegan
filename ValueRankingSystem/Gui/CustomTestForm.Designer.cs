@@ -152,6 +152,7 @@
             this.shuffleCheckBox.TabIndex = 9;
             this.shuffleCheckBox.Text = "&Shuffle Order?";
             this.shuffleCheckBox.UseSelectable = true;
+            this.shuffleCheckBox.CheckedChanged += new System.EventHandler(this.shuffleCheckBox_CheckedChanged);
             // 
             // finishButton
             // 

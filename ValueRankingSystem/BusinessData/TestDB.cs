@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace BusinessData
 {
     class TestDB
     {
+        public const string TESTS_TESTID_COLUMN = "TestID";
+        public const string TESTS_CUSTOMTEST_COLUMN = "CustomTest";
+        public const string TESTS_SHUFFLE_COLUMN = "Shuffle";
         //Get all the tests from the Tests table and add them to the provided list
         public static bool getTests(List<Test> listTestList, string stringErrorString)
         {
@@ -19,13 +23,16 @@ namespace BusinessData
                 connection.Open();
                 command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT TestID, TestName, CustomTest FROM Tests";
+                command.CommandText = "SELECT TestID, TestName, CustomTest, Shuffle FROM Tests";
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     test = new Test();
                     test.TestID = reader.GetInt32(0);
                     test.TestName = reader.GetString(1);
+                    //TODO - SQL get Bit info. Int and Byte do not work currently need to find out what data type this is.
+                    test.CustomTest = (int)reader.GetByte(2);
+                    test.Shuffle = (int)reader.GetByte(3);
                     listTestList.Add(test);
                 }
                 reader.Close();
@@ -39,6 +46,32 @@ namespace BusinessData
             finally
             {
                 connection.Close();
+            }
+        }
+        public bool updateCustomTest(int intTestID, int intCustomBit, int intShuffleBit)
+        {
+            SqlConnection conn = DatabaseHelper.Connect();
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("SPUpdateCustomTest", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter(TESTS_TESTID_COLUMN, intTestID));
+                cmd.Parameters.Add(new SqlParameter(TESTS_CUSTOMTEST_COLUMN, intCustomBit));
+                cmd.Parameters.Add(new SqlParameter(TESTS_SHUFFLE_COLUMN, intShuffleBit));
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
             }
         }
         //Add the test to the database with the name provided and set the ID to the return value from the scalar

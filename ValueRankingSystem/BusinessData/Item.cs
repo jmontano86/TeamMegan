@@ -34,6 +34,12 @@ namespace BusinessData
         {
             return this.Name;
         }
+
+        public static Item getItem(int intItemID)
+        {
+            ItemDB db = new ItemDB();
+            return db.getItem(intItemID);
+        }
     }
 
     public static class ItemList
