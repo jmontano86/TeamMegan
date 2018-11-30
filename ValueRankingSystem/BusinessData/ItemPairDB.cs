@@ -22,7 +22,6 @@ namespace BusinessData
         public bool AddCustomItemPairs(List<ItemPair> itemPairs, int intTestID, string strError)
         {
             SqlConnection conn = DatabaseHelper.Connect();
-
             try
             {
                 conn.Open();
@@ -78,7 +77,7 @@ namespace BusinessData
         }
         //Programmer: Jeremiah Montano
         //Date: November 11, 2018
-        //Summary: Get list of ItemPairs for Customer Comparison
+        //Summary: Get list of ItemPairs for Custom Comparison
         public List<ItemPair> GetCustomItemPairs(int intTestID)
         {
             SqlConnection conn = DatabaseHelper.Connect();
@@ -96,8 +95,8 @@ namespace BusinessData
                 while (reader.Read())
                 {
                     itemPair = new ItemPair();
-                    itemPair.Item1 = Item.getItem(reader.GetInt32(0));
-                    itemPair.Item2 = Item.getItem(reader.GetInt32(1));
+                    itemPair.Item1 = Item.getItem(Convert.ToInt32(reader[ITEMPAIRS_ITEMID1_COLUMN]));
+                    itemPair.Item2 = Item.getItem(Convert.ToInt32(reader[ITEMPAIRS_ITEMID2_COLUMN]));
 
                     itemPairs.Add(itemPair);
                 }

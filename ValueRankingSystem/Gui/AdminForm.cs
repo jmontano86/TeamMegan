@@ -27,7 +27,7 @@ namespace Gui
             {
                 foreach (Test test in testList)
                 {
-                    editTestComboBox.Items.Add(test.TestName);
+                    editTestComboBox.Items.Add(test);
                 }
             }
             else
@@ -298,104 +298,110 @@ namespace Gui
         //When the edit test combobox selection changes, get the test ID and the items for that test
         private void editTestComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            /* Commented out as Test is already an item in the drop down.
+             * No need to do another database call. JDM 
             Test test = new Test();
             test.TestName = editTestComboBox.SelectedItem.ToString();
             string stringErrorString = "";
             //Get the ID for the selected test and get the items from that test and put them in the itemsDataGrid
             if (TestList.getTestID(test, stringErrorString))
             {
-                //Updated items LIst to a class variable so it only needs to get loaded once, when the test is loaded. 
-                listItemsList = new List<Item>();
-                if (ItemList.getItems(listItemsList, test.TestID, stringErrorString))
+            */
+            currentTest = (Test)editTestComboBox.SelectedItem;
+            string stringErrorString = "";
+            //Updated items LIst to a class variable so it only needs to get loaded once, when the test is loaded. 
+            listItemsList = new List<Item>();
+            if (ItemList.getItems(listItemsList, currentTest.TestID, stringErrorString))
+            {
+                itemsDataGrid.Rows.Clear();
+                foreach (Item item in listItemsList)
                 {
-                    itemsDataGrid.Rows.Clear();
-                    foreach (Item item in listItemsList)
+                    int intIndex = itemsDataGrid.Rows.Add();
+                    itemsDataGrid.Rows[intIndex].Cells[0].Value = item.Name;
+                }
+                //Get the test type and set the testTypeComboBox accordingly
+                /*if (TestList.getTestType(test, stringErrorString))
+                {
+                    if(test.TestType == "T")
                     {
-                        int intIndex = itemsDataGrid.Rows.Add();
-                        itemsDataGrid.Rows[intIndex].Cells[0].Value = item.Name;
+                        testTypeComboBox.SelectedIndex = 0;
                     }
-                    //Get the test type and set the testTypeComboBox accordingly
-                    /*if (TestList.getTestType(test, stringErrorString))
+                    else if(test.TestType == "I")
                     {
-                        if(test.TestType == "T")
-                        {
-                            testTypeComboBox.SelectedIndex = 0;
-                        }
-                        else if(test.TestType == "I")
-                        {
-                            testTypeComboBox.SelectedIndex = 1;
-                        }
-                        else if(test.TestType == "TI")
-                        {
-                            testTypeComboBox.SelectedIndex = 2;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Test type is not valid");
-                        }
+                        testTypeComboBox.SelectedIndex = 1;
+                    }
+                    else if(test.TestType == "TI")
+                    {
+                        testTypeComboBox.SelectedIndex = 2;
                     }
                     else
                     {
-                        MessageBox.Show(stringErrorString);
-                    }*/
-                    currentTest = test;
-
-                    //Check if selected test is in testsessions and set controls accordingly
-                    List<int> listTestSessionIDs = new List<int>();
-                    bool isTestSessionID = false;
-                    if (TestList.getTestSessions(listTestSessionIDs, stringErrorString))
-                    {
-                        foreach (int intTestID in listTestSessionIDs)
-                        {
-                            if (test.TestID == intTestID)
-                            {
-                                isTestSessionID = true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show(stringErrorString);
-                        cancelButton.PerformClick();
-                    }
-                    if (isTestSessionID)
-                    {
-                        testNameLabel.Text = "You are now viewing the " + currentTest.TestName + " test";
-                        testNameLabel.Visible = true;
-                        cancelButton.Enabled = true;
-                        addItemButton.Enabled = false;
-                        deleteItemButton.Enabled = false;
-                        deleteTestButton.Enabled = false;
-                        finishButton.Enabled = false;
-                        customButton.Enabled = true;
-                        itemsDataGrid.ReadOnly = true;
-                        testTypeComboBox.Enabled = false;
-                    }
-                    else
-                    {
-                        testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
-                        testNameLabel.Visible = true;
-                        cancelButton.Enabled = true;
-                        addItemButton.Enabled = true;
-                        deleteItemButton.Enabled = true;
-                        deleteTestButton.Enabled = true;
-                        finishButton.Enabled = true;
-                        customButton.Enabled = true;
-                        itemsDataGrid.ReadOnly = true;
-                        testTypeComboBox.Enabled = true;
+                        MessageBox.Show("Test type is not valid");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Error finding items for the " + test.TestName + " test.");
+                    MessageBox.Show(stringErrorString);
+                }*/
+                //Check if selected test is in testsessions and set controls accordingly
+                List<int> listTestSessionIDs = new List<int>();
+                bool isTestSessionID = false;
+                if (TestList.getTestSessions(listTestSessionIDs, stringErrorString))
+                {
+                    foreach (int intTestID in listTestSessionIDs)
+                    {
+                        if (currentTest.TestID == intTestID)
+                        {
+                            isTestSessionID = true;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(stringErrorString);
+                    cancelButton.PerformClick();
+                }
+                if (isTestSessionID)
+                {
+                    testNameLabel.Text = "You are now viewing the " + currentTest.TestName + " test";
+                    testNameLabel.Visible = true;
+                    cancelButton.Enabled = true;
+                    addItemButton.Enabled = false;
+                    deleteItemButton.Enabled = false;
+                    deleteTestButton.Enabled = false;
+                    finishButton.Enabled = false;
+                    customButton.Enabled = true;
+                    itemsDataGrid.ReadOnly = true;
+                    testTypeComboBox.Enabled = false;
+                }
+                else
+                {
+                    testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
+                    testNameLabel.Visible = true;
+                    cancelButton.Enabled = true;
+                    addItemButton.Enabled = true;
+                    deleteItemButton.Enabled = true;
+                    deleteTestButton.Enabled = true;
+                    finishButton.Enabled = true;
+                    customButton.Enabled = true;
+                    itemsDataGrid.ReadOnly = true;
+                    testTypeComboBox.Enabled = true;
                 }
             }
-            else
-            {
-                MessageBox.Show("Could not find the '" + editTestComboBox.SelectedValue.ToString() + " test'");
-            }
         }
-        private void customButton_Click(object sender, EventArgs e)
+            /*
+                    else
+                    {
+                        MessageBox.Show("Error finding items for the " + test.TestName + " test.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Could not find the '" + editTestComboBox.SelectedValue.ToString() + " test'");
+                }
+            }
+            */
+            private void customButton_Click(object sender, EventArgs e)
         {
             //Programmer: Jeremiah Montano
             //Date: November 11, 2018

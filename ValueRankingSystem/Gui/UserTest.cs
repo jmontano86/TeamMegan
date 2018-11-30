@@ -26,11 +26,11 @@ namespace Gui
             get { return _currentUser; }
             set { _currentUser = value; }
         }
-        private int _testID;
-        public int currentTestID
+        private Test _currentTest;
+        public Test currentTest
         {
-            get { return _testID; }
-            set { _testID = value; }
+            get { return _currentTest; }
+            set { _currentTest = value; }
         }
         List<ItemPair> itemPairList = new List<ItemPair>();
         //List<Test> testItems = new List<Test>();
@@ -46,8 +46,14 @@ namespace Gui
         {
             testButton.Enabled = false;
             //Load itemPairs that was selected in test selection form
-            BusinessData.UserTestLogic.getItemPair(currentTestID, itemPairList);
-            
+            if (currentTest.CustomTest == 1)
+            {
+                itemPairList = ItemPair.getCustomItemPair(currentTest.TestID);
+            }
+            else
+            {
+                UserTestLogic.getItemPair(currentTest.TestID, itemPairList);
+            }
             // Get Item Pairs and populate groupbox
             populateGroupBox(itemPairList, itemPairListIndex);
 
@@ -78,7 +84,7 @@ namespace Gui
                 // write to test session table
                 List<TestSession> testSessionList = new List<TestSession>();
                 currentTestSession.intUserID = currentUser.intUserID;
-                currentTestSession.intTestID = currentTestID; // Need to change this for sprint 2
+                currentTestSession.intTestID = currentTest.TestID; // Need to change this for sprint 2
                 currentTestSession.datetimeCreationDate = DateTime.Now;
                 TestSession.CreateSession(currentTestSession);
 
@@ -101,7 +107,20 @@ namespace Gui
                 // Populate groupbox radio buttons with itempair by index
                 ItemPair newItemPair = new ItemPair();
                 newItemPair = itemPairList[itemPairListIndex];
-                itemToAssign = populateRadio(newItemPair);
+                if(currentTest.Shuffle == 1)
+                {
+                    //if custom test is set to Shuffle, will randomize order of pairings
+                    itemToAssign = populateRadio(newItemPair);
+                } else
+                {
+                    itemToAssign.Clear();
+                    itemToAssign.Add(newItemPair.Item1);
+                    itemToAssign.Add(newItemPair.Item2);
+                    itemToAssign.Add(new Item(0, "Undecided", currentTest.TestID));
+                    userChoiceOne.Text = newItemPair.Item1.Name;
+                    userChoiceTwo.Text = newItemPair.Item2.Name;
+                    userChoiceThree.Text = "Undecided";
+                }
                 userChoiceOne.Checked = false;
                 userChoiceTwo.Checked = false;
                 userChoiceThree.Checked = false;

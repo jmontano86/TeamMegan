@@ -76,21 +76,12 @@ namespace BusinessData
                 //// Loops through and pairs up item starting at count +1
                 for (int i = j+1; i <= itemList.Count-1; i++)
                 {
-
                     // Creates new itempair instance
                     ItemPair itemInsta = new ItemPair();
                     // Populates first parameter of itemPair
                     itemInsta.Item1 = itemList[j];
                     itemInsta.Item2 = itemList[i];
-
-
-
-
-
-
-
-                 itemPairList.Add(itemInsta);
-
+                    itemPairList.Add(itemInsta);
                 }
             }
             return itemPairList;
@@ -135,10 +126,7 @@ namespace BusinessData
         {
             List<Item> randomItemList = new List<Item>();
             // Assign "Undecided" as an item
-            Item unChoice = new Item();
-            unChoice.ItemID = 0;
-            unChoice.Name = "Undecided";
-            unChoice.TestID = itemPair.Item1.TestID;
+            Item unChoice = new Item(0, "Undecided", itemPair.Item1.TestID);
             // Generate random number
             Random rndNum = new Random();
             // Assigns rndNum to itemPair          

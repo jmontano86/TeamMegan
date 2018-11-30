@@ -43,11 +43,17 @@
             this.removeOption1Buttn = new MetroFramework.Controls.MetroButton();
             this.removeOption2Button = new MetroFramework.Controls.MetroButton();
             this.customToolTip = new MetroFramework.Components.MetroToolTip();
+            this.myNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.addItemContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.addToOption1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToOption2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.customErrorProvider)).BeginInit();
+            this.addItemContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // itemsListBox
             // 
+            this.itemsListBox.ContextMenuStrip = this.addItemContextMenu;
             this.itemsListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.itemsListBox.FormattingEnabled = true;
             this.itemsListBox.ItemHeight = 16;
@@ -193,6 +199,33 @@
             this.customToolTip.StyleManager = null;
             this.customToolTip.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
+            // myNotifyIcon
+            // 
+            this.myNotifyIcon.Text = "notifyIcon1";
+            this.myNotifyIcon.Visible = true;
+            // 
+            // addItemContextMenu
+            // 
+            this.addItemContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToOption1ToolStripMenuItem,
+            this.addToOption2ToolStripMenuItem});
+            this.addItemContextMenu.Name = "addItemContextMenu";
+            this.addItemContextMenu.Size = new System.Drawing.Size(160, 48);
+            // 
+            // addToOption1ToolStripMenuItem
+            // 
+            this.addToOption1ToolStripMenuItem.Name = "addToOption1ToolStripMenuItem";
+            this.addToOption1ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.addToOption1ToolStripMenuItem.Text = "Add to Option 1";
+            this.addToOption1ToolStripMenuItem.Click += new System.EventHandler(this.addToOption1ToolStripMenuItem_Click);
+            // 
+            // addToOption2ToolStripMenuItem
+            // 
+            this.addToOption2ToolStripMenuItem.Name = "addToOption2ToolStripMenuItem";
+            this.addToOption2ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.addToOption2ToolStripMenuItem.Text = "Add to Option 2";
+            this.addToOption2ToolStripMenuItem.Click += new System.EventHandler(this.addToOption2ToolStripMenuItem_Click);
+            // 
             // CustomTestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,6 +247,7 @@
             this.Text = "Customize Your Test";
             this.Load += new System.EventHandler(this.CustomTestForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.customErrorProvider)).EndInit();
+            this.addItemContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,5 +269,9 @@
         private MetroFramework.Controls.MetroButton removeOption2Button;
         private MetroFramework.Controls.MetroButton removeOption1Buttn;
         private MetroFramework.Components.MetroToolTip customToolTip;
+        private System.Windows.Forms.NotifyIcon myNotifyIcon;
+        private MetroFramework.Controls.MetroContextMenu addItemContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem addToOption1ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addToOption2ToolStripMenuItem;
     }
 }

@@ -69,7 +69,6 @@ namespace BusinessData
             {
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
-
                 while(reader.Read())
                 {
                     Item newItem = new Item();
@@ -78,7 +77,6 @@ namespace BusinessData
                     newItem.Name = reader.GetString(2);
                     return newItem;
                 }
-
             }
             catch
             {

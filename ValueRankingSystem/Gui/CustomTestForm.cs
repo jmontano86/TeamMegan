@@ -1,12 +1,7 @@
 ﻿using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BusinessData;
 using MetroFramework;
@@ -37,7 +32,7 @@ namespace Gui
         {
             //Update form text to name of test
             this.Text = "You are now customizing the " + currentTest.TestName + " test!";
-            //update ListView with items
+            //update ListView with items in the current test
             foreach (Item item in itemList)
             {
                 itemsListBox.Items.Add(item);
@@ -53,6 +48,10 @@ namespace Gui
                     item1ListBox.Items.Add(listItem.Item1);
                     item2ListBox.Items.Add(listItem.Item2);
                 }
+            }
+            if (currentTest.Shuffle == 1)
+            {
+                shuffleCheckBox.Checked = true;
             }
         }
 
@@ -73,6 +72,7 @@ namespace Gui
         private void itemsListBox_MouseDown(object sender, MouseEventArgs e)
         {
             customErrorProvider.Clear();
+            itemsListBox.SelectedIndex = itemsListBox.IndexFromPoint(e.X, e.Y);
         }
 
         private void option2Button_Click(object sender, EventArgs e)
@@ -214,6 +214,12 @@ namespace Gui
                     }
                 }
                 Test.updateCustomTest(currentTest.TestID, 0, intShuffleBit);
+                //shuffle option successfully saved. Party up!
+                myNotifyIcon.BalloonTipTitle = "Custom Test Saved";
+                myNotifyIcon.BalloonTipText = "The changes to " + currentTest.TestName + " Test have been saved!";
+                myNotifyIcon.Icon = SystemIcons.Information;
+                myNotifyIcon.Visible = true;
+                myNotifyIcon.ShowBalloonTip(2000);
                 return;
             }
             if (item1ListBox.Items.Count != item2ListBox.Items.Count)
@@ -253,6 +259,19 @@ namespace Gui
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            for (int x = 0; x < item1ListBox.Items.Count; x++)
+            {
+                Item item1 = (Item)item1ListBox.Items[x];
+                Item item2 = (Item)item2ListBox.Items[x];
+                if (item1.ItemID == item2.ItemID)
+                {
+                    MetroMessageBox.Show(this, "You cannot compare an item against itself!", "Invalid Comparison",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    item1ListBox.SelectedIndex = x;
+                    item2ListBox.SelectedIndex = x;
+                    return;
+                }
+            }
             //All validation has been made, we will write items to database
             List<ItemPair> pairList = new List<ItemPair>();
             for (int x = 0; x < item1ListBox.Items.Count; x++)
@@ -284,6 +303,11 @@ namespace Gui
                 Test.updateCustomTest(currentTest.TestID, 1, intShuffleBit);
                 isExisting = true;
                 //items successfully saved. Party up!
+                myNotifyIcon.BalloonTipTitle = "Custom Test Saved";
+                myNotifyIcon.BalloonTipText = "The changes to " + currentTest.TestName + " Test have been saved!";
+                myNotifyIcon.Icon = SystemIcons.Information;
+                myNotifyIcon.Visible = true;
+                myNotifyIcon.ShowBalloonTip(2000);
             }
         }
 
@@ -292,10 +316,21 @@ namespace Gui
             if (shuffleCheckBox.Checked)
             {
                 intShuffleBit = 1;
-            } else
+            }
+            else
             {
                 intShuffleBit = 0;
             }
+        }
+
+        private void addToOption1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            option1Button_Click(sender, e);
+        }
+
+        private void addToOption2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            option2Button_Click(sender, e);
         }
     }
 }

@@ -8,8 +8,11 @@ namespace BusinessData
     class TestDB
     {
         public const string TESTS_TESTID_COLUMN = "TestID";
+        public const string TESTS_TESTNAME_COLUMN = "TestName";
+        public const string TESTS_CREATIONDATE_COLUMN = "CreationDate";
         public const string TESTS_CUSTOMTEST_COLUMN = "CustomTest";
         public const string TESTS_SHUFFLE_COLUMN = "Shuffle";
+        public const string TESTS_TESTTYPE_COLUMN = "TestType";
         //Get all the tests from the Tests table and add them to the provided list
         public static bool getTests(List<Test> listTestList, string stringErrorString)
         {
@@ -28,11 +31,22 @@ namespace BusinessData
                 while (reader.Read())
                 {
                     test = new Test();
-                    test.TestID = reader.GetInt32(0);
-                    test.TestName = reader.GetString(1);
-                    //TODO - SQL get Bit info. Int and Byte do not work currently need to find out what data type this is.
-                    test.CustomTest = (int)reader.GetByte(2);
-                    test.Shuffle = (int)reader.GetByte(3);
+                    test.TestID = Convert.ToInt32(reader[TESTS_TESTID_COLUMN]);
+                    test.TestName = Convert.ToString(reader[TESTS_TESTNAME_COLUMN]);
+                    if (!reader.IsDBNull(reader.GetOrdinal(TESTS_CUSTOMTEST_COLUMN)))
+                    {
+                        test.CustomTest = Convert.ToInt32(reader[TESTS_CUSTOMTEST_COLUMN]);
+                    } else
+                    {
+                        test.CustomTest = 0;
+                    }
+                    if (!reader.IsDBNull(reader.GetOrdinal(TESTS_SHUFFLE_COLUMN)))
+                    {
+                        test.Shuffle = Convert.ToInt32(reader[TESTS_SHUFFLE_COLUMN]);
+                    } else
+                    {
+                        test.Shuffle = 0;
+                    }
                     listTestList.Add(test);
                 }
                 reader.Close();
