@@ -35,11 +35,12 @@ namespace BusinessData
             get { return intCustomTest; }
             set { intCustomTest = value; }
 		}
-        public string TestType
+
+        public override string ToString()
         {
-            get { return strTestType; }
-            set { strTestType = value; }
+            return TestName.ToString();
         }
+
     }
 
     public static class TestList

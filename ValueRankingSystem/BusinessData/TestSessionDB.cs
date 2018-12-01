@@ -64,6 +64,8 @@ namespace BusinessData
             }
         }
 
+       
+
         public static bool CreateSession(TestSession testsession)
         {
             SqlConnection Connection = DatabaseHelper.Connect();
@@ -99,7 +101,53 @@ namespace BusinessData
                     Connection.Close();
             }
         }
-            
+
+        public static bool GetUserTests(List<Test> testList, ref string error, int UserID)
+        {
+            List<Test> TestSessionList = new List<Test>();
+
+            SqlConnection Connection = new SqlConnection();
+            SqlDataReader TestDataReader;
+            SqlCommand Command;
+            Test test;
+
+            try
+            {
+                // Connect to database and get data.
+                Connection = DatabaseHelper.Connect();
+                Connection.Open();
+                Command = new SqlCommand();
+                Command.Connection = Connection;
+                Command.CommandText = "SELECT TestSessions.TestID, Tests.TestName FROM TestSessions" +
+                    "                  LEFT OUTER JOIN Tests ON TestSessions.TestID = Tests.TestID WHERE UserID = @UserID;";
+                Command.Parameters.AddWithValue("@UserID", UserID);
+                TestDataReader = Command.ExecuteReader();
+
+                // Add data to list.
+                while (TestDataReader.Read())
+                {
+                    test = new Test();
+                    test.TestID = TestDataReader.GetInt32(0);
+                    test.TestName = TestDataReader.GetString(1);
+                    testList.Add(test);
+
+                }
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                if (Connection != null)
+                    Connection.Close();
+            }
+        }
+
+
 
     }
 }

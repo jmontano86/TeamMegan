@@ -49,7 +49,7 @@ namespace BusinessData
 
         public override string ToString()
         {
-            return intSessionID.ToString();
+            return datetimeCreationDate.ToString();
         }
 
       
@@ -57,12 +57,22 @@ namespace BusinessData
         {
             return TestSessionDB.GetTestSessions(testSessionList, ref error);
         }
-        
+
+        public static bool GetUserTests(List<Test> testList, ref string error, int TestID)
+        {
+            return TestSessionDB.GetUserTests(testList, ref error, TestID);
+        }
+
         public static bool CreateSession(TestSession testsession)
         {
             return TestSessionDB.CreateSession(testsession);
         }
-        
+
+        public static bool getTestID(Test test, string stringErrorString)
+        {
+            return TestDB.getTestID(test, stringErrorString);
+        }
+
     }
 }
 
