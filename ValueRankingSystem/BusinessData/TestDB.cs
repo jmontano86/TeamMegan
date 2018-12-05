@@ -8,10 +8,13 @@ namespace BusinessData
     class TestDB
     {
         public const string TESTS_TESTID_COLUMN = "TestID";
+        public const string TESTS_TESTNAME_COLUMN = "TestName";
+        public const string TESTS_CREATIONDATE_COLUMN = "CreationDate";
         public const string TESTS_CUSTOMTEST_COLUMN = "CustomTest";
         public const string TESTS_SHUFFLE_COLUMN = "Shuffle";
+        public const string TESTS_TESTTYPE_COLUMN = "TestType";
         //Get all the tests from the Tests table and add them to the provided list
-        public static bool getTests(List<Test> listTestList, string stringErrorString)
+        public static bool getTests(List<Test> listTestList, ref string stringErrorString)
         {
             SqlConnection connection = new SqlConnection();
             SqlDataReader reader;
@@ -23,24 +26,39 @@ namespace BusinessData
                 connection.Open();
                 command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT TestID, TestName, CustomTest, Shuffle FROM Tests";
+                command.CommandText = "SELECT TestID, TestName, CustomTest, Shuffle, TestType FROM Tests";
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     test = new Test();
-                    test.TestID = reader.GetInt32(0);
-                    test.TestName = reader.GetString(1);
-                    //TODO - SQL get Bit info. Int and Byte do not work currently need to find out what data type this is.
-                    test.CustomTest = (int)reader.GetByte(2);
-                    test.Shuffle = (int)reader.GetByte(3);
+                    test.TestID = Convert.ToInt32(reader[TESTS_TESTID_COLUMN]);
+                    test.TestName = Convert.ToString(reader[TESTS_TESTNAME_COLUMN]);
+                    test.TestType = Convert.ToString(reader[TESTS_TESTTYPE_COLUMN]);
+                    if (!reader.IsDBNull(reader.GetOrdinal(TESTS_CUSTOMTEST_COLUMN)))
+                    {
+                        test.CustomTest = Convert.ToInt32(reader[TESTS_CUSTOMTEST_COLUMN]);
+                    }
+                    else
+                    {
+                        test.CustomTest = 0;
+                    }
+                    if (!reader.IsDBNull(reader.GetOrdinal(TESTS_SHUFFLE_COLUMN)))
+                    {
+                        test.Shuffle = Convert.ToInt32(reader[TESTS_SHUFFLE_COLUMN]);
+                    }
+                    else
+                    {
+                        test.Shuffle = 0;
+                    }
                     listTestList.Add(test);
                 }
                 reader.Close();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                stringErrorString = ex.Message.ToString();
+                stringErrorString = "Error retriving the tests from the database: ";
+                stringErrorString += ex.Message.ToString();
                 return false;
             }
             finally
@@ -75,7 +93,7 @@ namespace BusinessData
             }
         }
         //Add the test to the database with the name provided and set the ID to the return value from the scalar
-        public static bool addTest(Test test, string stringErrorString)
+        public static bool addTest(Test test, ref string stringErrorString)
         {
             SqlConnection connection = new SqlConnection();
             SqlCommand command;
@@ -97,7 +115,8 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
-                stringErrorString = ex.Message.ToString();
+                stringErrorString = "Error adding the test to the database: ";
+                stringErrorString += ex.Message.ToString();
                 return false;
             }
             finally
@@ -106,7 +125,7 @@ namespace BusinessData
             }
         }
         //Delete the test with the ID provided
-        public static bool deleteTest(int intTestID, string stringErrorString)
+        public static bool deleteTest(int intTestID, ref string stringErrorString)
         {
             SqlConnection connection = new SqlConnection();
             SqlCommand command;
@@ -123,7 +142,8 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
-                stringErrorString = ex.Message.ToString();
+                stringErrorString = "Error deleting the test from the database: ";
+                stringErrorString += ex.Message.ToString();
                 return false;
             }
             finally
@@ -132,7 +152,7 @@ namespace BusinessData
             }
         }
         //Gets the ID of the test with the name provided
-        public static bool getTestID(Test test, string stringErrorString)
+        public static bool getTestIDAndType(Test test, ref string stringErrorString)
         {
             SqlConnection connection = new SqlConnection();
             SqlDataReader reader;
@@ -143,19 +163,53 @@ namespace BusinessData
                 connection.Open();
                 command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT TestID FROM Tests WHERE TestName = @TestName";
+                command.CommandText = "SELECT TestID, TestType FROM Tests WHERE TestName = @TestName";
                 command.Parameters.AddWithValue("@TestName", test.TestName);
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     test.TestID = reader.GetInt32(0);
+                    test.TestType = reader.GetString(1);
                 }
                 reader.Close();
                 return true;
             }
             catch (Exception ex)
             {
-                stringErrorString = ex.Message.ToString();
+                stringErrorString = "Error getting the test ID and type from the database: ";
+                stringErrorString += ex.Message.ToString();
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        public static bool getTestType(ref string testType, int testID, ref string errorMessage)
+        {
+            SqlConnection connection = new SqlConnection();
+            SqlDataReader reader;
+            SqlCommand command;
+            try
+            {
+                connection = DatabaseHelper.Connect();
+                connection.Open();
+                command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "SELECT TestType FROM Tests WHERE TestID = @TestID";
+                command.Parameters.AddWithValue("@TestID", testID);
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    testType = reader.GetString(0);
+                }
+                reader.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = "Error getting the test type from the database: ";
+                errorMessage += ex.Message.ToString();
                 return false;
             }
             finally
@@ -164,7 +218,7 @@ namespace BusinessData
             }
         }
         //Get the test IDs from the TestSessions table and add them to the list provided
-        public static bool getTestSessions(List<int> listTestIDList, string stringErrorString)
+        public static bool getTestSessions(List<int> listTestIDList, ref string stringErrorString)
         {
             SqlConnection connection = new SqlConnection();
             SqlDataReader reader;
@@ -186,7 +240,8 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
-                stringErrorString = ex.Message.ToString();
+                stringErrorString = "Error getting the test sessions from the database: ";
+                stringErrorString += ex.Message.ToString();
                 return false;
             }
             finally
@@ -195,7 +250,7 @@ namespace BusinessData
             }
         }
         //Get all the names of the tests and add them to the list provided
-        public static bool getTestNames(List<string> listTestNames, string stringErrorString)
+        public static bool getTestNames(List<string> listTestNames, ref string stringErrorString)
         {
             SqlConnection connection = new SqlConnection();
             SqlDataReader reader;
@@ -217,38 +272,8 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
-                stringErrorString = ex.Message.ToString();
-                return false;
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
-        public static bool getTestType(Test test, string stringErrorString)
-        {
-            SqlConnection connection = new SqlConnection();
-            SqlDataReader reader;
-            SqlCommand command;
-            try
-            {
-                connection = DatabaseHelper.Connect();
-                connection.Open();
-                command = new SqlCommand();
-                command.Connection = connection;
-                command.CommandText = "SELECT TestType FROM Tests WHERE TestID = @TestID";
-                command.Parameters.AddWithValue("@TestID", test.TestID);
-                reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    test.TestType = reader.GetString(0);
-                }
-                reader.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                stringErrorString = ex.Message.ToString();
+                stringErrorString = "Error getting the test names from the database: ";
+                stringErrorString += ex.Message.ToString();
                 return false;
             }
             finally

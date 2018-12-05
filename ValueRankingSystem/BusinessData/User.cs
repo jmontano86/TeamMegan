@@ -57,7 +57,8 @@ namespace BusinessData
                 //check password to make sure login valid.
                 if(hashPassword(strPassword) == strUserItems[2])
                 {
-                    Int32.TryParse(strUserItems[0], out int intID);
+                    int intID = 0;
+                    Int32.TryParse(strUserItems[0], out intID);
                     intUserID = intID;
                     strUsername = strUserItems[1];
                     strPassword = strUserItems[2];

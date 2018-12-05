@@ -46,7 +46,8 @@ namespace BusinessData
             TestSession.GetTestSessions(testSessionList, ref error);
             foreach (var testSession in testSessionList)
             {
-                TestList.getTests(testList, "Error Getting Items");
+                string errorString = "Error Getting Items: ";
+                TestList.getTests(testList, ref errorString);
                 foreach (var test in testList)
                 {
                     if (testSession.intTestID == test.TestID && testSession.intUserID == user.intUserID)
@@ -65,7 +66,8 @@ namespace BusinessData
             // Get all items from the database
            
             List<Item> itemList = new List<Item>();
-            ItemList.getItems(itemList, testID, "Could not load items");
+            string errorString = "Could not load items: ";
+            ItemList.getItems(itemList, testID, ref errorString);
 
             // Pair up items
       
