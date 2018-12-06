@@ -68,7 +68,7 @@ namespace Gui
             // Randomizes where the item pairs are assigned to the userChoice Radio boxes: Kevin Khlom Sprint 2
             List<Item> itemToAssign = new List<Item>();
             // Function that randomizes the pairings
-            UserTestLogic.itemToAssign(itemPair, itemToAssign);
+            UserTestLogic.itemToAssign(itemPair, itemToAssign, currentTest);
             userChoiceOne.Text = itemToAssign[0].Name;
             userChoiceTwo.Text = itemToAssign[1].Name;
             userChoiceThree.Text = itemToAssign[2].Name;
