@@ -44,16 +44,14 @@ namespace Gui
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            int testID;
-            testID = selectedTest.TestID;
-            UserTest testForm = new UserTest();
             if (testSelectionComboBox.SelectedItem == null)
             {
                 MessageBox.Show("Please choose a test you would like to take from the dropdown");
             }
             else
             {
-                testForm.currentTestID = testID;
+                UserTest testForm = new UserTest();
+                testForm.currentTest = selectedTest;
                 testForm.currentUser = currentUser;
                 testForm.ShowDialog();
                 this.Close();

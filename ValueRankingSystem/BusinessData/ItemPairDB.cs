@@ -19,39 +19,65 @@ namespace BusinessData
         //Summary: Add Custom Item pairs to the database for custom comparison
         public ItemPairDB() { }
 
-        public bool AddCustomItemPairs(List<ItemPair> itemPairs, int intTestID, string strErrorString)
+        public bool AddCustomItemPairs(List<ItemPair> itemPairs, int intTestID, string strError)
         {
             SqlConnection conn = DatabaseHelper.Connect();
-            SqlCommand cmd = new SqlCommand("SPInsertItemPair", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            foreach (ItemPair item in itemPairs)
+            try
             {
-                cmd.Parameters.Add(new SqlParameter(ITEMPAIRS_ITEMID1_COLUMN, item.Item1.ItemID));
-                cmd.Parameters.Add(new SqlParameter(ITEMPAIRS_ITEMID2_COLUMN, item.Item2.ItemID));
-                cmd.Parameters.Add(new SqlParameter(ITEMPAIRS_TESTID_COLUMN, intTestID));
-                try
+                conn.Open();
+                foreach (ItemPair item in itemPairs)
                 {
-                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("SPInsertItemPair", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter(ITEMPAIRS_ITEMID1_COLUMN, item.Item1.ItemID));
+                    cmd.Parameters.Add(new SqlParameter(ITEMPAIRS_ITEMID2_COLUMN, item.Item2.ItemID));
+                    cmd.Parameters.Add(new SqlParameter(ITEMPAIRS_TESTID_COLUMN, intTestID));
+
                     cmd.ExecuteNonQuery();
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    strErrorString = ex.ToString();
-                    return false;
-                }
-                finally
-                {
-                    conn.Close();
-                    conn.Dispose();
                 }
             }
-            //If there happens to be no item pairs, return false
-            return false;
+            catch (Exception ex)
+            {
+                strError = ex.ToString();
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            //Success we added all items!!!
+            return true;
+        }
+        //Programmer: Jeremiah Montano
+        //Date: November 20, 2018
+        //Summary: Delete Item Pairs to write new ones to the database
+        public bool DelCustomItemPairs(int intTestID, string strError)
+        {
+            SqlConnection conn = DatabaseHelper.Connect();
+            SqlCommand cmd = new SqlCommand("SPDeleteItemPair", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter(ITEMPAIRS_TESTID_COLUMN, intTestID));
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                strError = ex.ToString();
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
         }
         //Programmer: Jeremiah Montano
         //Date: November 11, 2018
-        //Summary: Get list of ItemPairs for Customer Comparison
+        //Summary: Get list of ItemPairs for Custom Comparison
         public List<ItemPair> GetCustomItemPairs(int intTestID)
         {
             SqlConnection conn = DatabaseHelper.Connect();
@@ -69,8 +95,8 @@ namespace BusinessData
                 while (reader.Read())
                 {
                     itemPair = new ItemPair();
-                    itemPair.Item1.ItemID = reader.GetInt32(0);
-                    itemPair.Item2.ItemID = reader.GetInt32(1);
+                    itemPair.Item1 = Item.getItem(Convert.ToInt32(reader[ITEMPAIRS_ITEMID1_COLUMN]));
+                    itemPair.Item2 = Item.getItem(Convert.ToInt32(reader[ITEMPAIRS_ITEMID2_COLUMN]));
 
                     itemPairs.Add(itemPair);
                 }

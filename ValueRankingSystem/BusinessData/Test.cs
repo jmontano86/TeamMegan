@@ -12,13 +12,12 @@ namespace BusinessData
         string strTestName;
         int intCustomTest; //there is a custom comparison test if this equal 1
         string strTestType;
+        int intShuffle; //If 1, shuffle enabled
 
         public int TestID
         {
             get { return intTestID; }
             set { intTestID = value; }
-
-
         }
         public string TestType
         {
@@ -35,10 +34,21 @@ namespace BusinessData
             get { return intCustomTest; }
             set { intCustomTest = value; }
 		}
+        public int Shuffle
+        {
+            get { return intShuffle; }
+            set { intShuffle = value; }
+        }
         public override string ToString()
         {
             //ToString method override to display testName for default method
             return TestName;
+        }
+
+        public static void updateCustomTest(int intTestID, int intCustomTest, int intShuffleBit)
+        {
+            TestDB db = new TestDB();
+            db.updateCustomTest(intTestID, intCustomTest, intShuffleBit);
         }
     }
     

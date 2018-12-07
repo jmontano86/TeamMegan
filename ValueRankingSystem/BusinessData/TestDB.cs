@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace BusinessData
 {
     class TestDB
     {
+        public const string TESTS_TESTID_COLUMN = "TestID";
+        public const string TESTS_TESTNAME_COLUMN = "TestName";
+        public const string TESTS_CREATIONDATE_COLUMN = "CreationDate";
+        public const string TESTS_CUSTOMTEST_COLUMN = "CustomTest";
+        public const string TESTS_SHUFFLE_COLUMN = "Shuffle";
+        public const string TESTS_TESTTYPE_COLUMN = "TestType";
         //Get all the tests from the Tests table and add them to the provided list
         public static bool getTests(List<Test> listTestList, string stringErrorString)
         {
@@ -19,13 +26,27 @@ namespace BusinessData
                 connection.Open();
                 command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT TestID, TestName, CustomTest FROM Tests";
+                command.CommandText = "SELECT TestID, TestName, CustomTest, Shuffle FROM Tests";
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     test = new Test();
-                    test.TestID = reader.GetInt32(0);
-                    test.TestName = reader.GetString(1);
+                    test.TestID = Convert.ToInt32(reader[TESTS_TESTID_COLUMN]);
+                    test.TestName = Convert.ToString(reader[TESTS_TESTNAME_COLUMN]);
+                    if (!reader.IsDBNull(reader.GetOrdinal(TESTS_CUSTOMTEST_COLUMN)))
+                    {
+                        test.CustomTest = Convert.ToInt32(reader[TESTS_CUSTOMTEST_COLUMN]);
+                    } else
+                    {
+                        test.CustomTest = 0;
+                    }
+                    if (!reader.IsDBNull(reader.GetOrdinal(TESTS_SHUFFLE_COLUMN)))
+                    {
+                        test.Shuffle = Convert.ToInt32(reader[TESTS_SHUFFLE_COLUMN]);
+                    } else
+                    {
+                        test.Shuffle = 0;
+                    }
                     listTestList.Add(test);
                 }
                 reader.Close();
@@ -39,6 +60,32 @@ namespace BusinessData
             finally
             {
                 connection.Close();
+            }
+        }
+        public bool updateCustomTest(int intTestID, int intCustomBit, int intShuffleBit)
+        {
+            SqlConnection conn = DatabaseHelper.Connect();
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("SPUpdateCustomTest", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter(TESTS_TESTID_COLUMN, intTestID));
+                cmd.Parameters.Add(new SqlParameter(TESTS_CUSTOMTEST_COLUMN, intCustomBit));
+                cmd.Parameters.Add(new SqlParameter(TESTS_SHUFFLE_COLUMN, intShuffleBit));
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
             }
         }
         //Add the test to the database with the name provided and set the ID to the return value from the scalar

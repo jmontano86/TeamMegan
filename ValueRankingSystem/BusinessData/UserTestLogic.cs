@@ -76,21 +76,12 @@ namespace BusinessData
                 //// Loops through and pairs up item starting at count +1
                 for (int i = j+1; i <= itemList.Count-1; i++)
                 {
-
                     // Creates new itempair instance
                     ItemPair itemInsta = new ItemPair();
                     // Populates first parameter of itemPair
                     itemInsta.Item1 = itemList[j];
                     itemInsta.Item2 = itemList[i];
-
-
-
-
-
-
-
-                 itemPairList.Add(itemInsta);
-
+                    itemPairList.Add(itemInsta);
                 }
             }
             return itemPairList;
@@ -131,27 +122,35 @@ namespace BusinessData
         /// <summary>
         /// Randmizes the number that will be used to assign itempairs to populate radio buttons
         /// </summary>
-        public static List<Item> itemToAssign(ItemPair itemPair, List<Item> itemToAssign)
+        public static List<Item> itemToAssign(ItemPair itemPair, List<Item> itemToAssign, Test currentTest)
         {
             List<Item> randomItemList = new List<Item>();
             // Assign "Undecided" as an item
-            Item unChoice = new Item();
-            unChoice.ItemID = 0;
-            unChoice.Name = "Undecided";
-            unChoice.TestID = itemPair.Item1.TestID;
-            // Generate random number
-            Random rndNum = new Random();
-            // Assigns rndNum to itemPair          
-            randomItemList.Add(itemPair.Item1);
-            randomItemList.Add(itemPair.Item2);
-            randomItemList.Add(unChoice);
-            // items to assign
-            // puts the itempair in random order
-            while (randomItemList.Count > 0)
+            Item unChoice = new Item(0, "Undecided", itemPair.Item1.TestID);
+            //Updated for Custom Test Presentation 
+            //If the custom test has the shuffle option selected, shuffle the options. JDM
+            if (currentTest.Shuffle == 1)
             {
-                int rndNumAssign = rndNum.Next(0, randomItemList.Count);
-                itemToAssign.Add(randomItemList[rndNumAssign]);
-                randomItemList.RemoveAt(rndNumAssign);
+                // Generate random number
+                Random rndNum = new Random();
+                // Assigns rndNum to itemPair          
+                randomItemList.Add(itemPair.Item1);
+                randomItemList.Add(itemPair.Item2);
+                randomItemList.Add(unChoice);
+                // items to assign
+                // puts the itempair in random order
+                while (randomItemList.Count > 0)
+                {
+                    int rndNumAssign = rndNum.Next(0, randomItemList.Count);
+                    itemToAssign.Add(randomItemList[rndNumAssign]);
+                    randomItemList.RemoveAt(rndNumAssign);
+                }
+            }
+            else
+            {
+                itemToAssign.Add(itemPair.Item1);
+                itemToAssign.Add(itemPair.Item2);
+                itemToAssign.Add(unChoice);
             }
             return itemToAssign;
         }

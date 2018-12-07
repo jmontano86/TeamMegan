@@ -83,7 +83,6 @@ namespace BusinessData
         public UserClass createUser(string strEmail, string strPassword, string strUsername)
         {
             UserDB db = new UserDB();
-            //TODO: Compare database with email address to ensure no prior registration
             string strHashedPassword = hashPassword(strPassword);
             if (!UserClass.search(strEmail))
             {

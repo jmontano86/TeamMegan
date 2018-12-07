@@ -38,5 +38,15 @@ namespace BusinessData
             List<ItemPair> itemPair = db.GetCustomItemPairs(intTestID);
             return itemPair;
         }
+        public static bool addCustomItemPair(List<ItemPair> itemPair, int intTestID, string strError)
+        {
+            ItemPairDB db = new ItemPairDB();
+            return db.AddCustomItemPairs(itemPair, intTestID, strError);
+        }
+        public static bool delCustomItemPair(int intTestID, string strError)
+        {
+            ItemPairDB db = new ItemPairDB();
+            return db.DelCustomItemPairs(intTestID, strError);
+        }
     }
 }

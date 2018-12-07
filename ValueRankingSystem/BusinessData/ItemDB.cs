@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace BusinessData
 {
     class ItemDB
     {
+        private const string TESTITEMS_ITEMID_COLUMN = "ItemID";
         //Get all the items from the test ID that is provided and add them to the list that is provided
         /// <summary>
         /// Need to get test items with testID included in the pull.
@@ -55,6 +57,39 @@ namespace BusinessData
                 connection.Close();
             }
         }
+
+        public Item getItem(int intItemID)
+        {
+            SqlConnection conn = DatabaseHelper.Connect();
+            SqlCommand cmd = new SqlCommand("SPGetItem", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add(new SqlParameter(TESTITEMS_ITEMID_COLUMN, intItemID));
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    Item newItem = new Item();
+                    newItem.ItemID = reader.GetInt32(0);
+                    newItem.TestID = reader.GetInt32(1);
+                    newItem.Name = reader.GetString(2);
+                    return newItem;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return null;
+        }
+    
         //TODO: GET IMAGES
         //Delete the items from the test with the test ID that is provided
         public static bool deleteItems(int intTestID, string stringErrorString)

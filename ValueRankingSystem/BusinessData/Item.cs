@@ -34,6 +34,23 @@ namespace BusinessData
         {
             return this.Name;
         }
+        public Item(int intItemID, string strItemName, int intTestID)
+        {
+            ItemID = intItemID;
+            Name = strItemName;
+            TestID = intTestID;
+        }
+
+        public Item()
+        {
+
+        }
+
+        public static Item getItem(int intItemID)
+        {
+            ItemDB db = new ItemDB();
+            return db.getItem(intItemID);
+        }
     }
 
     public static class ItemList
