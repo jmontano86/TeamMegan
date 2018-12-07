@@ -114,7 +114,7 @@ namespace Gui
                     // itemGroupBox
                     // 
                     this.itemGroupBox.Location = new System.Drawing.Point(79, 142);
-                    this.itemGroupBox.Size = new System.Drawing.Size(1000, 1000);
+                    this.itemGroupBox.Size = new System.Drawing.Size(440, 100);
                     //
                     // UserTest
                     //
@@ -129,7 +129,6 @@ namespace Gui
                         if (testType == "T")
                         {
                             control.Text = itemToAssign[i].Name;
-                            control.Location = new Point(i * 330, 152);
                         }
                         else if (testType == "I")
                         {
