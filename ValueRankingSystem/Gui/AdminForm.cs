@@ -14,6 +14,7 @@ namespace Gui
     {
         Test currentTest;
         List<Control> imageBoxLabels;
+        bool addingItems;
         public AdminForm()
         {
             InitializeComponent();
@@ -206,16 +207,23 @@ namespace Gui
                         itemsDataGrid.Rows[i].Cells[0].Value.ToString().ToUpper() ==
                         itemsDataGrid.Rows[o].Cells[0].Value.ToString().ToUpper() && i != o)
                     {
-                        MessageBox.Show(itemsDataGrid.Rows[i].Cells[0].Value + "is a duplicate.");
-                        itemsDataGrid.Rows.RemoveAt(i);
+                        MessageBox.Show(itemsDataGrid.Rows[i].Cells[0].Value + " is a duplicate.");
+                        itemsDataGrid.Rows[i].Cells[0].Value = null;
                     }
                 }
             }
-            //Add a new row if you're at the bottom row
-            if (itemsDataGrid.CurrentRow.Index == itemsDataGrid.Rows.Count)
+            //Add a new row if you're at the bottom row and all cells are filled out
+            bool allCellsFilledOut = true;
+            foreach (DataGridViewRow row in itemsDataGrid.Rows)
+            {
+                if (row.Cells[0].Value == null)
+                {
+                    allCellsFilledOut = false;
+                }
+            }
+            if (allCellsFilledOut)
             {
                 int intCurrentCell = itemsDataGrid.Rows.Add();
-                itemsDataGrid.Rows[intCurrentCell].Cells[0].Selected = true;
             }
             //Trim the current cell's content
             if (itemsDataGrid.CurrentCell.Value != null)
@@ -426,111 +434,122 @@ namespace Gui
             //Get the ID for the selected test and get the items from that test and put them in the itemsDataGrid
             if (TestList.getTestIDAndType(test, ref stringErrorString))
             {
-                List<Item> listItemsList = new List<Item>();
-                if (ItemList.getItems(listItemsList, test.TestID, ref stringErrorString))
+                if(test.TestID == 0)
                 {
-                    itemsDataGrid.Rows.Clear();
-                    foreach (Item item in listItemsList)
+                    MessageBox.Show("Test does not exist");
+                    editTestComboBox.Items.RemoveAt(editTestComboBox.SelectedIndex);
+                }
+                else
+                {
+                    List<Item> listItemsList = new List<Item>();
+                    if (ItemList.getItems(listItemsList, test.TestID, ref stringErrorString))
                     {
-                        int intIndex = itemsDataGrid.Rows.Add();
+                        itemsDataGrid.Rows.Clear();
+                        //Add the items from the test to the datagrid
+                        addingItems = true;
+                        foreach (Item item in listItemsList)
+                        {
+                            int intIndex = itemsDataGrid.Rows.Add();
+                            if (test.TestType == "T")
+                            {
+                                itemsDataGrid.Rows[intIndex].Cells[0].Value = item.Name;
+                            }
+                            else if (test.TestType == "I")
+                            {
+                                itemsDataGrid.Rows[intIndex].Cells[1].Value = item.getImage();
+                            }
+                            else if (test.TestType == "TI")
+                            {
+                                itemsDataGrid.Rows[intIndex].Cells[0].Value = item.Name;
+                                itemsDataGrid.Rows[intIndex].Cells[1].Value = item.getImage();
+                            }
+                        }
+                        addingItems = false;
+                        //Get the test type and set the testTypeComboBox accordingly
                         if (test.TestType == "T")
                         {
-                            itemsDataGrid.Rows[intIndex].Cells[0].Value = item.Name;
+                            testTypeComboBox.SelectedIndex = 0;
+                            testTypeComboBox_SelectionChangeCommitted(this, new EventArgs());
+                            foreach (DataGridViewRow row in itemsDataGrid.Rows)
+                            {
+                                row.Height = 21;
+                            }
                         }
                         else if (test.TestType == "I")
                         {
-                            itemsDataGrid.Rows[intIndex].Cells[1].Value = item.getImage();
+                            testTypeComboBox.SelectedIndex = 1;
+                            testTypeComboBox_SelectionChangeCommitted(this, new EventArgs());
+                            foreach (DataGridViewRow row in itemsDataGrid.Rows)
+                            {
+                                row.Height = 75;
+                            }
                         }
                         else if (test.TestType == "TI")
                         {
-                            itemsDataGrid.Rows[intIndex].Cells[0].Value = item.Name;
-                            itemsDataGrid.Rows[intIndex].Cells[1].Value = item.getImage();
-                        }
-                    }
-                    //Get the test type and set the testTypeComboBox accordingly
-                    if (test.TestType == "T")
-                    {
-                        testTypeComboBox.SelectedIndex = 0;
-                        testTypeComboBox_SelectionChangeCommitted(this, new EventArgs());
-                        foreach (DataGridViewRow row in itemsDataGrid.Rows)
-                        {
-                            row.Height = 21;
-                        }
-                    }
-                    else if (test.TestType == "I")
-                    {
-                        testTypeComboBox.SelectedIndex = 1;
-                        testTypeComboBox_SelectionChangeCommitted(this, new EventArgs());
-                        foreach (DataGridViewRow row in itemsDataGrid.Rows)
-                        {
-                            row.Height = 75;
-                        }
-                    }
-                    else if (test.TestType == "TI")
-                    {
-                        testTypeComboBox.SelectedIndex = 2;
-                        testTypeComboBox_SelectionChangeCommitted(this, new EventArgs());
-                        foreach (DataGridViewRow row in itemsDataGrid.Rows)
-                        {
-                            row.Height = 75;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Test type is not valid");
-                    }
-                    currentTest = test;
-
-                    //Check if selected test is in testsessions and set controls accordingly
-                    List<int> listTestSessionIDs = new List<int>();
-                    bool isTestSessionID = false;
-                    if (TestList.getTestSessions(listTestSessionIDs, ref stringErrorString))
-                    {
-                        foreach (int intTestID in listTestSessionIDs)
-                        {
-                            if (test.TestID == intTestID)
+                            testTypeComboBox.SelectedIndex = 2;
+                            testTypeComboBox_SelectionChangeCommitted(this, new EventArgs());
+                            foreach (DataGridViewRow row in itemsDataGrid.Rows)
                             {
-                                isTestSessionID = true;
+                                row.Height = 75;
                             }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Test type is not valid");
+                        }
+                        currentTest = test;
+
+                        //Check if selected test is in testsessions and set controls accordingly
+                        List<int> listTestSessionIDs = new List<int>();
+                        bool isTestSessionID = false;
+                        if (TestList.getTestSessions(listTestSessionIDs, ref stringErrorString))
+                        {
+                            foreach (int intTestID in listTestSessionIDs)
+                            {
+                                if (test.TestID == intTestID)
+                                {
+                                    isTestSessionID = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(stringErrorString);
+                            cancelButton.PerformClick();
+                        }
+                        if (isTestSessionID)
+                        {
+                            testNameLabel.Text = "You are now viewing the " + currentTest.TestName + " test";
+                            testNameLabel.Visible = true;
+                            cancelButton.Enabled = true;
+                            addItemButton.Enabled = false;
+                            deleteItemButton.Enabled = false;
+                            deleteTestButton.Enabled = false;
+                            finishButton.Enabled = false;
+                            itemsDataGrid.ReadOnly = true;
+                            testTypeComboBox.Enabled = false;
+                            itemsDataGrid.Focus();
+                            itemsDataGrid_SelectionChanged(this, new EventArgs());
+                        }
+                        else
+                        {
+                            testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
+                            testNameLabel.Visible = true;
+                            cancelButton.Enabled = true;
+                            addItemButton.Enabled = true;
+                            deleteItemButton.Enabled = true;
+                            deleteTestButton.Enabled = true;
+                            finishButton.Enabled = true;
+                            itemsDataGrid.ReadOnly = false;
+                            testTypeComboBox.Enabled = true;
+                            itemsDataGrid.Focus();
+                            itemsDataGrid_SelectionChanged(this, new EventArgs());
                         }
                     }
                     else
                     {
                         MessageBox.Show(stringErrorString);
-                        cancelButton.PerformClick();
                     }
-                    if (isTestSessionID)
-                    {
-                        testNameLabel.Text = "You are now viewing the " + currentTest.TestName + " test";
-                        testNameLabel.Visible = true;
-                        cancelButton.Enabled = true;
-                        addItemButton.Enabled = false;
-                        deleteItemButton.Enabled = false;
-                        deleteTestButton.Enabled = false;
-                        finishButton.Enabled = false;
-                        itemsDataGrid.ReadOnly = true;
-                        testTypeComboBox.Enabled = false;
-                        itemsDataGrid.Focus();
-                        itemsDataGrid_SelectionChanged(this, new EventArgs());
-                    }
-                    else
-                    {
-                        testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
-                        testNameLabel.Visible = true;
-                        cancelButton.Enabled = true;
-                        addItemButton.Enabled = true;
-                        deleteItemButton.Enabled = true;
-                        deleteTestButton.Enabled = true;
-                        finishButton.Enabled = true;
-                        itemsDataGrid.ReadOnly = false;
-                        testTypeComboBox.Enabled = true;
-                        itemsDataGrid.Focus();
-                        itemsDataGrid_SelectionChanged(this, new EventArgs());
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(stringErrorString);
                 }
             }
             else
@@ -619,10 +638,10 @@ namespace Gui
                     }
                 }
                 //Check if the dropped image is the right dimensions
-                /*if (image.Width > 500 || image.Height > 500)
+                if (image.Width > 300 || image.Height > 300)
                 {
                     isWrongSize = true;
-                }*/
+                }
                 if (isDuplicate)
                 {
                     MessageBox.Show("This image is already in this test");
@@ -688,10 +707,10 @@ namespace Gui
                     }
                 }
                 //Check if the dropped image is the right dimensions
-                /*if (image.Width > 500 || image.Height > 500)
+                if (image.Width > 300 || image.Height > 300)
                 {
                     isWrongSize = true;
-                }*/
+                }
                 if (isDuplicate)
                 {
                     MessageBox.Show("This image is already in this test");
@@ -785,7 +804,7 @@ namespace Gui
         //If an image exists on the row selected, display the image and set the label values
         private void itemsDataGrid_SelectionChanged(object sender, EventArgs e)
         {
-            if (itemsDataGrid.RowCount > 0 && currentTest.TestType != "T" && itemsDataGrid.Rows[itemsDataGrid.CurrentCell.RowIndex].Cells[1].Value != null)
+            if (itemsDataGrid.Rows[itemsDataGrid.CurrentCell.RowIndex].Cells[1].Value != null && itemsDataGrid.RowCount > 0 && currentTest.TestType != "T")
             {
                 imagePictureBox.Image = (Image)itemsDataGrid.Rows[itemsDataGrid.CurrentCell.RowIndex].Cells[1].Value;
                 setPictureLabelText();
@@ -816,6 +835,14 @@ namespace Gui
             else if (size > 1000)
             {
                 sizeLabel.Text = ((float)size / 1024).ToString("n2") + "KB";
+            }
+        }
+
+        private void itemsDataGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            if(itemsDataGrid.Rows.Count > 1 && !addingItems)
+            {
+                itemsDataGrid.Rows[e.RowIndex].Cells[0].Selected = true;
             }
         }
     }
