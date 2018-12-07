@@ -34,6 +34,7 @@ namespace BusinessData
             get { return intCustomTest; }
             set { intCustomTest = value; }
 		}
+<<<<<<< HEAD
         public int Shuffle
         {
             get { return intShuffle; }
@@ -44,6 +45,15 @@ namespace BusinessData
             //ToString method override to display testName for default method
             return TestName;
         }
+=======
+
+        public override string ToString()
+        {
+            return TestName.ToString();
+        }
+
+    }
+>>>>>>> ResultsReporting2
 
         public static void updateCustomTest(int intTestID, int intCustomTest, int intShuffleBit)
         {

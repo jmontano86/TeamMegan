@@ -40,6 +40,7 @@
             this.TiesHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LossesHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TestScoreListView = new MetroFramework.Controls.MetroListView();
+            this.resultsButton = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // patientLabel
@@ -92,6 +93,7 @@
             this.testComboBox.Size = new System.Drawing.Size(162, 29);
             this.testComboBox.TabIndex = 4;
             this.testComboBox.UseSelectable = true;
+            this.testComboBox.SelectedIndexChanged += new System.EventHandler(this.testComboBox_SelectedIndexChanged);
             // 
             // dateComboBox
             // 
@@ -102,6 +104,7 @@
             this.dateComboBox.Size = new System.Drawing.Size(162, 29);
             this.dateComboBox.TabIndex = 5;
             this.dateComboBox.UseSelectable = true;
+            this.dateComboBox.SelectedIndexChanged += new System.EventHandler(this.dateComboBox_SelectedIndexChanged);
             // 
             // TestItemHeader
             // 
@@ -148,11 +151,24 @@
             this.TestScoreListView.UseSelectable = true;
             this.TestScoreListView.View = System.Windows.Forms.View.Details;
             // 
+            // resultsButton
+            // 
+            this.resultsButton.Enabled = false;
+            this.resultsButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.resultsButton.Location = new System.Drawing.Point(451, 436);
+            this.resultsButton.Name = "resultsButton";
+            this.resultsButton.Size = new System.Drawing.Size(109, 23);
+            this.resultsButton.TabIndex = 7;
+            this.resultsButton.Text = "Global Results";
+            this.resultsButton.UseSelectable = true;
+            this.resultsButton.Click += new System.EventHandler(this.resultsButton_Click);
+            // 
             // ResultsReportingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(886, 494);
+            this.ClientSize = new System.Drawing.Size(916, 504);
+            this.Controls.Add(this.resultsButton);
             this.Controls.Add(this.TestScoreListView);
             this.Controls.Add(this.dateComboBox);
             this.Controls.Add(this.testComboBox);
@@ -182,6 +198,7 @@
         private System.Windows.Forms.ColumnHeader TiesHeader;
         private System.Windows.Forms.ColumnHeader LossesHeader;
         private MetroFramework.Controls.MetroListView TestScoreListView;
+        private MetroFramework.Controls.MetroButton resultsButton;
     }
 }
 
