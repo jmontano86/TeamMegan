@@ -188,7 +188,6 @@ namespace Gui
                         }
                         currentResult.intUserChoice = itemToAssign[2].ItemID;
 
-
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;
