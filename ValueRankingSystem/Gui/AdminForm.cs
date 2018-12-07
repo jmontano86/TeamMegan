@@ -251,6 +251,9 @@ namespace Gui
                         {
                             editTestComboBox.Items.Add(currentTest.TestName);
                         }
+                        listItemsList = new List<Item>();
+                        ItemList.getItems(listItemsList, currentTest.TestID, stringErrorString);
+
                     }
                     else
                     {
