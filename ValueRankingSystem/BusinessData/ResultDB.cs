@@ -17,7 +17,7 @@ namespace BusinessData
         * Gets results from the database and stores it in class/objects.
         * 
         */
-        public static bool GetResults(List<ResultDisplay> resultList, ref string error, int UserID, int TestID)
+        public static bool GetResults(List<ResultDisplay> resultList, ref string error, int UserID, int TestID, DateTime CreationDate)
         {
             List<ResultDisplay> ResultList = new List<ResultDisplay>();
             
@@ -37,10 +37,11 @@ namespace BusinessData
                 Command = new SqlCommand
                 {
                     Connection = Connection,
-                    CommandText = "SELECT ItemName, TotalScore, Wins, Losses, Ties FROM vResults WHERE UserID = @UserID AND TestID = @TestID;"   
+                    CommandText = "SELECT ItemName, TotalScore, Wins, Losses, Ties FROM vResults WHERE UserID = @UserID AND TestID = @TestID AND CreationDate = @CreationDate;"   
                 };
                 Command.Parameters.AddWithValue("@UserID", UserID);
                 Command.Parameters.AddWithValue("@TestID", TestID);
+                Command.Parameters.AddWithValue("@CreationDate", CreationDate);
                 ResultDataReader = Command.ExecuteReader();
 
                 while (ResultDataReader.Read())

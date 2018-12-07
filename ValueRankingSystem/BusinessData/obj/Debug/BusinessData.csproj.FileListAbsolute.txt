@@ -16,3 +16,10 @@ C:\Users\Bakwock\Desktop\Megan\School\CIS234A\Sprint2\TeamMegan\ValueRankingSyst
 C:\Users\Bakwock\Desktop\Megan\School\CIS234A\Sprint2\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.dll
 C:\Users\Bakwock\Desktop\Megan\School\CIS234A\Sprint2\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.pdb
 C:\Users\Bakwock\Desktop\Megan\School\CIS234A\Sprint2\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.dll.config
+C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.dll.config
+C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.dll
+C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.pdb
+C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.csproj.CoreCompileInputs.cache
+C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.dll
+C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.pdb
+C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.csprojAssemblyReference.cache

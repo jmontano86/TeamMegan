@@ -73,6 +73,11 @@ namespace BusinessData
             return TestDB.getTestID(test, stringErrorString);
         }
 
+       public static bool GetTestDate(List<TestSession> dateList, ref string error, int UserID, int TestID)
+        {
+            return TestSessionDB.GetTestDate(dateList, ref error, UserID, TestID);
+        }
+
     }
 }
 

@@ -51,9 +51,9 @@ namespace BusinessData
         }
 
            
-         public static bool GetResults(List<ResultDisplay> resultList, ref string error, int UserID, int TestID)
+         public static bool GetResults(List<ResultDisplay> resultList, ref string error, int UserID, int TestID, DateTime CreationDate)
          {
-             return ResultDB.GetResults(resultList, ref error, UserID, TestID);
+             return ResultDB.GetResults(resultList, ref error, UserID, TestID, CreationDate);
          }
 
          public static bool CreateSession(Result result)

@@ -17,19 +17,29 @@ namespace Gui
 {
     public partial class ResultsDisplayForm : MetroForm
     {
-        public ResultsDisplayForm()
+
+        int UserID;
+        int TestID;
+        DateTime CreationDate;
+
+        public ResultsDisplayForm(int inUserID, int inTestID, DateTime inCreationDate)
         {
             InitializeComponent();
+            UserID = inUserID;
+            TestID = inTestID;
+            CreationDate = inCreationDate;
    
         }
 
-        private void ResultsDisplayForm_Load(object sender, EventArgs e)
+
+        public void ResultsDisplayForm_Load(object sender, EventArgs e)
         {
-
-
+            ReportDataSource source = new ReportDataSource("DataSet", BusinessData.Statistics.FillData(UserID, TestID, CreationDate));
+            this.reportViewer2.LocalReport.DataSources.Clear();
+            this.reportViewer2.LocalReport.DataSources.Add(source);
+            this.reportViewer2.LocalReport.Refresh();
             this.reportViewer2.RefreshReport();
         }
-
 
     }
 }

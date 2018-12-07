@@ -42,13 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseHelper.cs" />
-    <Compile Include="DataSet.cs">
-      <DependentUpon>DataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataSet.Designer.cs">
+    <Compile Include="DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet.xsd</DependentUpon>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="Item.cs" />
     <Compile Include="ItemDB.cs" />
@@ -72,20 +69,39 @@
     <Compile Include="UserDB.cs" />
     <Compile Include="UserTestLogic.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="DataSet.xsc">
-      <DependentUpon>DataSet.xsd</DependentUpon>
+    <None Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
-    <None Include="DataSet.xsd">
+    <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
     </None>
-    <None Include="DataSet.xss">
-      <DependentUpon>DataSet.xsd</DependentUpon>
+    <None Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
+    <None Include="Properties\DataSources\BusinessData.DataSetTableAdapters.vResultsTableAdapter.datasource" />
+    <None Include="Properties\DataSources\BusinessData.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\DatabaseHelper.datasource" />
+    <None Include="Properties\DataSources\Item.datasource" />
+    <None Include="Properties\DataSources\ItemDB.datasource" />
+    <None Include="Properties\DataSources\ItemList.datasource" />
+    <None Include="Properties\DataSources\ItemPair.datasource" />
+    <None Include="Properties\DataSources\ItemPairDB.datasource" />
+    <None Include="Properties\DataSources\Result.datasource" />
+    <None Include="Properties\DataSources\ResultDB.datasource" />
+    <None Include="Properties\DataSources\ResultDisplay.datasource" />
+    <None Include="Properties\DataSources\Statistics.datasource" />
+    <None Include="Properties\DataSources\Test.datasource" />
+    <None Include="Properties\DataSources\TestDB.datasource" />
+    <None Include="Properties\DataSources\TestList.datasource" />
+    <None Include="Properties\DataSources\TestSession.datasource" />
+    <None Include="Properties\DataSources\TestSessionDB.datasource" />
+    <None Include="Properties\DataSources\UserClass.datasource" />
+    <None Include="Properties\DataSources\UserDB.datasource" />
+    <None Include="Properties\DataSources\UserTestLogic.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

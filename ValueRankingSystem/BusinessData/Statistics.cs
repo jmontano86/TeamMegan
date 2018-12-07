@@ -12,25 +12,35 @@ namespace BusinessData
 
     public class Statistics
     {
-        
-
-        private DataSet dataTable = new DataSet();
-        
-
-        private void FillData()
+        public static DataTable dataTable = new DataTable();
+   
+        public static DataTable FillData(int UserID, int TestID, DateTime CreationDate)
         {
-            string queryString =
-               "SELECT * FROM dbo.vResults";
-
+            SqlCommand Command;
             SqlConnection Connection = DatabaseHelper.Connect();
+
+            string queryString =
+               "SELECT * FROM dbo.vResults WHERE UserID = @UserID AND TestID = @TestID AND CreationDate = @CreationDate;";
+            Command = new SqlCommand
+            {
+                Connection = Connection,
+                CommandText = queryString
+            };
+            Command.Parameters.AddWithValue("@UserID", UserID);
+            Command.Parameters.AddWithValue("@TestID", TestID);
+            Command.Parameters.AddWithValue("@CreationDate", CreationDate);
+            
             Connection.Open();
 
-            SqlDataAdapter daResults = new SqlDataAdapter(queryString, Connection);
+            SqlDataAdapter daResults = new SqlDataAdapter(Command);
 
-            daResults.Fill(dataTable, "Results");
+            daResults.Fill(dataTable);
 
-            Connection.Close();
+            Connection.Close();        
+
+            return dataTable;
         }
+
 
         /*private int testID;
 

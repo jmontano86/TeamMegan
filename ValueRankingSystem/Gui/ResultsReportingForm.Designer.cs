@@ -104,6 +104,7 @@
             this.dateComboBox.Size = new System.Drawing.Size(162, 29);
             this.dateComboBox.TabIndex = 5;
             this.dateComboBox.UseSelectable = true;
+            this.dateComboBox.SelectedIndexChanged += new System.EventHandler(this.dateComboBox_SelectedIndexChanged);
             // 
             // TestItemHeader
             // 
