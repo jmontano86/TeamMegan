@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet" targetNamespace="http://tempuri.org/DataSet.xsd" xmlns:mstns="http://tempuri.org/DataSet.xsd" xmlns="http://tempuri.org/DataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="_234a_MeganConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="_234a_MeganConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.BusinessData.Properties.Settings.GlobalReference.Default._234a_MeganConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vResultsTableAdapter" GeneratorDataComponentClassName="vResultsTableAdapter" Name="vResults" UserDataComponentName="vResultsTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="_234a_MeganConnectionString (Settings)" DbObjectName="[234a_Megan].dbo.vResults" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT ItemName, Wins, Losses, Ties, TotalScore, TestID, UserID, TestName FROM dbo.vResults</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ItemName" DataSetColumn="ItemName" />
+              <Mapping SourceColumn="Wins" DataSetColumn="Wins" />
+              <Mapping SourceColumn="Losses" DataSetColumn="Losses" />
+              <Mapping SourceColumn="Ties" DataSetColumn="Ties" />
+              <Mapping SourceColumn="TotalScore" DataSetColumn="TotalScore" />
+              <Mapping SourceColumn="TestID" DataSetColumn="TestID" />
+              <Mapping SourceColumn="UserID" DataSetColumn="UserID" />
+              <Mapping SourceColumn="TestName" DataSetColumn="TestName" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="_234a_MeganConnectionString (Settings)" DbObjectName="[234a_Megan].dbo.vResults" DbObjectType="View" FillMethodModifier="Public" FillMethodName="FillBy" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetDataBy" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBy">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT ItemName, Wins, Losses, Ties, TotalScore, TestID, UserID, TestName FROM dbo.vResults</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet" msprop:Generator_UserDSName="DataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vResults" msprop:Generator_TableClassName="vResultsDataTable" msprop:Generator_TableVarName="tablevResults" msprop:Generator_TablePropName="vResults" msprop:Generator_RowDeletingName="vResultsRowDeleting" msprop:Generator_RowChangingName="vResultsRowChanging" msprop:Generator_RowEvHandlerName="vResultsRowChangeEventHandler" msprop:Generator_RowDeletedName="vResultsRowDeleted" msprop:Generator_UserTableName="vResults" msprop:Generator_RowChangedName="vResultsRowChanged" msprop:Generator_RowEvArgName="vResultsRowChangeEvent" msprop:Generator_RowClassName="vResultsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ItemName" msprop:Generator_ColumnVarNameInTable="columnItemName" msprop:Generator_ColumnPropNameInRow="ItemName" msprop:Generator_ColumnPropNameInTable="ItemNameColumn" msprop:Generator_UserColumnName="ItemName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Wins" msprop:Generator_ColumnVarNameInTable="columnWins" msprop:Generator_ColumnPropNameInRow="Wins" msprop:Generator_ColumnPropNameInTable="WinsColumn" msprop:Generator_UserColumnName="Wins" type="xs:int" minOccurs="0" />
+              <xs:element name="Losses" msprop:Generator_ColumnVarNameInTable="columnLosses" msprop:Generator_ColumnPropNameInRow="Losses" msprop:Generator_ColumnPropNameInTable="LossesColumn" msprop:Generator_UserColumnName="Losses" type="xs:int" minOccurs="0" />
+              <xs:element name="Ties" msprop:Generator_ColumnVarNameInTable="columnTies" msprop:Generator_ColumnPropNameInRow="Ties" msprop:Generator_ColumnPropNameInTable="TiesColumn" msprop:Generator_UserColumnName="Ties" type="xs:int" minOccurs="0" />
+              <xs:element name="TotalScore" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalScore" msprop:Generator_ColumnPropNameInRow="TotalScore" msprop:Generator_ColumnPropNameInTable="TotalScoreColumn" msprop:Generator_UserColumnName="TotalScore" type="xs:int" minOccurs="0" />
+              <xs:element name="TestID" msprop:Generator_ColumnVarNameInTable="columnTestID" msprop:Generator_ColumnPropNameInRow="TestID" msprop:Generator_ColumnPropNameInTable="TestIDColumn" msprop:Generator_UserColumnName="TestID" type="xs:int" minOccurs="0" />
+              <xs:element name="UserID" msprop:Generator_ColumnVarNameInTable="columnUserID" msprop:Generator_ColumnPropNameInRow="UserID" msprop:Generator_ColumnPropNameInTable="UserIDColumn" msprop:Generator_UserColumnName="UserID" type="xs:int" minOccurs="0" />
+              <xs:element name="TestName" msprop:Generator_ColumnVarNameInTable="columnTestName" msprop:Generator_ColumnPropNameInRow="TestName" msprop:Generator_ColumnPropNameInTable="TestNameColumn" msprop:Generator_UserColumnName="TestName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -8,39 +8,32 @@ namespace BusinessData
 {
     public class UserTestLogic
     {
-        
-        /// <summary>
-        /// Accidentally wrote this for sprint 1 because I misunderstood my user story but the point of this was 
-        /// to load all the available tests that the user can take. Found out that this can be used in sprint 2
-        /// </summary>
-        /// <param name="testList"></param>
-        /// <param name="itemList"></param>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public static List<Test> loadTests(List<Test> testList, List<Item> itemList, UserClass user)
-        {
-            bool testExist = false;
-            List<Test> availTest = new List<Test>();
-            //Get all tests
-            TestList.getTests(testList, "Error getting items");
-            //Only stores to an array tests that are available
-            foreach (var test in testList.ToList())
-            {
-                testExist = checkExistingTestSession(testList, user);
-                if (testExist != true)
-                {
-                    availTest.Add(test);
-                }
-            }
-            // Get all test items
-            // Need to rewrite this for sprint 2
-            //foreach (var test in availTest)
-            //{
-            //    //Only store test items that match test id and testSession does not exist yet
-            //    ItemList.getItems(itemList, test.TestID);
-            //}
-            return availTest;
-        }
+        //Duplicate between loadItemList and getItemPair function
+        ///// <summary>
+        ///// Accidentally wrote this for sprint 1 because I misunderstood my user story but the point of this was 
+        ///// to load all the available items that the user can take. Found out that this can be used in sprint 2
+        ///// </summary>
+        ///// <param name="testList"></param>
+        ///// <param name="itemList"></param>
+        ///// <param name="user"></param>
+        ///// <returns></returns>
+        //public static List<Item> loadItemList(int testID, List<ItemPair> itemPairList, UserClass user)
+        //{
+        //    bool testExist = false;
+        //    List<Item> itemList = new List<Item>();
+        //    //Get all tests
+        //    ItemList.getItems(itemList, testID, "Error getting items");
+        //    //Only stores to an array items that are available
+
+        //    // Get all test items
+        //    // Need to rewrite this for sprint 2
+        //    //foreach (var test in availTest)
+        //    //{
+        //    //    //Only store test items that match test id and testSession does not exist yet
+        //    //    ItemList.getItems(itemList, test.TestID);
+        //    //}
+        //    return itemList;
+        //}
 
 
         // Need to check to see if the User already has taken a test
@@ -53,7 +46,8 @@ namespace BusinessData
             TestSession.GetTestSessions(testSessionList, ref error);
             foreach (var testSession in testSessionList)
             {
-                TestList.getTests(testList, "Error Getting Items");
+                string errorString = "Error Getting Items: ";
+                TestList.getTests(testList, ref errorString);
                 foreach (var test in testList)
                 {
                     if (testSession.intTestID == test.TestID && testSession.intUserID == user.intUserID)
@@ -67,12 +61,13 @@ namespace BusinessData
         }
         //Objective: Find ItemPairs
         //Create list that pairs up items
-        public static List<ItemPair> getItemPair(List<ItemPair> itemPair)
+        public static List<ItemPair> getItemPair(int testID, List<ItemPair> itemPairList)
         {
             // Get all items from the database
            
             List<Item> itemList = new List<Item>();
-            ItemList.getItems(itemList, 1, "Error getting items");
+            string errorString = "Could not load items: ";
+            ItemList.getItems(itemList, testID, ref errorString);
 
             // Pair up items
       
@@ -83,17 +78,15 @@ namespace BusinessData
                 //// Loops through and pairs up item starting at count +1
                 for (int i = j+1; i <= itemList.Count-1; i++)
                 {
-
                     // Creates new itempair instance
                     ItemPair itemInsta = new ItemPair();
                     // Populates first parameter of itemPair
                     itemInsta.Item1 = itemList[j];
                     itemInsta.Item2 = itemList[i];
-                    itemPair.Add(itemInsta);
-
+                    itemPairList.Add(itemInsta);
                 }
             }
-            return itemPair;
+            return itemPairList;
         }
 
         public static int getCurrentSessionId(int testSessionID)
@@ -127,6 +120,41 @@ namespace BusinessData
                 }
             }
             return alreadyTookTest;
+        }
+        /// <summary>
+        /// Randmizes the number that will be used to assign itempairs to populate radio buttons
+        /// </summary>
+        public static List<Item> itemToAssign(ItemPair itemPair, List<Item> itemToAssign, Test currentTest)
+        {
+            List<Item> randomItemList = new List<Item>();
+            // Assign "Undecided" as an item
+            Item unChoice = new Item(0, "Undecided", itemPair.Item1.TestID);
+            //Updated for Custom Test Presentation 
+            //If the custom test has the shuffle option selected, shuffle the options. JDM
+            if (currentTest.Shuffle == 1)
+            {
+                // Generate random number
+                Random rndNum = new Random();
+                // Assigns rndNum to itemPair          
+                randomItemList.Add(itemPair.Item1);
+                randomItemList.Add(itemPair.Item2);
+                randomItemList.Add(unChoice);
+                // items to assign
+                // puts the itempair in random order
+                while (randomItemList.Count > 0)
+                {
+                    int rndNumAssign = rndNum.Next(0, randomItemList.Count);
+                    itemToAssign.Add(randomItemList[rndNumAssign]);
+                    randomItemList.RemoveAt(rndNumAssign);
+                }
+            }
+            else
+            {
+                itemToAssign.Add(itemPair.Item1);
+                itemToAssign.Add(itemPair.Item2);
+                itemToAssign.Add(unChoice);
+            }
+            return itemToAssign;
         }
     }
 }

@@ -88,9 +88,9 @@ namespace Gui
                         resultForm.ShowDialog();
                         break;
                     case UserClass.USER_ROLE:
-                        UserTest testForm = new UserTest();
-                        testForm.currentUser = user;
-                        testForm.ShowDialog();
+                        TestSelectionForm selectionForm = new TestSelectionForm();
+                        selectionForm.currentUser = user;
+                        selectionForm.ShowDialog();
                         break;
                 }
                 this.Show();

@@ -20,15 +20,22 @@ namespace Gui
             InitializeComponent();
         }
         private UserClass _currentUser;
-
+        private string testType;
         public UserClass currentUser
         {
             get { return _currentUser; }
             set { _currentUser = value; }
         }
+        private Test _currentTest;
+        public Test currentTest
+        {
+            get { return _currentTest; }
+            set { _currentTest = value; }
+        }
         List<ItemPair> itemPairList = new List<ItemPair>();
         //List<Test> testItems = new List<Test>();
         List<Item> itemList = new List<Item>();
+        List<Item> itemToAssign = new List<Item>();
         List<Result> allCurrentResults = new List<Result>();
         ItemPair itemPair = new ItemPair();
         int itemPairListIndex = 0;
@@ -37,28 +44,136 @@ namespace Gui
         TestSession currentTestSession = new TestSession();
         private void Form1_Load(object sender, EventArgs e)
         {
-            bool testAlreadyTaken = false;
             testButton.Enabled = false;
-            BusinessData.UserTestLogic.getItemPair(itemPairList);
-            //Checks to see if user already took test
-            testAlreadyTaken = BusinessData.UserTestLogic.userTookTest(currentUser, itemPairList[itemPairListIndex]);
-            if (testAlreadyTaken == true)
+            //Load itemPairs that was selected in test selection form
+            if (currentTest.CustomTest == 1)
             {
-                MessageBox.Show("You have already taken this test");
-                this.Close();
+                itemPairList = ItemPair.getCustomItemPair(currentTest.TestID);
             }
-            // Get Item Pairs
+            else
+            {
+                UserTestLogic.getItemPair(currentTest.TestID, itemPairList);
+            }
+            // Get Item Pairs and populate groupbox
             populateGroupBox(itemPairList, itemPairListIndex);
-           
 
+            // Load denominator for Progress Bar
+            denominatorChange(itemPairList.Count);
         }
 
         // Changes the radio buttons based content in array
-        public void populateRadio(ItemPair itemPair)
+        public List<Item> populateRadio(ItemPair itemPair)
         {
-            userChoiceOne.Text = itemPair.Item1.Name;
-            userChoiceTwo.Text = itemPair.Item2.Name;
-            userChoiceThree.Text = "Undecided";
+            // Randomizes where the item pairs are assigned to the userChoice Radio boxes: Kevin Khlom Sprint 2
+            List<Item> itemToAssign = new List<Item>();
+            // Function that randomizes the pairings
+<<<<<<< HEAD
+            UserTestLogic.itemToAssign(itemPair, itemToAssign, currentTest);
+            userChoiceOne.Text = itemToAssign[0].Name;
+            userChoiceTwo.Text = itemToAssign[1].Name;
+            userChoiceThree.Text = itemToAssign[2].Name;
+
+=======
+            UserTestLogic.itemToAssign(itemPair, itemToAssign);
+            //Gets the test type and sets the text/images accordingly
+            int i = 0;
+            string errorString = "Error getting test type: ";
+            if (TestList.getTestType(ref testType, _testID, ref errorString))
+            {
+                if(testType == "T")
+                {
+                    
+                    // 
+                    // userChoiceOne
+                    // 
+                    this.userChoiceOne.Location = new System.Drawing.Point(61, 49);
+                    // 
+                    // userChoiceTwo
+                    // 
+                    this.userChoiceTwo.Location = new System.Drawing.Point(165, 49);
+                    // 
+                    // userChoiceThree
+                    // 
+                    this.userChoiceThree.Location = new System.Drawing.Point(269, 49);
+                    // 
+                    // testButton
+                    // 
+                    this.testButton.Location = new System.Drawing.Point(214, 275);
+                    // 
+                    // directionLabel
+                    // 
+                    this.directionLabel.Location = new System.Drawing.Point(150, 96);
+                    // 
+                    // finishedLabel
+                    // 
+                    this.finishedLabel.Location = new System.Drawing.Point(54, 44);
+                    // 
+                    // testProgressBar
+                    // 
+                    this.testProgressBar.Location = new System.Drawing.Point(197, 372);
+                    // 
+                    // numeratorLabel
+                    // 
+                    this.numeratorLabel.Location = new System.Drawing.Point(416, 372);
+                    // 
+                    // slashLabel
+                    // 
+                    this.slashLabel.Location = new System.Drawing.Point(433, 372);
+                    // 
+                    // denominatorLabel
+                    // 
+                    this.denominatorLabel.Location = new System.Drawing.Point(449, 372);
+                    // 
+                    // itemGroupBox
+                    // 
+                    this.itemGroupBox.Location = new System.Drawing.Point(79, 142);
+                    this.itemGroupBox.Size = new System.Drawing.Size(440, 100);
+                    //
+                    // UserTest
+                    //
+                    this.ClientSize = new System.Drawing.Size(600, 426);
+                }
+                foreach (Control control in itemGroupBox.Controls)
+                {
+                    if (control is RadioButton)
+                    {
+                        control.Width = 300;
+                        ((RadioButton)control).BackColor = Color.Transparent;
+                        if (testType == "T")
+                        {
+                            control.Text = itemToAssign[i].Name;
+                        }
+                        else if (testType == "I")
+                        {
+                            if (itemToAssign[i].ItemImage != null)
+                            {
+                                ((RadioButton)control).TextImageRelation = TextImageRelation.TextAboveImage;
+                                ((RadioButton)control).Image = itemToAssign[i].getImage();
+                            }
+                            else
+                            {
+                                ((RadioButton)control).Image = null;
+                            }
+                        }
+                        else if (testType == "TI")
+                        {
+                            if (itemToAssign[i].ItemImage != null)
+                            {
+                                ((RadioButton)control).TextImageRelation = TextImageRelation.TextAboveImage;
+                                ((RadioButton)control).Image = itemToAssign[i].getImage();
+                            }
+                            else
+                            {
+                                ((RadioButton)control).Image = Image.FromFile("Undecided.png");
+                            }
+                            control.Text = itemToAssign[i].Name;
+                        }
+                    }
+                    i++;
+                }
+            }
+>>>>>>> AdminForm
+            return itemToAssign;
         }
         // Gets the next index in the itemPairList
         private void populateGroupBox(List<ItemPair> listItemPairList, int itemPairListIndex)
@@ -69,7 +184,7 @@ namespace Gui
                 // write to test session table
                 List<TestSession> testSessionList = new List<TestSession>();
                 currentTestSession.intUserID = currentUser.intUserID;
-                currentTestSession.intTestID = 1; // Need to change this for sprint 2
+                currentTestSession.intTestID = currentTest.TestID; // Need to change this for sprint 2
                 currentTestSession.datetimeCreationDate = DateTime.Now;
                 TestSession.CreateSession(currentTestSession);
 
@@ -92,10 +207,25 @@ namespace Gui
                 // Populate groupbox radio buttons with itempair by index
                 ItemPair newItemPair = new ItemPair();
                 newItemPair = itemPairList[itemPairListIndex];
-                populateRadio(newItemPair);
+                if(currentTest.Shuffle == 1)
+                {
+                    //if custom test is set to Shuffle, will randomize order of pairings
+                    itemToAssign = populateRadio(newItemPair);
+                } else
+                {
+                    itemToAssign.Clear();
+                    itemToAssign.Add(newItemPair.Item1);
+                    itemToAssign.Add(newItemPair.Item2);
+                    itemToAssign.Add(new Item(0, "Undecided", currentTest.TestID));
+                    userChoiceOne.Text = newItemPair.Item1.Name;
+                    userChoiceTwo.Text = newItemPair.Item2.Name;
+                    userChoiceThree.Text = "Undecided";
+                }
                 userChoiceOne.Checked = false;
                 userChoiceTwo.Checked = false;
                 userChoiceThree.Checked = false;
+                // Load numerator for progress bar
+                numeratorChange(itemPairList.Count, itemPairListIndex);
             }
         }
  
@@ -110,11 +240,22 @@ namespace Gui
                     {
                         //Stores user choice in currentResult
                         Result currentResult = new Result();
+                        // write to current Result of intItemID1 if it is not undecided
                         
-                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.intUserChoice = currentResult.intItemID1;
-
+                        for (int i = 0; i < itemToAssign.Count; i++)
+                        {
+                            if (itemToAssign[i].ItemID != 0 && currentResult.intItemID1 == 0)
+                            {
+                                currentResult.intItemID1 = itemToAssign[i].ItemID;
+                                //itemToAssign.RemoveAt(i);
+                            }
+                            else if (itemToAssign[i].ItemID != 0 && currentResult.intItemID2 == 0)
+                            {
+                                currentResult.intItemID2 = itemToAssign[i].ItemID;
+                                //itemToAssign.RemoveAt(i);
+                            }
+                        }
+                        currentResult.intUserChoice = itemToAssign[0].ItemID;
                         //Stores currentResult into an array of results
                         allCurrentResults.Add(currentResult);
                         itemPairListIndex++;
@@ -125,9 +266,21 @@ namespace Gui
                     {
                         Result currentResult = new Result();
 
-                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.intUserChoice = currentResult.intItemID2;
+                        for (int i = 0; i < itemToAssign.Count; i++)
+                        {
+                            if (itemToAssign[i].ItemID != 0 && currentResult.intItemID1 == 0)
+                            {
+                                currentResult.intItemID1 = itemToAssign[i].ItemID;
+                                //itemToAssign.RemoveAt(i);
+                            }
+                            else if (itemToAssign[i].ItemID != 0 && currentResult.intItemID2 == 0)
+                            {
+                                currentResult.intItemID2 = itemToAssign[i].ItemID;
+                                //itemToAssign.RemoveAt(i);
+                            }
+                        }
+
+                        currentResult.intUserChoice = itemToAssign[1].ItemID;
 
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
@@ -139,9 +292,20 @@ namespace Gui
                     {
                         Result currentResult = new Result();
 
-                        currentResult.intItemID1 = itemPairList[itemPairListIndex].Item1.ItemID;
-                        currentResult.intItemID2 = itemPairList[itemPairListIndex].Item2.ItemID;
-                        currentResult.intUserChoice = 0;
+                        for (int i = 0; i < itemToAssign.Count; i++)
+                        {
+                            if (itemToAssign[i].ItemID != 0 && currentResult.intItemID1 == 0)
+                            {
+                                currentResult.intItemID1 = itemToAssign[i].ItemID;
+                                //itemToAssign.RemoveAt(i);
+                            }
+                            else if (itemToAssign[i].ItemID != 0 && currentResult.intItemID2 == 0)
+                            {
+                                currentResult.intItemID2 = itemToAssign[i].ItemID;
+                               // itemToAssign.RemoveAt(i);
+                            }
+                        }
+                        currentResult.intUserChoice = itemToAssign[2].ItemID;
 
                         //Stores currentResults into an array of results
                         allCurrentResults.Add(currentResult);
@@ -158,7 +322,7 @@ namespace Gui
             }
             catch
             {
-                MessageBox.Show("Something went wrong with gathering item data");
+                MessageBox.Show("Could not write current result");
             }
         }
 
@@ -179,6 +343,23 @@ namespace Gui
         public static Result savesResults(Result currentResult, List<ItemPair> itemPairList, int itemPairListIndex)
         {
             return currentResult;
+        }
+
+        /// Creating progress bar - Kevin Khlom 11/21/18
+
+        private void denominatorChange(int itemPairListIndex)
+        {
+            denominatorLabel.Text = itemPairListIndex.ToString();
+        }
+        private void numeratorChange(int numeratorSet, int itemPairListIndex)
+        {
+            
+            int numeratorNum = numeratorSet;
+            numeratorNum = +itemPairListIndex + 1;
+            numeratorLabel.Text = numeratorNum.ToString();
+            testProgressBar.Value = numeratorNum;
+            testProgressBar.Maximum = itemPairList.Count();
+            testProgressBar.Minimum = 0;
         }
     }
 }

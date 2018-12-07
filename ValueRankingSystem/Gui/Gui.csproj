@@ -45,6 +45,27 @@
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -85,12 +106,28 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultsDisplayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsDisplayForm.Designer.cs">
+      <DependentUpon>ResultsDisplayForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ResultsReportingForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ResultsReportingForm.Designer.cs">
       <DependentUpon>ResultsReportingForm.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
+    <Compile Include="TestSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestSelectionForm.Designer.cs">
+      <DependentUpon>TestSelectionForm.cs</DependentUpon>
+    </Compile>
+=======
+    <Compile Include="SqlServerTypes\Loader.cs" />
+>>>>>>> ResultsReporting2
     <Compile Include="UserTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,13 +156,42 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Report.rdlc" />
+    <EmbeddedResource Include="resultsDisplayForm.resx">
+      <DependentUpon>ResultsDisplayForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ResultsReportingForm.resx">
       <DependentUpon>ResultsReportingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestSelectionForm.resx">
+      <DependentUpon>TestSelectionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserTest.resx">
       <DependentUpon>UserTest.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\BusinessData.DatabaseHelper.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet1+vResultsDataTable.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet1+vResultsRow.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet1+vResultsRowChangeEvent.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet1+vResultsRowChangeEventHandler.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet1.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet1TableAdapters.TableAdapterManager+UpdateOrderOption.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet1TableAdapters.TableAdapterManager.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet1TableAdapters.vResultsTableAdapter.datasource" />
+    <None Include="Properties\DataSources\BusinessData.Item.datasource" />
+    <None Include="Properties\DataSources\BusinessData.ItemList.datasource" />
+    <None Include="Properties\DataSources\BusinessData.ItemPair.datasource" />
+    <None Include="Properties\DataSources\BusinessData.Result.datasource" />
+    <None Include="Properties\DataSources\BusinessData.ResultDB.datasource" />
+    <None Include="Properties\DataSources\BusinessData.ResultDisplay.datasource" />
+    <None Include="Properties\DataSources\BusinessData.Statistics.datasource" />
+    <None Include="Properties\DataSources\BusinessData.Test.datasource" />
+    <None Include="Properties\DataSources\BusinessData.TestList.datasource" />
+    <None Include="Properties\DataSources\BusinessData.TestSession.datasource" />
+    <None Include="Properties\DataSources\BusinessData.TestSessionDB.datasource" />
+    <None Include="Properties\DataSources\BusinessData.UserClass.datasource" />
+    <None Include="Properties\DataSources\BusinessData.UserTestLogic.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -144,6 +210,21 @@
       <Project>{b6ad0aa3-8202-4718-a628-defd86c00ccc}</Project>
       <Name>BusinessData</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
