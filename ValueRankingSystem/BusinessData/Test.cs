@@ -54,34 +54,33 @@ namespace BusinessData
     
     public static class TestList
     {
-        public static bool getTests(List<Test> listTestList, string stringErrorString)
+        public static bool getTests(List<Test> listTestList, ref string stringErrorString)
         {
-            return TestDB.getTests(listTestList, stringErrorString);
+            return TestDB.getTests(listTestList, ref stringErrorString);
         }
-        public static bool getTestSessions(List<int> listTestIDList, string stringErrorString)
+        public static bool getTestSessions(List<int> listTestIDList, ref string stringErrorString)
         {
-            return TestDB.getTestSessions(listTestIDList, stringErrorString);
+            return TestDB.getTestSessions(listTestIDList, ref stringErrorString);
         }
-        public static bool getTestNames(List<string> listTestNames, string stringErrorString)
+        public static bool getTestNames(List<string> listTestNames, ref string stringErrorString)
         {
-            return TestDB.getTestNames(listTestNames, stringErrorString);
+            return TestDB.getTestNames(listTestNames, ref stringErrorString);
         }
-        //TODO: ADD TEST TYPE
-        public static bool addTest(Test test, string stringErrorString)
+        public static bool addTest(Test test, ref string stringErrorString)
         {
-            return TestDB.addTest(test, stringErrorString);
+            return TestDB.addTest(test, ref stringErrorString);
         }
-        public static bool deleteTest(int intTestID, string stringErrorString)
+        public static bool deleteTest(int intTestID, ref string stringErrorString)
         {
-            return TestDB.deleteTest(intTestID, stringErrorString);
+            return TestDB.deleteTest(intTestID, ref stringErrorString);
         }
-        public static bool getTestID(Test test, string stringErrorString)
+        public static bool getTestIDAndType(Test test, ref string stringErrorString)
         {
-            return TestDB.getTestID(test, stringErrorString);
+            return TestDB.getTestIDAndType(test, ref stringErrorString);
         }
-        public static bool getTestType(Test test, string stringErrorString)
+        public static bool getTestType(ref string testType, int testID, ref string errorString)
         {
-            return TestDB.getTestType(test, stringErrorString);
+            return TestDB.getTestType(ref testType, testID, ref errorString);
         }
     }
 }

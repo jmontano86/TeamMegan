@@ -29,9 +29,9 @@ namespace Gui
         {
             // Load tests into combobox
             List<Test> testList = new List<Test>();
-            String error = "Could not load list of tests";
+            String error = "Could not load list of tests: ";
 
-            if (TestList.getTests(testList, error))
+            if (TestList.getTests(testList, ref error))
             {
                 foreach (Test test in testList)
                 {

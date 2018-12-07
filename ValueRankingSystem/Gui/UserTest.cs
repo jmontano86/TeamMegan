@@ -20,7 +20,7 @@ namespace Gui
             InitializeComponent();
         }
         private UserClass _currentUser;
-
+        private string testType;
         public UserClass currentUser
         {
             get { return _currentUser; }
@@ -59,7 +59,6 @@ namespace Gui
 
             // Load denominator for Progress Bar
             denominatorChange(itemPairList.Count);
-
         }
 
         // Changes the radio buttons based content in array
@@ -68,11 +67,112 @@ namespace Gui
             // Randomizes where the item pairs are assigned to the userChoice Radio boxes: Kevin Khlom Sprint 2
             List<Item> itemToAssign = new List<Item>();
             // Function that randomizes the pairings
+<<<<<<< HEAD
             UserTestLogic.itemToAssign(itemPair, itemToAssign, currentTest);
             userChoiceOne.Text = itemToAssign[0].Name;
             userChoiceTwo.Text = itemToAssign[1].Name;
             userChoiceThree.Text = itemToAssign[2].Name;
 
+=======
+            UserTestLogic.itemToAssign(itemPair, itemToAssign);
+            //Gets the test type and sets the text/images accordingly
+            int i = 0;
+            string errorString = "Error getting test type: ";
+            if (TestList.getTestType(ref testType, _testID, ref errorString))
+            {
+                if(testType == "T")
+                {
+                    
+                    // 
+                    // userChoiceOne
+                    // 
+                    this.userChoiceOne.Location = new System.Drawing.Point(61, 49);
+                    // 
+                    // userChoiceTwo
+                    // 
+                    this.userChoiceTwo.Location = new System.Drawing.Point(165, 49);
+                    // 
+                    // userChoiceThree
+                    // 
+                    this.userChoiceThree.Location = new System.Drawing.Point(269, 49);
+                    // 
+                    // testButton
+                    // 
+                    this.testButton.Location = new System.Drawing.Point(214, 275);
+                    // 
+                    // directionLabel
+                    // 
+                    this.directionLabel.Location = new System.Drawing.Point(150, 96);
+                    // 
+                    // finishedLabel
+                    // 
+                    this.finishedLabel.Location = new System.Drawing.Point(54, 44);
+                    // 
+                    // testProgressBar
+                    // 
+                    this.testProgressBar.Location = new System.Drawing.Point(197, 372);
+                    // 
+                    // numeratorLabel
+                    // 
+                    this.numeratorLabel.Location = new System.Drawing.Point(416, 372);
+                    // 
+                    // slashLabel
+                    // 
+                    this.slashLabel.Location = new System.Drawing.Point(433, 372);
+                    // 
+                    // denominatorLabel
+                    // 
+                    this.denominatorLabel.Location = new System.Drawing.Point(449, 372);
+                    // 
+                    // itemGroupBox
+                    // 
+                    this.itemGroupBox.Location = new System.Drawing.Point(79, 142);
+                    this.itemGroupBox.Size = new System.Drawing.Size(440, 100);
+                    //
+                    // UserTest
+                    //
+                    this.ClientSize = new System.Drawing.Size(600, 426);
+                }
+                foreach (Control control in itemGroupBox.Controls)
+                {
+                    if (control is RadioButton)
+                    {
+                        control.Width = 300;
+                        ((RadioButton)control).BackColor = Color.Transparent;
+                        if (testType == "T")
+                        {
+                            control.Text = itemToAssign[i].Name;
+                        }
+                        else if (testType == "I")
+                        {
+                            if (itemToAssign[i].ItemImage != null)
+                            {
+                                ((RadioButton)control).TextImageRelation = TextImageRelation.TextAboveImage;
+                                ((RadioButton)control).Image = itemToAssign[i].getImage();
+                            }
+                            else
+                            {
+                                ((RadioButton)control).Image = null;
+                            }
+                        }
+                        else if (testType == "TI")
+                        {
+                            if (itemToAssign[i].ItemImage != null)
+                            {
+                                ((RadioButton)control).TextImageRelation = TextImageRelation.TextAboveImage;
+                                ((RadioButton)control).Image = itemToAssign[i].getImage();
+                            }
+                            else
+                            {
+                                ((RadioButton)control).Image = Image.FromFile("Undecided.png");
+                            }
+                            control.Text = itemToAssign[i].Name;
+                        }
+                    }
+                    i++;
+                }
+            }
+>>>>>>> AdminForm
             return itemToAssign;
         }
         // Gets the next index in the itemPairList

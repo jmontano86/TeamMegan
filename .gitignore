@@ -332,4 +332,8 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+<<<<<<< HEAD
 *.zip
+=======
+khlom_sprint2week2.zip
+>>>>>>> AdminForm
