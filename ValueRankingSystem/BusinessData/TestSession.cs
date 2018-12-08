@@ -70,7 +70,7 @@ namespace BusinessData
 
         public static bool getTestID(Test test, string stringErrorString)
         {
-            return TestDB.getTestID(test, stringErrorString);
+            return TestDB.getTestIDAndType(test, ref stringErrorString);
         }
 
        public static bool GetTestDate(List<TestSession> dateList, ref string error, int UserID, int TestID)

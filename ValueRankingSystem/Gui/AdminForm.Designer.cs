@@ -76,6 +76,7 @@
             this.ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.editTestComboBox = new MetroFramework.Controls.MetroComboBox();
             this.testNameLabel = new MetroFramework.Controls.MetroLabel();
+            this.customTestButton = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.imagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsDataGrid)).BeginInit();
             this.SuspendLayout();
@@ -204,7 +205,7 @@
             this.addItemButton.Enabled = false;
             this.addItemButton.Location = new System.Drawing.Point(254, 511);
             this.addItemButton.Name = "addItemButton";
-            this.addItemButton.Size = new System.Drawing.Size(77, 23);
+            this.addItemButton.Size = new System.Drawing.Size(75, 23);
             this.addItemButton.TabIndex = 38;
             this.addItemButton.Text = "Add item";
             this.addItemButton.UseSelectable = true;
@@ -255,7 +256,6 @@
             this.itemsDataGrid.Size = new System.Drawing.Size(504, 400);
             this.itemsDataGrid.TabIndex = 43;
             this.itemsDataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.itemsDataGrid_CellEndEdit);
-            this.itemsDataGrid.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.itemsDataGrid_RowsAdded);
             this.itemsDataGrid.SelectionChanged += new System.EventHandler(this.itemsDataGrid_SelectionChanged);
             // 
             // itemNameColumn
@@ -293,12 +293,23 @@
             this.testNameLabel.Text = "metroLabel1";
             this.testNameLabel.Visible = false;
             // 
+            // customTestButton
+            // 
+            this.customTestButton.Location = new System.Drawing.Point(254, 540);
+            this.customTestButton.Name = "customTestButton";
+            this.customTestButton.Size = new System.Drawing.Size(75, 23);
+            this.customTestButton.TabIndex = 56;
+            this.customTestButton.Text = "Custom Test";
+            this.customTestButton.UseSelectable = true;
+            this.customTestButton.Click += new System.EventHandler(this.customButton_Click);
+            // 
             // AdminForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1229, 602);
+            this.Controls.Add(this.customTestButton);
             this.Controls.Add(this.sizeLabel);
             this.Controls.Add(this.sizeTextLabel);
             this.Controls.Add(this.heightLabel);
@@ -357,6 +368,7 @@
         private MetroFramework.Controls.MetroLabel testNameLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn itemNameColumn;
         private System.Windows.Forms.DataGridViewImageColumn ImageColumn;
+        private MetroFramework.Controls.MetroButton customTestButton;
     }
 
 }

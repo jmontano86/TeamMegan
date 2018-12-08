@@ -14,6 +14,7 @@ namespace Gui
     {
         Test currentTest;
         List<Control> imageBoxLabels;
+        List<Item> listItemsList;
         bool addingItems;
         public AdminForm()
         {
@@ -47,6 +48,7 @@ namespace Gui
             imageBoxLabels.Add(sizeLabel);
             imageBoxLabels.Add(sizeTextLabel);
             setImageBoxLabelVisibility(false);
+            customTestButton.Enabled = false;
         }
         //Gets the test name and sets up the new test
         private void addTestButton_Click(object sender, EventArgs e)
@@ -153,7 +155,7 @@ namespace Gui
             string stringErrorString = "";
             if (currentTest.TestID != 0)
             {
-                List<Item> listItemsList = new List<Item>();
+                listItemsList = new List<Item>();
                 if (ItemList.getItems(listItemsList, currentTest.TestID, ref stringErrorString))
                 {
                     itemsDataGrid.Rows.Clear();
@@ -185,6 +187,7 @@ namespace Gui
                 addItemButton.Enabled = false;
                 deleteItemButton.Enabled = false;
                 testNameLabel.Visible = false;
+                customTestButton.Enabled = false;
                 deleteTestButton.Enabled = false;
                 imagePictureBox.Image = null;
                 testTypeComboBox.Enabled = false;
@@ -373,6 +376,7 @@ namespace Gui
                             else
                             {
                                 MessageBox.Show("The " + currentTest.TestName + " test has been added");
+                                customTestButton.Enabled = true;
                             }
                             deleteTestButton.Enabled = true;
                             if (!editTestComboBox.Items.Contains(currentTest.TestName))
@@ -385,7 +389,7 @@ namespace Gui
                             MessageBox.Show(stringErrorString);
                         }
                         listItemsList = new List<Item>();
-                        ItemList.getItems(listItemsList, currentTest.TestID, stringErrorString);
+                        ItemList.getItems(listItemsList, currentTest.TestID, ref stringErrorString);
 
                     }
                     else
@@ -432,120 +436,13 @@ namespace Gui
         private void editTestComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
             /* Commented out as Test is already an item in the drop down.
-             * No need to do another database call. JDM 
+             * No need to do another database call. JDM */
             Test test = new Test();
             test.TestName = editTestComboBox.SelectedItem.ToString();
             string stringErrorString = "";
             //Get the ID for the selected test and get the items from that test and put them in the itemsDataGrid
             if (TestList.getTestIDAndType(test, ref stringErrorString))
             {
-<<<<<<< HEAD
-            */
-            currentTest = (Test)editTestComboBox.SelectedItem;
-            string stringErrorString = "";
-            //Updated items LIst to a class variable so it only needs to get loaded once, when the test is loaded. 
-            listItemsList = new List<Item>();
-            if (ItemList.getItems(listItemsList, currentTest.TestID, stringErrorString))
-            {
-                itemsDataGrid.Rows.Clear();
-                foreach (Item item in listItemsList)
-                {
-                    int intIndex = itemsDataGrid.Rows.Add();
-                    itemsDataGrid.Rows[intIndex].Cells[0].Value = item.Name;
-                }
-                //Get the test type and set the testTypeComboBox accordingly
-                /*if (TestList.getTestType(test, stringErrorString))
-                {
-                    if(test.TestType == "T")
-                    {
-                        testTypeComboBox.SelectedIndex = 0;
-                    }
-                    else if(test.TestType == "I")
-                    {
-                        testTypeComboBox.SelectedIndex = 1;
-                    }
-                    else if(test.TestType == "TI")
-                    {
-                        testTypeComboBox.SelectedIndex = 2;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Test type is not valid");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(stringErrorString);
-                }*/
-                //Check if selected test is in testsessions and set controls accordingly
-                List<int> listTestSessionIDs = new List<int>();
-                bool isTestSessionID = false;
-                if (TestList.getTestSessions(listTestSessionIDs, stringErrorString))
-                {
-                    foreach (int intTestID in listTestSessionIDs)
-                    {
-                        if (currentTest.TestID == intTestID)
-                        {
-                            isTestSessionID = true;
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(stringErrorString);
-                    cancelButton.PerformClick();
-                }
-                if (isTestSessionID)
-                {
-                    testNameLabel.Text = "You are now viewing the " + currentTest.TestName + " test";
-                    testNameLabel.Visible = true;
-                    cancelButton.Enabled = true;
-                    addItemButton.Enabled = false;
-                    deleteItemButton.Enabled = false;
-                    deleteTestButton.Enabled = false;
-                    finishButton.Enabled = false;
-                    customButton.Enabled = true;
-                    itemsDataGrid.ReadOnly = true;
-                    testTypeComboBox.Enabled = false;
-                }
-                else
-                {
-                    testNameLabel.Text = "You are now editing the " + currentTest.TestName + " test";
-                    testNameLabel.Visible = true;
-                    cancelButton.Enabled = true;
-                    addItemButton.Enabled = true;
-                    deleteItemButton.Enabled = true;
-                    deleteTestButton.Enabled = true;
-                    finishButton.Enabled = true;
-                    customButton.Enabled = true;
-                    itemsDataGrid.ReadOnly = true;
-                    testTypeComboBox.Enabled = true;
-                }
-            }
-        }
-            /*
-                    else
-                    {
-                        MessageBox.Show("Error finding items for the " + test.TestName + " test.");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Could not find the '" + editTestComboBox.SelectedValue.ToString() + " test'");
-                }
-            }
-            */
-            private void customButton_Click(object sender, EventArgs e)
-        {
-            //Programmer: Jeremiah Montano
-            //Date: November 11, 2018
-            //Summary: Allows the administrator define a custom comparison test
-            CustomTestForm customForm = new CustomTestForm();
-            customForm.currentTest = currentTest;
-            customForm.itemList = listItemsList;
-            customForm.ShowDialog();
-        }
-=======
                 if(test.TestID == 0)
                 {
                     MessageBox.Show("Test does not exist");
@@ -553,7 +450,7 @@ namespace Gui
                 }
                 else
                 {
-                    List<Item> listItemsList = new List<Item>();
+                    listItemsList = new List<Item>();
                     if (ItemList.getItems(listItemsList, test.TestID, ref stringErrorString))
                     {
                         itemsDataGrid.Rows.Clear();
@@ -637,6 +534,7 @@ namespace Gui
                             addItemButton.Enabled = false;
                             deleteItemButton.Enabled = false;
                             deleteTestButton.Enabled = false;
+                            customTestButton.Enabled = false;
                             finishButton.Enabled = false;
                             itemsDataGrid.ReadOnly = true;
                             testTypeComboBox.Enabled = false;
@@ -652,6 +550,7 @@ namespace Gui
                             deleteItemButton.Enabled = true;
                             deleteTestButton.Enabled = true;
                             finishButton.Enabled = true;
+                            customTestButton.Enabled = true;
                             itemsDataGrid.ReadOnly = false;
                             testTypeComboBox.Enabled = true;
                             itemsDataGrid.Focus();
@@ -669,8 +568,17 @@ namespace Gui
                 MessageBox.Show(stringErrorString);
             }
         }
+                    private void customButton_Click(object sender, EventArgs e)
+        {
+            //Programmer: Jeremiah Montano
+            //Date: November 11, 2018
+            //Summary: Allows the administrator define a custom comparison test
+            CustomTestForm customForm = new CustomTestForm();
+            customForm.currentTest = currentTest;
+            customForm.itemList = listItemsList;
+            customForm.ShowDialog();
+        }
         //Check the file type of the item being dragged into the form and set the drag drop effect accordingly
->>>>>>> AdminForm
         private void AdminForm_DragEnter(object sender, DragEventArgs e)
         {
             if (currentTest.TestName == "" || itemsDataGrid.RowCount == 0 || currentTest.TestType == "T")
@@ -761,7 +669,7 @@ namespace Gui
                 }
                 else if (isWrongSize)
                 {
-                    MessageBox.Show("This image has the wrong dimensions.  Please resize this image to 500x500px.");
+                    MessageBox.Show("This image has the wrong dimensions.  Please resize this image to 300x300px or less.");
                 }
                 else
                 {
@@ -830,7 +738,7 @@ namespace Gui
                 }
                 else if (isWrongSize)
                 {
-                    MessageBox.Show("This image has the wrong dimensions.  Please resize this image to 500x500px.");
+                    MessageBox.Show("This image has the wrong dimensions.  Please resize this image to 300x300px or less.");
                 }
                 else
                 {
@@ -951,12 +859,12 @@ namespace Gui
             }
         }
 
-        private void itemsDataGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        /*private void itemsDataGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             if(itemsDataGrid.Rows.Count > 1 && !addingItems)
             {
                 itemsDataGrid.Rows[e.RowIndex].Cells[0].Selected = true;
             }
-        }
+        }*/
     }
 }

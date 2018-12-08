@@ -67,18 +67,11 @@ namespace Gui
             // Randomizes where the item pairs are assigned to the userChoice Radio boxes: Kevin Khlom Sprint 2
             List<Item> itemToAssign = new List<Item>();
             // Function that randomizes the pairings
-<<<<<<< HEAD
             UserTestLogic.itemToAssign(itemPair, itemToAssign, currentTest);
-            userChoiceOne.Text = itemToAssign[0].Name;
-            userChoiceTwo.Text = itemToAssign[1].Name;
-            userChoiceThree.Text = itemToAssign[2].Name;
-
-=======
-            UserTestLogic.itemToAssign(itemPair, itemToAssign);
             //Gets the test type and sets the text/images accordingly
             int i = 0;
             string errorString = "Error getting test type: ";
-            if (TestList.getTestType(ref testType, _testID, ref errorString))
+            if (TestList.getTestType(ref testType, currentTest.TestID, ref errorString))
             {
                 if(testType == "T")
                 {
@@ -139,11 +132,11 @@ namespace Gui
                     {
                         control.Width = 300;
                         ((RadioButton)control).BackColor = Color.Transparent;
-                        if (testType == "T")
+                        if (currentTest.TestType == "T")
                         {
                             control.Text = itemToAssign[i].Name;
                         }
-                        else if (testType == "I")
+                        else if (currentTest.TestType == "I")
                         {
                             if (itemToAssign[i].ItemImage != null)
                             {
@@ -152,10 +145,10 @@ namespace Gui
                             }
                             else
                             {
-                                ((RadioButton)control).Image = null;
+                                ((RadioButton)control).Image = Image.FromFile("../../Undecided.png");
                             }
                         }
-                        else if (testType == "TI")
+                        else if (currentTest.TestType == "TI")
                         {
                             if (itemToAssign[i].ItemImage != null)
                             {
@@ -164,7 +157,7 @@ namespace Gui
                             }
                             else
                             {
-                                ((RadioButton)control).Image = Image.FromFile("Undecided.png");
+                                ((RadioButton)control).Image = Image.FromFile("../../Undecided.png");
                             }
                             control.Text = itemToAssign[i].Name;
                         }
@@ -172,7 +165,6 @@ namespace Gui
                     i++;
                 }
             }
->>>>>>> AdminForm
             return itemToAssign;
         }
         // Gets the next index in the itemPairList
@@ -217,9 +209,65 @@ namespace Gui
                     itemToAssign.Add(newItemPair.Item1);
                     itemToAssign.Add(newItemPair.Item2);
                     itemToAssign.Add(new Item(0, "Undecided", currentTest.TestID));
-                    userChoiceOne.Text = newItemPair.Item1.Name;
-                    userChoiceTwo.Text = newItemPair.Item2.Name;
-                    userChoiceThree.Text = "Undecided";
+                    if (currentTest.TestType == "T")
+                    { 
+                        userChoiceOne.Text = newItemPair.Item1.Name;
+                        userChoiceTwo.Text = newItemPair.Item2.Name;
+                        userChoiceThree.Text = "Undecided";
+                    }
+                    else if (currentTest.TestType == "I")
+                    {
+                        if (itemToAssign[0].ItemImage != null)
+                        {
+                            userChoiceOne.Text = null;
+                            userChoiceOne.TextImageRelation = TextImageRelation.TextAboveImage;
+                            userChoiceOne.Image = itemToAssign[0].getImage();
+                        }
+                        else
+                        {
+                            userChoiceOne.Image = null;
+                        }
+                        if (itemToAssign[1].ItemImage != null)
+                        {
+                            userChoiceTwo.Text = null;
+                            userChoiceTwo.TextImageRelation = TextImageRelation.TextAboveImage;
+                            userChoiceTwo.Image = itemToAssign[1].getImage();
+                        }
+                        else
+                        {
+                            userChoiceTwo.Image = null;
+                        }
+                        userChoiceThree.TextImageRelation = TextImageRelation.TextAboveImage;
+                        userChoiceThree.Image = Image.FromFile("../../Undecided.png");
+                        userChoiceThree.Text = null;
+                    }
+                    else if (currentTest.TestType == "TI")
+                    {
+                        if (itemToAssign[0].ItemImage != null)
+                        {
+                            userChoiceOne.TextImageRelation = TextImageRelation.TextAboveImage;
+                            userChoiceOne.Image = itemToAssign[0].getImage();
+                        }
+                        else
+                        {
+                            userChoiceOne.Image = null;
+                        }
+                        if (itemToAssign[1].ItemImage != null)
+                        {
+                            userChoiceTwo.TextImageRelation = TextImageRelation.TextAboveImage;
+                            userChoiceTwo.Image = itemToAssign[1].getImage();
+                        }
+                        else
+                        {
+                            userChoiceTwo.Image = null;
+                        }
+                        userChoiceThree.TextImageRelation = TextImageRelation.TextAboveImage;
+                        userChoiceOne.Text = newItemPair.Item1.Name;
+                        userChoiceTwo.Text = newItemPair.Item2.Name;
+                        userChoiceThree.Text = "Undecided";
+                        userChoiceThree.Image = Image.FromFile("../../Undecided.png");
+                    }
+
                 }
                 userChoiceOne.Checked = false;
                 userChoiceTwo.Checked = false;
