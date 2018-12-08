@@ -33,31 +33,29 @@ namespace BusinessData
                     test = new Test();
                     test.TestID = Convert.ToInt32(reader[TESTS_TESTID_COLUMN]);
                     test.TestName = Convert.ToString(reader[TESTS_TESTNAME_COLUMN]);
-<<<<<<< HEAD
+
                     if (!reader.IsDBNull(reader.GetOrdinal(TESTS_CUSTOMTEST_COLUMN)))
                     {
                         test.CustomTest = Convert.ToInt32(reader[TESTS_CUSTOMTEST_COLUMN]);
                     } else
-=======
+
                     test.TestType = Convert.ToString(reader[TESTS_TESTTYPE_COLUMN]);
                     if (!reader.IsDBNull(reader.GetOrdinal(TESTS_CUSTOMTEST_COLUMN)))
                     {
                         test.CustomTest = Convert.ToInt32(reader[TESTS_CUSTOMTEST_COLUMN]);
                     }
                     else
->>>>>>> AdminForm
+
                     {
                         test.CustomTest = 0;
                     }
                     if (!reader.IsDBNull(reader.GetOrdinal(TESTS_SHUFFLE_COLUMN)))
                     {
                         test.Shuffle = Convert.ToInt32(reader[TESTS_SHUFFLE_COLUMN]);
-<<<<<<< HEAD
+
                     } else
-=======
                     }
                     else
->>>>>>> AdminForm
                     {
                         test.Shuffle = 0;
                     }

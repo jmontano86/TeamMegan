@@ -439,7 +439,6 @@ namespace Gui
             //Get the ID for the selected test and get the items from that test and put them in the itemsDataGrid
             if (TestList.getTestIDAndType(test, ref stringErrorString))
             {
-<<<<<<< HEAD
             */
             currentTest = (Test)editTestComboBox.SelectedItem;
             string stringErrorString = "";
@@ -545,7 +544,7 @@ namespace Gui
             customForm.itemList = listItemsList;
             customForm.ShowDialog();
         }
-=======
+
                 if(test.TestID == 0)
                 {
                     MessageBox.Show("Test does not exist");

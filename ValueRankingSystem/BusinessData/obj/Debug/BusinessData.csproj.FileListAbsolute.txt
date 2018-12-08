@@ -23,3 +23,7 @@ C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\B
 C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.dll
 C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.pdb
 C:\Users\mvillwock\Desktop\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.csprojAssemblyReference.cache
+C:\Users\khlomke\Desktop\cis234a\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.csprojAssemblyReference.cache
+C:\Users\khlomke\Desktop\cis234a\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.csproj.CoreCompileInputs.cache
+C:\Users\khlomke\Desktop\cis234a\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.dll
+C:\Users\khlomke\Desktop\cis234a\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.pdb
