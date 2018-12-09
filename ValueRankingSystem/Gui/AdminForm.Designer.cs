@@ -255,7 +255,6 @@
             this.itemsDataGrid.Size = new System.Drawing.Size(504, 400);
             this.itemsDataGrid.TabIndex = 43;
             this.itemsDataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.itemsDataGrid_CellEndEdit);
-            this.itemsDataGrid.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.itemsDataGrid_RowsAdded);
             this.itemsDataGrid.SelectionChanged += new System.EventHandler(this.itemsDataGrid_SelectionChanged);
             // 
             // itemNameColumn

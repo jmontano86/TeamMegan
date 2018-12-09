@@ -14,7 +14,6 @@ namespace Gui
     {
         Test currentTest;
         List<Control> imageBoxLabels;
-        bool addingItems;
         public AdminForm()
         {
             InitializeComponent();
@@ -446,7 +445,6 @@ namespace Gui
                     {
                         itemsDataGrid.Rows.Clear();
                         //Add the items from the test to the datagrid
-                        addingItems = true;
                         foreach (Item item in listItemsList)
                         {
                             int intIndex = itemsDataGrid.Rows.Add();
@@ -464,7 +462,6 @@ namespace Gui
                                 itemsDataGrid.Rows[intIndex].Cells[1].Value = item.getImage();
                             }
                         }
-                        addingItems = false;
                         //Get the test type and set the testTypeComboBox accordingly
                         if (test.TestType == "T")
                         {
@@ -648,7 +645,7 @@ namespace Gui
                 }
                 else if (isWrongSize)
                 {
-                    MessageBox.Show("This image has the wrong dimensions.  Please resize this image to 500x500px.");
+                    MessageBox.Show("This image has the wrong dimensions.  Please resize this image to 300x300px or less.");
                 }
                 else
                 {
@@ -717,7 +714,7 @@ namespace Gui
                 }
                 else if (isWrongSize)
                 {
-                    MessageBox.Show("This image has the wrong dimensions.  Please resize this image to 500x500px.");
+                    MessageBox.Show("This image has the wrong dimensions.  Please resize this image to 300x300px or less.");
                 }
                 else
                 {
@@ -835,14 +832,6 @@ namespace Gui
             else if (size > 1000)
             {
                 sizeLabel.Text = ((float)size / 1024).ToString("n2") + "KB";
-            }
-        }
-
-        private void itemsDataGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            if(itemsDataGrid.Rows.Count > 1 && !addingItems)
-            {
-                itemsDataGrid.Rows[e.RowIndex].Cells[0].Selected = true;
             }
         }
     }
