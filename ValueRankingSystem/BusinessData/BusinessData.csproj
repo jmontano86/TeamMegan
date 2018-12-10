@@ -43,15 +43,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseHelper.cs" />
-    <Compile Include="DataSet1.Designer.cs">
+    <Compile Include="IndividualDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+      <DependentUpon>IndividualDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Item.cs" />
     <Compile Include="ItemDB.cs" />
     <Compile Include="ItemPair.cs" />
     <Compile Include="ItemPairDB.cs" />
+    <Compile Include="PercentDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PercentDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -69,19 +74,38 @@
     <Compile Include="User.cs" />
     <Compile Include="UserDB.cs" />
     <Compile Include="UserTestLogic.cs" />
+    <Compile Include="WinsDataSet.cs">
+      <DependentUpon>WinsDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="WinsDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WinsDataSet.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="DataSet1.xsc">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+    <None Include="IndividualDataSet.xsc">
+      <DependentUpon>IndividualDataSet.xsd</DependentUpon>
     </None>
-    <None Include="DataSet1.xsd">
+    <None Include="IndividualDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+      <LastGenOutput>IndividualDataSet.Designer.cs</LastGenOutput>
     </None>
-    <None Include="DataSet1.xss">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+    <None Include="IndividualDataSet.xss">
+      <DependentUpon>IndividualDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="PercentDataSet.xsc">
+      <DependentUpon>PercentDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="PercentDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PercentDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="PercentDataSet.xss">
+      <DependentUpon>PercentDataSet.xsd</DependentUpon>
     </None>
     <None Include="Properties\DataSources\BusinessData.DataSetTableAdapters.vResultsTableAdapter.datasource" />
     <None Include="Properties\DataSources\BusinessData.Properties.Settings.datasource" />
@@ -91,6 +115,11 @@
     <None Include="Properties\DataSources\ItemList.datasource" />
     <None Include="Properties\DataSources\ItemPair.datasource" />
     <None Include="Properties\DataSources\ItemPairDB.datasource" />
+    <None Include="Properties\DataSources\PercentDataSet.datasource" />
+    <None Include="Properties\DataSources\PercentDataSet.DataTable1DataTable.datasource" />
+    <None Include="Properties\DataSources\PercentDataSet.DataTable1Row.datasource" />
+    <None Include="Properties\DataSources\PercentDataSet.DataTable1RowChangeEvent.datasource" />
+    <None Include="Properties\DataSources\PercentDataSet.DataTable1RowChangeEventHandler.datasource" />
     <None Include="Properties\DataSources\Result.datasource" />
     <None Include="Properties\DataSources\ResultDB.datasource" />
     <None Include="Properties\DataSources\ResultDisplay.datasource" />
@@ -106,6 +135,17 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="WinsDataSet.xsc">
+      <DependentUpon>WinsDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="WinsDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>WinsDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="WinsDataSet.xss">
+      <DependentUpon>WinsDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

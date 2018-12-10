@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="WinsDataSet" targetNamespace="http://tempuri.org/WinsDataSet.xsd" xmlns:mstns="http://tempuri.org/WinsDataSet.xsd" xmlns="http://tempuri.org/WinsDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="_234a_MeganConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="_234a_MeganConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.BusinessData.Properties.Settings.GlobalReference.Default._234a_MeganConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vResultsTableAdapter" GeneratorDataComponentClassName="vResultsTableAdapter" Name="vResults" UserDataComponentName="vResultsTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="_234a_MeganConnectionString (Settings)" DbObjectName="[234a_Megan].dbo.vResults" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT TestName
+         ,ItemName
+		 ,SUM(Wins) TotalWins
+		 ,SUM(Losses) TotalLosses
+		 ,SUM(TotalScore) TotalScore
+FROM vResults GROUP BY TestName, ItemName
+ORDER BY TestName, ItemName, SUM(Wins)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="TestName" DataSetColumn="TestName" />
+              <Mapping SourceColumn="ItemName" DataSetColumn="ItemName" />
+              <Mapping SourceColumn="TotalWins" DataSetColumn="TotalWins" />
+              <Mapping SourceColumn="TotalLosses" DataSetColumn="TotalLosses" />
+              <Mapping SourceColumn="TotalScore" DataSetColumn="TotalScore" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="WinsDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="WinsDataSet" msprop:Generator_UserDSName="WinsDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vResults" msprop:Generator_TableClassName="vResultsDataTable" msprop:Generator_TableVarName="tablevResults" msprop:Generator_TablePropName="vResults" msprop:Generator_RowDeletingName="vResultsRowDeleting" msprop:Generator_RowChangingName="vResultsRowChanging" msprop:Generator_RowEvHandlerName="vResultsRowChangeEventHandler" msprop:Generator_RowDeletedName="vResultsRowDeleted" msprop:Generator_UserTableName="vResults" msprop:Generator_RowChangedName="vResultsRowChanged" msprop:Generator_RowEvArgName="vResultsRowChangeEvent" msprop:Generator_RowClassName="vResultsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TestName" msprop:Generator_ColumnVarNameInTable="columnTestName" msprop:Generator_ColumnPropNameInRow="TestName" msprop:Generator_ColumnPropNameInTable="TestNameColumn" msprop:Generator_UserColumnName="TestName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemName" msprop:Generator_ColumnVarNameInTable="columnItemName" msprop:Generator_ColumnPropNameInRow="ItemName" msprop:Generator_ColumnPropNameInTable="ItemNameColumn" msprop:Generator_UserColumnName="ItemName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TotalWins" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalWins" msprop:Generator_ColumnPropNameInRow="TotalWins" msprop:Generator_ColumnPropNameInTable="TotalWinsColumn" msprop:Generator_UserColumnName="TotalWins" type="xs:int" minOccurs="0" />
+              <xs:element name="TotalLosses" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalLosses" msprop:Generator_ColumnPropNameInRow="TotalLosses" msprop:Generator_ColumnPropNameInTable="TotalLossesColumn" msprop:Generator_UserColumnName="TotalLosses" type="xs:int" minOccurs="0" />
+              <xs:element name="TotalScore" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalScore" msprop:Generator_ColumnPropNameInRow="TotalScore" msprop:Generator_ColumnPropNameInTable="TotalScoreColumn" msprop:Generator_UserColumnName="TotalScore" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -34,11 +34,27 @@ namespace Gui
 
         public void ResultsDisplayForm_Load(object sender, EventArgs e)
         {
+            // establish and fill datasets for the report
+
+            
+
             ReportDataSource source = new ReportDataSource("DataSet", BusinessData.Statistics.FillData(UserID, TestID, CreationDate));
-            this.reportViewer2.LocalReport.DataSources.Clear();
+            ReportDataSource winssource = new ReportDataSource("WinsDataSet", BusinessData.Statistics.WinsFillData(TestID));
+            ReportDataSource percentsource = new ReportDataSource("DataSet1", BusinessData.Statistics.PercentFillData(TestID));
+          
+
             this.reportViewer2.LocalReport.DataSources.Add(source);
-            this.reportViewer2.LocalReport.Refresh();
+            this.reportViewer2.LocalReport.DataSources.Add(winssource);
+            this.reportViewer2.LocalReport.DataSources.Add(percentsource);
             this.reportViewer2.RefreshReport();
+
+
+        }
+
+        private void ResultsDisplayForm_FormClosing(object sender, EventArgs e)
+        {
+
+          
         }
 
     }
