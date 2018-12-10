@@ -121,12 +121,16 @@ namespace Gui
 
         private void resultsButton_Click(object sender, EventArgs e)
         {
+
+            
+
             UserClass user = (UserClass)patientComboBox.SelectedItem;
             Test test = (Test)testComboBox.SelectedItem;
             TestSession session = (TestSession)dateComboBox.SelectedItem;
 
             ResultsDisplayForm form = new ResultsDisplayForm(user.intUserID, test.TestID, session.datetimeCreationDate);
-            form.ShowDialog();
+            form.Show();
+            
         }
 
         private void dateComboBox_SelectedIndexChanged(object sender, EventArgs e)
