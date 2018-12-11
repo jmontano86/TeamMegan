@@ -136,8 +136,7 @@ namespace Gui
             TestSession session = (TestSession)dateComboBox.SelectedItem;
 
             ResultsDisplayForm form = new ResultsDisplayForm(user.intUserID, test.TestID, session.datetimeCreationDate);
-            form.Show();
-            
+            form.ShowDialog();
         }
 
         private void dateComboBox_SelectedIndexChanged(object sender, EventArgs e)
