@@ -29,10 +29,9 @@ C:\Users\Jeremiah\Documents\JeremiahMontano\TeamMegan\ValueRankingSystem\Busines
 C:\Users\Jeremiah\Documents\JeremiahMontano\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.pdb
 C:\Users\Jeremiah\Documents\JeremiahMontano\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.dll
 C:\Users\Jeremiah\Documents\JeremiahMontano\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.pdb
-C:\Users\Bakwock\Desktop\Megan\School\CIS234A\FinalCode\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.dll.config
-C:\Users\Bakwock\Desktop\Megan\School\CIS234A\FinalCode\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.dll
-C:\Users\Bakwock\Desktop\Megan\School\CIS234A\FinalCode\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.pdb
-C:\Users\Bakwock\Desktop\Megan\School\CIS234A\FinalCode\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.csproj.CoreCompileInputs.cache
-C:\Users\Bakwock\Desktop\Megan\School\CIS234A\FinalCode\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.dll
-C:\Users\Bakwock\Desktop\Megan\School\CIS234A\FinalCode\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.pdb
-C:\Users\Bakwock\Desktop\Megan\School\CIS234A\FinalCode\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.csprojResolveAssemblyReference.cache
+C:\Users\Jordan\Desktop\Real World Programming\Sprint 2\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.dll.config
+C:\Users\Jordan\Desktop\Real World Programming\Sprint 2\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.dll
+C:\Users\Jordan\Desktop\Real World Programming\Sprint 2\TeamMegan\ValueRankingSystem\BusinessData\bin\Debug\BusinessData.pdb
+C:\Users\Jordan\Desktop\Real World Programming\Sprint 2\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.csprojResolveAssemblyReference.cache
+C:\Users\Jordan\Desktop\Real World Programming\Sprint 2\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.dll
+C:\Users\Jordan\Desktop\Real World Programming\Sprint 2\TeamMegan\ValueRankingSystem\BusinessData\obj\Debug\BusinessData.pdb
