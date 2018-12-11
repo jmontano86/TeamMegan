@@ -12,10 +12,10 @@ namespace Gui
 {
     public partial class AdminForm : MetroForm
     {
-        Test currentTest;
-        List<Control> imageBoxLabels;
-        List<Item> listItemsList;
-        bool addingItems;
+        private Test currentTest;
+        private List<Control> imageBoxLabels;
+        private List<Item> listItemsList;
+
         public AdminForm()
         {
             InitializeComponent();
@@ -177,6 +177,7 @@ namespace Gui
                         }
                     }
                     testTypeComboBox_SelectionChangeCommitted(this, new EventArgs());
+                    finishButton.Enabled = false;
                 }
             }
             else
@@ -215,19 +216,6 @@ namespace Gui
                     }
                 }
             }
-            //Add a new row if you're at the bottom row and all cells are filled out
-            bool allCellsFilledOut = true;
-            foreach (DataGridViewRow row in itemsDataGrid.Rows)
-            {
-                if (row.Cells[0].Value == null)
-                {
-                    allCellsFilledOut = false;
-                }
-            }
-            if (allCellsFilledOut)
-            {
-                int intCurrentCell = itemsDataGrid.Rows.Add();
-            }
             //Trim the current cell's content
             if (itemsDataGrid.CurrentCell.Value != null)
             {
@@ -242,17 +230,67 @@ namespace Gui
             {
                 finishButton.Enabled = false;
             }
+            checkCellsForCompletion();
         }
 
-        //Checks the cells to see how many are filled out, based on the test type.
+        private void checkCellsForCompletion()
+        {
+            //Add a new row if all cells are filled out
+            bool allCellsFilledOut = true;
+            foreach (DataGridViewRow row in itemsDataGrid.Rows)
+            {
+                if (currentTest.TestType == "T")
+                {
+                    if (row.Cells[0].Value == null || row.Cells[0].Value == "")
+                    {
+                        allCellsFilledOut = false;
+                    }
+                }
+                else if (currentTest.TestType == "I")
+                {
+                    if (row.Cells[1].Value == null)
+                    {
+                        allCellsFilledOut = false;
+                    }
+                }
+                else if (currentTest.TestType == "TI")
+                {
+                    if (row.Cells[0].Value == null || row.Cells[0].Value == "" || row.Cells[1].Value == null)
+                    {
+                        allCellsFilledOut = false;
+                    }
+                }
+            }
+            if (allCellsFilledOut)
+            {
+                itemsDataGrid.Rows.Add();
+                if (currentTest.TestType == "T")
+                {
+                    itemsDataGrid.Rows[itemsDataGrid.Rows.Count - 1].Cells[0].Selected = true;
+                    itemsDataGrid.Rows[itemsDataGrid.Rows.Count - 1].Height = 21;
+                }
+                else if (currentTest.TestType == "I")
+                {
+                    itemsDataGrid.Rows[itemsDataGrid.Rows.Count - 1].Cells[1].Selected = true;
+                    itemsDataGrid.Rows[itemsDataGrid.Rows.Count - 1].Height = 75;
+                }
+                else if (currentTest.TestType == "TI")
+                {
+                    itemsDataGrid.Rows[itemsDataGrid.Rows.Count - 1].Cells[0].Selected = true;
+                    itemsDataGrid.Rows[itemsDataGrid.Rows.Count - 1].Height = 75;
+                }
+            }
+        }
+        
         private bool checkCells()
         {
+            //Checks the cells to see how many are filled out, based on the test type.
             int intFilledOutCells = 0;
             foreach (DataGridViewRow row in itemsDataGrid.Rows)
             {
                 if (currentTest.TestType == "T")
                 {
-                    if (row.Cells[0].Value != null)
+                    if (row.Cells[0].Value != null && row.Cells[0].Value != "")
                     {
                         intFilledOutCells++;
                     }
@@ -266,7 +304,7 @@ namespace Gui
                 }
                 else if (currentTest.TestType == "TI")
                 {
-                    if (row.Cells[0].Value != null && row.Cells[1].Value != null)
+                    if (row.Cells[0].Value != null && row.Cells[1].Value != null && row.Cells[0].Value != "")
                     {
                         intFilledOutCells++;
                     }
@@ -288,7 +326,7 @@ namespace Gui
             //Delete null cells
             for (int i = itemsDataGrid.Rows.Count - 1; i > 1; i--)
             {
-                if (currentTest.TestType == "T" && itemsDataGrid.Rows[i].Cells[0].Value == null)
+                if (currentTest.TestType == "T" && itemsDataGrid.Rows[i].Cells[0].Value == null || itemsDataGrid.Rows[i].Cells[0].Value == "")
                 {
                     itemsDataGrid.Rows.RemoveAt(i);
                 }
@@ -296,7 +334,8 @@ namespace Gui
                 {
                     itemsDataGrid.Rows.RemoveAt(i);
                 }
-                else if (currentTest.TestType == "TI" && itemsDataGrid.Rows[i].Cells[0].Value == null && itemsDataGrid.Rows[i].Cells[1].Value == null)
+                else if (currentTest.TestType == "TI" && itemsDataGrid.Rows[i].Cells[0].Value == null && itemsDataGrid.Rows[i].Cells[1].Value == null ||
+                    itemsDataGrid.Rows[i].Cells[0].Value == "")
                 {
                     itemsDataGrid.Rows.RemoveAt(i);
                 }
@@ -379,7 +418,16 @@ namespace Gui
                                 customTestButton.Enabled = true;
                             }
                             deleteTestButton.Enabled = true;
-                            if (!editTestComboBox.Items.Contains(currentTest.TestName))
+                            //Add the test to the combobox if it isn't there already
+                            bool testInComboBox = false;
+                            foreach(object item in editTestComboBox.Items)
+                            {
+                                if(item.ToString() == currentTest.TestName)
+                                {
+                                    testInComboBox = true;
+                                }
+                            }
+                            if (!testInComboBox)
                             {
                                 editTestComboBox.Items.Add(currentTest.TestName);
                             }
@@ -388,9 +436,6 @@ namespace Gui
                         {
                             MessageBox.Show(stringErrorString);
                         }
-                        listItemsList = new List<Item>();
-                        ItemList.getItems(listItemsList, currentTest.TestID, ref stringErrorString);
-
                     }
                     else
                     {
@@ -455,7 +500,6 @@ namespace Gui
                     {
                         itemsDataGrid.Rows.Clear();
                         //Add the items from the test to the datagrid
-                        addingItems = true;
                         foreach (Item item in listItemsList)
                         {
                             int intIndex = itemsDataGrid.Rows.Add();
@@ -473,7 +517,6 @@ namespace Gui
                                 itemsDataGrid.Rows[intIndex].Cells[1].Value = item.getImage();
                             }
                         }
-                        addingItems = false;
                         //Get the test type and set the testTypeComboBox accordingly
                         if (test.TestType == "T")
                         {
@@ -553,6 +596,7 @@ namespace Gui
                             customTestButton.Enabled = true;
                             itemsDataGrid.ReadOnly = false;
                             testTypeComboBox.Enabled = true;
+                            checkCellsForCompletion();
                             itemsDataGrid.Focus();
                             itemsDataGrid_SelectionChanged(this, new EventArgs());
                         }
@@ -568,7 +612,7 @@ namespace Gui
                 MessageBox.Show(stringErrorString);
             }
         }
-                    private void customButton_Click(object sender, EventArgs e)
+        private void customButton_Click(object sender, EventArgs e)
         {
             //Programmer: Jeremiah Montano
             //Date: November 11, 2018
@@ -591,7 +635,8 @@ namespace Gui
                 try
                 {
                     string file = e.Data.GetData(DataFormats.Text) as string;
-                    if (file.EndsWith(".jpg") || file.EndsWith(".png") || file.EndsWith(".bmp") || file.EndsWith(".jpeg") || file.EndsWith(".PNG"))
+                    if (file.ToLower().EndsWith(".jpg") || file.ToLower().EndsWith(".png") || file.ToLower().EndsWith(".bmp") || 
+                        file.ToLower().EndsWith(".jpeg") || file.ToLower().EndsWith(".webp"))
                     {
                         e.Effect = DragDropEffects.Link;
                     }
@@ -604,8 +649,9 @@ namespace Gui
                 catch
                 {
                     string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                    if (Path.GetExtension(files[0]) == ".PNG" || Path.GetExtension(files[0]) == ".jpg" || Path.GetExtension(files[0]) == ".bmp" ||
-                    Path.GetExtension(files[0]) == ".jpeg" || Path.GetExtension(files[0]) == ".png")
+                    if (Path.GetExtension(files[0]).ToLower() == ".jpg" || Path.GetExtension(files[0]).ToLower() == ".bmp" ||
+                    Path.GetExtension(files[0]).ToLower() == ".jpeg" || Path.GetExtension(files[0]).ToLower() == ".png" || 
+                    Path.GetExtension(files[0]).ToLower() == ".webp")
                     {
                         e.Effect = DragDropEffects.Copy;
                     }
@@ -675,7 +721,7 @@ namespace Gui
                 {
                     //Set the image on the picturebox
                     imagePictureBox.Image = image;
-                    //Set the second datagrid column to the path of the image and set the width and height labels to that of the image
+                    //Set the second datagrid column to the image and set the width and height labels to that of the image
                     itemsDataGrid.Rows[itemsDataGrid.CurrentRow.Index].Cells[1].Value = image;
                     setPictureLabelText();
                     setImageBoxLabelVisibility(true);
@@ -746,7 +792,7 @@ namespace Gui
                     try
                     {
                         imagePictureBox.Image = image;
-                        //Set the second datagrid column to the path of the image and set the width and height labels to that of the image
+                        //Set the second datagrid column to the image and set the width and height labels to that of the image
                         itemsDataGrid.Rows[itemsDataGrid.CurrentRow.Index].Cells[1].Value = image;
                         setPictureLabelText();
                         setImageBoxLabelVisibility(true);
@@ -765,6 +811,7 @@ namespace Gui
                     }
                 }
             }
+            checkCellsForCompletion();
         }
         //Set the test type and adjust controls based on the test type selected
         private void testTypeComboBox_SelectionChangeCommitted(object sender, EventArgs e)
@@ -825,7 +872,7 @@ namespace Gui
         //If an image exists on the row selected, display the image and set the label values
         private void itemsDataGrid_SelectionChanged(object sender, EventArgs e)
         {
-            if (itemsDataGrid.Rows[itemsDataGrid.CurrentCell.RowIndex].Cells[1].Value != null && itemsDataGrid.RowCount > 0 && currentTest.TestType != "T")
+            if (itemsDataGrid.RowCount > 0 && itemsDataGrid.Rows[itemsDataGrid.CurrentCell.RowIndex].Cells[1].Value != null && currentTest.TestType != "T")
             {
                 imagePictureBox.Image = (Image)itemsDataGrid.Rows[itemsDataGrid.CurrentCell.RowIndex].Cells[1].Value;
                 setPictureLabelText();
@@ -858,13 +905,5 @@ namespace Gui
                 sizeLabel.Text = ((float)size / 1024).ToString("n2") + "KB";
             }
         }
-
-        /*private void itemsDataGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            if(itemsDataGrid.Rows.Count > 1 && !addingItems)
-            {
-                itemsDataGrid.Rows[e.RowIndex].Cells[0].Selected = true;
-            }
-        }*/
     }
 }
