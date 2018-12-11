@@ -168,6 +168,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Report.rdlc" />
     <EmbeddedResource Include="resultsDisplayForm.resx">
       <DependentUpon>ResultsDisplayForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -182,17 +183,28 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BusinessData.DatabaseHelper.datasource" />
-    <None Include="Properties\DataSources\BusinessData.DataSet1+vResultsDataTable.datasource" />
-    <None Include="Properties\DataSources\BusinessData.DataSet1+vResultsRow.datasource" />
-    <None Include="Properties\DataSources\BusinessData.DataSet1+vResultsRowChangeEvent.datasource" />
-    <None Include="Properties\DataSources\BusinessData.DataSet1+vResultsRowChangeEventHandler.datasource" />
-    <None Include="Properties\DataSources\BusinessData.DataSet1.datasource" />
     <None Include="Properties\DataSources\BusinessData.DataSet1TableAdapters.TableAdapterManager+UpdateOrderOption.datasource" />
     <None Include="Properties\DataSources\BusinessData.DataSet1TableAdapters.TableAdapterManager.datasource" />
     <None Include="Properties\DataSources\BusinessData.DataSet1TableAdapters.vResultsTableAdapter.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet2+vResultsDataTable.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet2+vResultsRow.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet2+vResultsRowChangeEvent.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet2+vResultsRowChangeEventHandler.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet2.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet2TableAdapters.TableAdapterManager+UpdateOrderOption.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet2TableAdapters.TableAdapterManager.datasource" />
+    <None Include="Properties\DataSources\BusinessData.DataSet2TableAdapters.vResultsTableAdapter.datasource" />
     <None Include="Properties\DataSources\BusinessData.Item.datasource" />
     <None Include="Properties\DataSources\BusinessData.ItemList.datasource" />
     <None Include="Properties\DataSources\BusinessData.ItemPair.datasource" />
+    <None Include="Properties\DataSources\BusinessData.PercentDataSet+DataTable1DataTable.datasource" />
+    <None Include="Properties\DataSources\BusinessData.PercentDataSet+DataTable1Row.datasource" />
+    <None Include="Properties\DataSources\BusinessData.PercentDataSet+DataTable1RowChangeEvent.datasource" />
+    <None Include="Properties\DataSources\BusinessData.PercentDataSet+DataTable1RowChangeEventHandler.datasource" />
+    <None Include="Properties\DataSources\BusinessData.PercentDataSet.datasource" />
+    <None Include="Properties\DataSources\BusinessData.PercentDataSetTableAdapters.DataTable1TableAdapter.datasource" />
+    <None Include="Properties\DataSources\BusinessData.PercentDataSetTableAdapters.TableAdapterManager+UpdateOrderOption.datasource" />
+    <None Include="Properties\DataSources\BusinessData.PercentDataSetTableAdapters.TableAdapterManager.datasource" />
     <None Include="Properties\DataSources\BusinessData.Result.datasource" />
     <None Include="Properties\DataSources\BusinessData.ResultDB.datasource" />
     <None Include="Properties\DataSources\BusinessData.ResultDisplay.datasource" />
@@ -203,6 +215,11 @@
     <None Include="Properties\DataSources\BusinessData.TestSessionDB.datasource" />
     <None Include="Properties\DataSources\BusinessData.UserClass.datasource" />
     <None Include="Properties\DataSources\BusinessData.UserTestLogic.datasource" />
+    <None Include="Properties\DataSources\BusinessData.WinsDataSet+vResultsDataTable.datasource" />
+    <None Include="Properties\DataSources\BusinessData.WinsDataSet+vResultsRow.datasource" />
+    <None Include="Properties\DataSources\BusinessData.WinsDataSet+vResultsRowChangeEvent.datasource" />
+    <None Include="Properties\DataSources\BusinessData.WinsDataSet+vResultsRowChangeEventHandler.datasource" />
+    <None Include="Properties\DataSources\BusinessData.WinsDataSet.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
