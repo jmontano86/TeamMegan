@@ -57,7 +57,7 @@ namespace Gui
             TestScoreListView.Items.Clear();
             testComboBox.Items.Clear();
             dateComboBox.Items.Clear();
-
+            resultsButton.Enabled = false;
             string error = "";
 
             List<ResultDisplay> resultList = new List<ResultDisplay>();
@@ -82,6 +82,11 @@ namespace Gui
             {
                 MessageBox.Show("Error in form!");
             }
+
+            if (testComboBox.Items.Count == 1)
+            {
+                testComboBox.SelectedIndex = 0;
+            }
                   
         }
 
@@ -89,7 +94,7 @@ namespace Gui
         {
             TestScoreListView.Items.Clear();
             dateComboBox.Items.Clear();
-
+            
             string error = "";
 
             List<ResultDisplay> resultList = new List<ResultDisplay>();
@@ -117,13 +122,15 @@ namespace Gui
             {
                 MessageBox.Show("Error in form!");
             }
+            //If there is only one test taken for the user, select it
+            if (dateComboBox.Items.Count == 1)
+            {
+                dateComboBox.SelectedIndex = 0;
+            }
         }
 
         private void resultsButton_Click(object sender, EventArgs e)
         {
-
-            
-
             UserClass user = (UserClass)patientComboBox.SelectedItem;
             Test test = (Test)testComboBox.SelectedItem;
             TestSession session = (TestSession)dateComboBox.SelectedItem;
@@ -136,7 +143,13 @@ namespace Gui
         private void dateComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             TestScoreListView.Items.Clear();
-            resultsButton.Enabled = true;
+            if (dateComboBox.SelectedIndex > -1)
+            {
+                resultsButton.Enabled = true;
+            } else
+            {
+                resultsButton.Enabled = false;
+            }
 
             List<ResultDisplay> resultList = new List<ResultDisplay>();
             string error = "";
