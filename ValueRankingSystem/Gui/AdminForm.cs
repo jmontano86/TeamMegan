@@ -415,6 +415,8 @@ namespace Gui
                             else
                             {
                                 MessageBox.Show("The " + currentTest.TestName + " test has been added");
+                                listItemsList = new List<Item>();
+                                listItemsList = listItems;
                                 customTestButton.Enabled = true;
                             }
                             deleteTestButton.Enabled = true;
