@@ -326,7 +326,7 @@ namespace Gui
             //Delete null cells
             for (int i = itemsDataGrid.Rows.Count - 1; i > 1; i--)
             {
-                if (currentTest.TestType == "T" && itemsDataGrid.Rows[i].Cells[0].Value == null)
+                if (currentTest.TestType == "T" && itemsDataGrid.Rows[i].Cells[0].Value == null || itemsDataGrid.Rows[i].Cells[0].Value == "")
                 {
                     itemsDataGrid.Rows.RemoveAt(i);
                 }
@@ -334,7 +334,8 @@ namespace Gui
                 {
                     itemsDataGrid.Rows.RemoveAt(i);
                 }
-                else if (currentTest.TestType == "TI" && itemsDataGrid.Rows[i].Cells[0].Value == null && itemsDataGrid.Rows[i].Cells[1].Value == null)
+                else if (currentTest.TestType == "TI" && itemsDataGrid.Rows[i].Cells[0].Value == null && itemsDataGrid.Rows[i].Cells[1].Value == null ||
+                    itemsDataGrid.Rows[i].Cells[0].Value == "")
                 {
                     itemsDataGrid.Rows.RemoveAt(i);
                 }
@@ -417,7 +418,16 @@ namespace Gui
                                 customTestButton.Enabled = true;
                             }
                             deleteTestButton.Enabled = true;
-                            if (!editTestComboBox.Items.Contains(currentTest.TestName))
+                            //Add the test to the combobox if it isn't there already
+                            bool testInComboBox = false;
+                            foreach(object item in editTestComboBox.Items)
+                            {
+                                if(item.ToString() == currentTest.TestName)
+                                {
+                                    testInComboBox = true;
+                                }
+                            }
+                            if (!testInComboBox)
                             {
                                 editTestComboBox.Items.Add(currentTest.TestName);
                             }
@@ -426,9 +436,6 @@ namespace Gui
                         {
                             MessageBox.Show(stringErrorString);
                         }
-                        listItemsList = new List<Item>();
-                        ItemList.getItems(listItemsList, currentTest.TestID, ref stringErrorString);
-
                     }
                     else
                     {
