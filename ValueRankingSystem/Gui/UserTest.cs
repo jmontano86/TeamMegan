@@ -145,7 +145,7 @@ namespace Gui
                             }
                             else
                             {
-                                ((RadioButton)control).Image = Image.FromFile("../../Undecided.png");
+                                ((RadioButton)control).Image = Properties.Resources.Undecided;
                             }
                         }
                         else if (currentTest.TestType == "TI")
@@ -157,7 +157,7 @@ namespace Gui
                             }
                             else
                             {
-                                ((RadioButton)control).Image = Image.FromFile("../../Undecided.png");
+                                ((RadioButton)control).Image = Properties.Resources.Undecided;
                             }
                             control.Text = itemToAssign[i].Name;
                         }
@@ -238,7 +238,7 @@ namespace Gui
                             userChoiceTwo.Image = null;
                         }
                         userChoiceThree.TextImageRelation = TextImageRelation.TextAboveImage;
-                        userChoiceThree.Image = Image.FromFile("../../Undecided.png");
+                        userChoiceThree.Image = Properties.Resources.Undecided;
                         userChoiceThree.Text = null;
                     }
                     else if (currentTest.TestType == "TI")
@@ -265,7 +265,7 @@ namespace Gui
                         userChoiceOne.Text = newItemPair.Item1.Name;
                         userChoiceTwo.Text = newItemPair.Item2.Name;
                         userChoiceThree.Text = "Undecided";
-                        userChoiceThree.Image = Image.FromFile("../../Undecided.png");
+                        userChoiceThree.Image = Properties.Resources.Undecided;
                     }
 
                 }
