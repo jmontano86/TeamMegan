@@ -281,6 +281,7 @@
             this.editTestComboBox.Size = new System.Drawing.Size(210, 29);
             this.editTestComboBox.TabIndex = 42;
             this.editTestComboBox.UseSelectable = true;
+            this.editTestComboBox.SelectedIndexChanged += new System.EventHandler(this.editTestComboBox_SelectedIndexChanged);
             this.editTestComboBox.SelectionChangeCommitted += new System.EventHandler(this.editTestComboBox_SelectionChangeCommitted);
             // 
             // testNameLabel

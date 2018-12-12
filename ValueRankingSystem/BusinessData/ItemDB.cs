@@ -33,19 +33,21 @@ namespace BusinessData
                 connection.Open();
                 command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT ISNULL(ItemImage, 0), ISNULL(ItemName, 0) FROM TestItems WHERE TestID = @TestID";
+                command.CommandText = "SELECT ItemID, ISNULL(ItemImage, 0), ISNULL(ItemName, 0) FROM TestItems WHERE TestID = @TestID";
                 command.Parameters.AddWithValue("@TestID", intTestID);
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
+                    
                     item = new Item();
-                    if(reader[0] != "null")
+                    item.ItemID = reader.GetInt32(0);
+                    if (reader[1] != "null")
                     {
-                        item.ItemImage = (byte[])reader[0];
+                        item.ItemImage = (byte[])reader[1];
                     }
-                    if(reader[1] != "null")
+                    if(reader[2] != "null")
                     {
-                        item.Name = reader.GetString(1);
+                        item.Name = reader.GetString(2);
                     }
                     listItemList.Add(item);
                 }

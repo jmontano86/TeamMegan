@@ -907,5 +907,10 @@ namespace Gui
                 sizeLabel.Text = ((float)size / 1024).ToString("n2") + "KB";
             }
         }
+
+        private void editTestComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
