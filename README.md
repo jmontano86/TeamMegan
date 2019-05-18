@@ -1,4 +1,4 @@
-# TeamMegan
-Team repo for CIS 234A TeamMegan
-Jeremiah Montano
-This is the best
+Class project for CIS 234A.
+Using C# and MS SQL Server. 
+
+Project completed by Kevin Khlom, Megan Villwock, Jeremiah Montano, and Jordan Long
